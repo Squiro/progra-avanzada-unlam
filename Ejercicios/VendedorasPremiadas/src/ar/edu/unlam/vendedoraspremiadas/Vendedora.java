@@ -1,8 +1,11 @@
 package ar.edu.unlam.vendedoraspremiadas;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +15,7 @@ public class Vendedora {
 	private int importeVentas[]; //Vector de importes de cada una de las ventas de la vendedora
 	private int numVendedora; //Número que identifica a la vendedora
 	private int importeMaximo; //Importe máximo obtenido de la suma de N ventas consecutivas
-	private int cantventasConsideradas; //La cantidad de ventas que se consideraron al momento de decidir el premio
+	//private int cantventasConsideradas; //La cantidad de ventas que se consideraron al momento de decidir el premio
 	private static int numVentasConsec; //Número de ventas consecutivas tomadas en cuenta en el concurso
 	
 	
@@ -27,7 +30,7 @@ public class Vendedora {
 	public static void main(String[] args) throws IOException {
 		int cantVendedoras;	//Almacena la cantidad de vendedoras
 		//Creamos un Scanner para leer el archivo de entrada
-		Scanner entrada = new Scanner(new FileReader("premio.in"));
+		Scanner entrada = new Scanner(new FileReader("premio1.in"));
 		//Leemos la cantidad de vendedoras (primer entero del archivo)
 		cantVendedoras = entrada.nextInt();
 		
@@ -49,20 +52,24 @@ public class Vendedora {
 		
 		//Cerramos el archivo de entrada porque ya no nos sirve
 		entrada.close();
-		
-		
-		while (vendedoras.size() > 1) {
 			
+		//Recorremos la lista de vendedoras y removemos aquellas que no cuentan con la cantidad necesaria de ventas
+		Iterator<Vendedora> iter = vendedoras.iterator();
+
+		while (iter.hasNext()) {
+		    Vendedora ven = iter.next();
+
+		    if (ven.cantVentas < numVentasConsec)
+		        iter.remove();
 		}
 		
-		//Recorremos la lista de vendedoras y removemos aquellas que no cuentan con la cantidad necesaria de ventas
-		for (Vendedora ven : vendedoras) {
+		/*for (Vendedora ven : vendedoras) {
 			if (ven.cantVentas < numVentasConsec) {
 				vendedoras.remove(ven);		
 			}
-		}
+		}*/
 		
-		int importeMax = 0;		
+		int importeMax = 0, maxVentas = 0;		
 		//Calculamos inicialmente el importe maximo para las vendedoras que pasaron el filtro, con el numVentasConsec original	
 		//y a su vez obtenemos el importe maximo
 		for (Vendedora ven : vendedoras) {
@@ -70,17 +77,35 @@ public class Vendedora {
 			if (ven.importeMaximo > importeMax) {
 				importeMax = ven.importeMaximo;
 			}
+			
+			if (ven.cantVentas > maxVentas) {
+				maxVentas = ven.cantVentas;
+			}
 				
 		}
 		
 		//Buscamos casos de empate
 		boolean empate = false;
-		List<Vendedora> empatantes = new ArrayList<Vendedora>();
+		List<Vendedora> empatantes = new ArrayList<Vendedora>();	
 		
 		//TODO: Buscar otro corte. No podes comparar con el size de empatantes, te va a dar siempre un empate
 		do {
 			//Recorremos la lista de vendedoras
-			for (Vendedora ven : vendedoras) {
+			iter = vendedoras.iterator();
+			
+			while (iter.hasNext()) {
+				Vendedora ven = iter.next();
+				//Si encontramos que una o más vendedoras coincide con el importe máximo, la añadimos a la lista de empatantes
+				if (ven.importeMaximo == importeMax) {
+					empatantes.add(ven);
+				}
+				else {
+					//Caso contrario removemos a la vendedora (¿de que nos sirve tener a alguien que ni siquiera llego al importe max?)
+					vendedoras.remove(ven);
+				}				
+			}
+			
+			/*for (Vendedora ven : vendedoras) {
 				//Si encontramos que una o más vendedoras coincide con el importe máximo, la añadimos a la lista de empatantes
 				if (ven.importeMaximo == importeMax) {
 					empatantes.add(ven);
@@ -89,7 +114,7 @@ public class Vendedora {
 					//Caso contrario removemos a la vendedora (¿de que nos sirve tener a alguien que ni siquiera llego al importe max?)
 					vendedoras.remove(ven);
 				}
-			}
+			}*/
 			
 			if (empatantes.size() > 1) {
 				empate = true;
@@ -101,8 +126,15 @@ public class Vendedora {
 				empate = false;
 			}
 			
-		} while (empate);	
+		} while (numVentasConsec <= maxVentas && empate);		
 		
+		PrintWriter salida = new PrintWriter(new FileWriter("ganadoras.out"));
+		
+		if (empate) {
+			salida.println("No se pudo desempatar");
+		}
+		
+		salida.close();		
 	}
 	
 	//Lee una vendedora desde el archivo y retorna un objeto de la clase Vendedora
