@@ -43,7 +43,10 @@ Las superclases pueden ser concretas o abstractas.
 
 ---
 
-Objetos polimórficos: "muchas formas". Mismo mensaje, distintas formas de responderse. Es la capacidad de un objeto de cambiar su comportamiento.
+Objetos polimórficos: "muchas formas". Mismo mensaje, distintas formas de responderse. Es la capacidad de un objeto de cambiar su comportamiento. Una variable es 
+polimorfica cuando puede contener un objeto de un tipo, o de otro. 
+
+Las clases deben ser abstractas para poder generar objetos polimorficos.
 
 Ejemplo:
 
@@ -55,3 +58,28 @@ f.calcularArea();
 Sobrecarga de metodos =/= polimorfismo
 
 La sobrecarga es un metodo con firma similar. E.g.: un metodo que recibe mas parametros.
+
+--
+
+Sobrecarga y sobre-escritura
+
+-Sobrecarga: se sobrecarga un método enviándoles diferentes parámetros (tipos y cantidad). El compilador puede evaluar si hay un método que tenga firma igual a lo que le estamos enviando como parametros, y en base a eso seleccionar el método adecuado. 
+
+-Sobre-escritura: la sobreescritura me permite ignorar la funcionalidad heredada de la clase padre. Puedo sobre-escribir el método del padre con un método propio, con funcionalidad distinta adaptada a mi clase.
+
+--
+
+Modificador static: no es necesario instanciar un objeto para utilizar el método. Los atributos con este modificador pertenecen a la clase en sí y no al objeto.
+
+
+--
+
+Referencias:
+
+Circulo c = new Circulo (radio1);
+
+c -> es una referencia a un objeto, sin hacer el new no tiene nada, es solo una referencia vacia.
+
+Cuando hago el new, se hace una referencia a las variables miembro y las funciones del objeto.
+
+Si yo asigno otro objeto a la referencia, el objeto que estaba guardado deja de existir y se pisa por el nuevo.
