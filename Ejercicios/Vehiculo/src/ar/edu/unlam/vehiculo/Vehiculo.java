@@ -13,5 +13,13 @@ public abstract class Vehiculo {
 	public void asignarChofer(Persona per) {
 		this.chofer = per;
 	}
+	
+	public void setKmRecorridos(double km) {
+		this.KmRecorridos = km;
+	}
+	
+	public double getKmRecorridos(double km) {
+		return this.KmRecorridos;
+	}
 
 }

@@ -21,4 +21,11 @@ public class Autobus extends Vehiculo {
 	public void añadirPasajeros(Persona per) {
 		pasajeros.add(per);
 	}
+	
+	public void cambiarChofer(Persona per) {
+		if (this.pasajeros.size() > 0)
+			return;
+		
+		this.asignarChofer(per);
+	}
 }
