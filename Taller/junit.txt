@@ -1,0 +1,4 @@
+
+new source folder test -> pk (mismo que el pk que voy a probar) -> new junit test "classTest" -> import org.junit.?
+
+add external libraries -> junit
