@@ -1,4 +1,2 @@
 Casos de prueba de:
 Pedregal
-Vendedoras
-Formandoequipos
