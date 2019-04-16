@@ -9,9 +9,9 @@ public class Operaciones {
 	}
 	
 	public int operaciones(int n) {
-		int o = 0;
-		for (;n > 0;o++)
-			n = n%2 < 1 ? n/2 : n-1;
-		return o;
+			int o = 0;
+			for (;n > 0;o++)
+				n = n%2 < 1 ? n/2 : n-1;
+			return o;
 	}
 }
