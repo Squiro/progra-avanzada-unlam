@@ -10,7 +10,6 @@ import ar.edu.unlam.input.Teclado;
 public class Bomberman extends Entidad {
 		
 	private List<Bomba> bombas;
-	private boolean estaVivo;
 	private int puntajeActual;	
 	private Teclado input;
 	private Mapa mapa;
@@ -21,19 +20,16 @@ public class Bomberman extends Entidad {
 		this.y = y;
 		this.input = input;
 		this.mapa = mapa;
-		this.bombas = llenarListaBombas(Juego.cantBombas);
-		this.estaVivo = true;
+		this.esVisible = true;
 		this.puntajeActual = 0;		
+		this.bombas = new ArrayList<Bomba>();
+		this.añadirBombas(Juego.cantBombas, Juego.tiempoExplosion, Juego.rangoExplosion);
 	}
 	
-	static List<Bomba> llenarListaBombas(int cant) {
-		List<Bomba> bs = new ArrayList<Bomba>();
-		
+	 public void añadirBombas(int cant, double tiempo, int rango) {		
 		for (int i = 0; i < cant; i++) {
-			bs.add(new Bomba(Juego.tiempoExplosion, Juego.rangoExplosion));
+			this.bombas.add(new Bomba(tiempo, rango));
 		}
-		
-		return bs;
 	}
 
 	@Override
@@ -84,6 +80,10 @@ public class Bomberman extends Entidad {
 		}
 		
 		return true;			
+	}
+	
+	public boolean estaVivo() {
+		return this.esVisible;
 	}
 	
 }

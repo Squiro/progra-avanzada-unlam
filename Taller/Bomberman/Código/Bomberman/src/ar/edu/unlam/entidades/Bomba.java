@@ -20,5 +20,9 @@ public class Bomba extends Entidad {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	
+	public void explotar() {
+		
+	}
 }
