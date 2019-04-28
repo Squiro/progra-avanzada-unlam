@@ -1,0 +1,15 @@
+Ejemplos de prueba:
+
+-Pongo el bomberman y lo muevo (la pos esperada es la pos real)
+
+-Que no se mueva fuera de los bordes (limites) del mapa
+
+-Poner un obstaculo y chequear que no se mueva (colisiones o forma matematica?)
+
+-Detonacion de bomba y muerte, bloques destruidos, bloques no destruidos
+
+-Detonacion de bomba y bomba consiguiente se detona, matandome
+
+-Detonacion de bomba y no me muero porque me proteje un obstaculo
+
+-
