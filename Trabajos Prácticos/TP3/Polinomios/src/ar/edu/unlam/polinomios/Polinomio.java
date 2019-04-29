@@ -71,15 +71,17 @@ public class Polinomio {
 	
 	double evaluarMSucesivas(double x) {
 		double resultado = 0;
-		double multi = 1;
-		
 		for (int i = 0; i <= this.grado; i++) {
-			for (int j = 0; j < this.grado - i; j++) {
-				multi *= x;
-			}
-
-			resultado += multi * this.coeficientes[i];
-			multi = 1;
+			resultado += potenciaSucesiva(x, this.grado-i) * this.coeficientes[i];
+		}		
+		return resultado;
+	}
+	
+	double potenciaSucesiva(double x, double n) {
+		double resultado = 1;
+		
+		for (int i = 1; i <= n; i++) {
+			resultado *= x;
 		}
 		
 		return resultado;
@@ -100,8 +102,8 @@ public class Polinomio {
 	double potencia(double x, double n) {
 		if (n == 0)
 			return 1;
-		if (n == 1)
-			return x;
+		/*if (n == 1)
+			return x;*/
 		
 		return x * potencia(x, n-1);
 	}	
@@ -120,31 +122,42 @@ public class Polinomio {
 	double potenciaPar(double x, double n) {
 		if (n == 0)
 			return 1;
-		if (n == 1)
-			return x;
+		/*if (n == 1)
+			return x;*/
 		if (n % 2 == 0)
 			return potenciaPar(x*x, n/2);
 		else
 			return x * potenciaPar(x, n-1);
-	}
+	}	
 	
+	
+	//Cambiar esto y hacer un vectorsito en vez de un Map
 	
 	double evaluarProgDinamica(double x) {
-		Map<Double, Double> potencias = new HashMap<Double, Double>();
-				
-		for (int i = 0; i <= this.grado; i++) {
-			potencias.put((double) i, calcularConMap(potencias, x, i));
+		//Map<Double, Double> potencias = new HashMap<Double, Double>();
+		double[] pot = new double[this.grado+1];		
+		
+		pot[0] = 1;
+		
+		for (int i = 1; i <= this.grado; i++) {
+			pot[i] = x * pot[i-1];
 		}
 		
-		double resultado = 0;
+		/*for (int i = 0; i <= this.grado; i++) {
+			potencias.put((double) i, calcularConMap(potencias, x, i));
+		}*/
 		
-		for (int i = 0; i <= this.grado; i++) {
-			resultado += potencias.get((double) i) * this.coeficientes[this.grado-i];
+		double resultado = this.coeficientes[this.grado-1];
+		
+		for (int i = 1; i <= this.grado; i++) {
+			resultado += pot[this.grado-i] * this.coeficientes[this.grado-i];
+			//resultado += potencias.get((double) i) * this.coeficientes[this.grado-i];
 		}
 		
 		return resultado;
 	}
 	
+	//CAMBIAR ESTO
 	double calcularConMap(Map<Double, Double> map, double x, double grado) {
 		if (grado <= 0)
 			return 1;
