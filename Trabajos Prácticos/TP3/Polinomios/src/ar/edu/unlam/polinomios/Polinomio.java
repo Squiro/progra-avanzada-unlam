@@ -101,10 +101,7 @@ public class Polinomio {
 	/** N = exponente */
 	double potencia(double x, double n) {
 		if (n == 0)
-			return 1;
-		/*if (n == 1)
-			return x;*/
-		
+			return 1;		
 		return x * potencia(x, n-1);
 	}	
 	
@@ -122,8 +119,6 @@ public class Polinomio {
 	double potenciaPar(double x, double n) {
 		if (n == 0)
 			return 1;
-		/*if (n == 1)
-			return x;*/
 		if (n % 2 == 0)
 			return potenciaPar(x*x, n/2);
 		else
@@ -131,10 +126,7 @@ public class Polinomio {
 	}	
 	
 	
-	//Cambiar esto y hacer un vectorsito en vez de un Map
-	
 	double evaluarProgDinamica(double x) {
-		//Map<Double, Double> potencias = new HashMap<Double, Double>();
 		double[] pot = new double[this.grado+1];		
 		
 		pot[0] = 1;
@@ -142,23 +134,18 @@ public class Polinomio {
 		for (int i = 1; i <= this.grado; i++) {
 			pot[i] = x * pot[i-1];
 		}
+	
+		double resultado = this.coeficientes[this.grado];
 		
-		/*for (int i = 0; i <= this.grado; i++) {
-			potencias.put((double) i, calcularConMap(potencias, x, i));
-		}*/
-		
-		double resultado = this.coeficientes[this.grado-1];
-		
-		for (int i = 1; i <= this.grado; i++) {
-			resultado += pot[this.grado-i] * this.coeficientes[this.grado-i];
-			//resultado += potencias.get((double) i) * this.coeficientes[this.grado-i];
+		for (int i = 0; i < this.grado; i++) {
+			resultado += pot[this.grado-i] * this.coeficientes[i];
 		}
 		
 		return resultado;
-	}
+	}		
 	
-	//CAMBIAR ESTO
-	double calcularConMap(Map<Double, Double> map, double x, double grado) {
+	//OBVIAR ESTO
+	/*double calcularConMap(Map<Double, Double> map, double x, double grado) {
 		if (grado <= 0)
 			return 1;
 		
@@ -170,16 +157,16 @@ public class Polinomio {
 		
 		
 		return  x * calcularConMap(map, x, grado-1);
-	}
+	}*/
 	
 	
 	double evaluarMejorada(double x) {
-		Map<Double, Double> potencias = new HashMap<Double, Double>();
+		double pot = 1;
 		double resultado = 0;
 		
 		for (int i = 0; i <= this.grado; i++) {
-			potencias.put((double) i, calcularConMap(potencias, x, i));
-			resultado += potencias.get((double) i) * this.coeficientes[this.grado-i];
+			resultado += pot * this.coeficientes[this.grado-i];
+			pot *= x;
 		}
 		
 		return resultado;
