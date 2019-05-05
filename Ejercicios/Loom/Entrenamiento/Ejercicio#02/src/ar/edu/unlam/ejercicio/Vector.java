@@ -42,7 +42,7 @@ public class Vector {
 		if (m > this.arr.length-1) 
 			return;
 		
-		int needle = 0;
+		int needle = m-1;
 		while (arr[needle] != m) {
 			needle++;
 		}
