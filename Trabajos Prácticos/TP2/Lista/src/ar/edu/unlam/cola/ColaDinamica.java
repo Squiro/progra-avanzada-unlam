@@ -6,14 +6,14 @@ public class ColaDinamica<T> implements Cola<T> {
 	private int primero;
 	private int ultimo;
 	private int cantElem;
-	private Object[] cola;
+	private T[] cola;
 	
 	
 	public ColaDinamica() {
 		this.primero = 0;
 		this.ultimo = -1;
 		this.cantElem = 0;
-		this.cola = new Object[tamCola];
+		this.cola = (T[]) new Object[tamCola];
 	}
 	
 	@Override
@@ -49,14 +49,14 @@ public class ColaDinamica<T> implements Cola<T> {
 	@Override
 	public void empty() {
 		this.tamCola = 64;
-		this.cola = new Object[tamCola];
+		this.cola = (T[]) new Object[tamCola];
 		this.primero = 0;
 		this.ultimo = -1;
 		this.cantElem = 0;		
 	}
 	
 	private void resizeArray() {
-		Object[] cola_nueva = new Object[cola.length*2];
+		T[] cola_nueva = (T[]) new Object[cola.length*2];
 		
 		for (int i = 0; i < cola.length; i++) {
 			cola_nueva[i] = cola[i];			

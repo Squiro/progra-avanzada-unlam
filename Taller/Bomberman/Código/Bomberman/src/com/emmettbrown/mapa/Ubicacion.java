@@ -1,28 +1,28 @@
 package com.emmettbrown.mapa;
 
 public class Ubicacion implements Comparable<Ubicacion> {
-	private int posX;
-	private int posY;
+	private double posX;
+	private double posY;
 
-	public Ubicacion(int posX, int posY) {
+	public Ubicacion(double posX, double posY) {
 		this.posX = posX;
 		this.posY = posY;
 	}
 	
-	public int getPosX() {
+	public double getPosX() {
 		return this.posX;
 	}
 
-	public int getPosY() {
+	public double getPosY() {
 		return this.posY;
 	}
 
 	@Override
 	public int compareTo(Ubicacion ubicacion) {
-		int cmp;
+		double cmp;
 		if((cmp = this.posX - ubicacion.posX) == 0) 
-			return this.posY - ubicacion.posY;
-		return cmp;
+			return (int)((this.posY - ubicacion.posY)*100);
+		return (int)(cmp*100);
 	}
 
 	@Override
@@ -30,18 +30,22 @@ public class Ubicacion implements Comparable<Ubicacion> {
 		return "Ubicacion [posX=" + posX + ", posY=" + posY + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + posX;
-		result = prime * result + posY;
-		return result;
-	}
 	public Ubicacion clone() {
 		return new Ubicacion(getPosX(),getPosY());
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(posX);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(posY);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -51,18 +55,18 @@ public class Ubicacion implements Comparable<Ubicacion> {
 		if (getClass() != obj.getClass())
 			return false;
 		Ubicacion other = (Ubicacion) obj;
-		if (posX != other.posX)
+		if (Double.doubleToLongBits(posX) != Double.doubleToLongBits(other.posX))
 			return false;
-		if (posY != other.posY)
+		if (Double.doubleToLongBits(posY) != Double.doubleToLongBits(other.posY))
 			return false;
 		return true;
 	}
 
-	public void cambiarPosY(int i) {
+	public void cambiarPosY(double i) {
 		this.posY += i;	
 	}
 
-	public void cambiarPosX(int i) {
+	public void cambiarPosX(double i) {
 		this.posX += i;
 	}
 	

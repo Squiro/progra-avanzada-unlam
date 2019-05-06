@@ -3,13 +3,13 @@ package ar.edu.unlam.pila;
 public class PilaEstatica<T> implements Pila<T> {
 	
 	private int tamPila;
-	private Object[] pila;
+	private T[] pila;
 	private int tope;
 	
 	public PilaEstatica(int tamPila) {
 		this.tamPila = tamPila;
 		this.tope = 0;
-		this.pila = new Object[tamPila];
+		this.pila = (T[]) new Object[tamPila];
 	}			
 			
 	@Override

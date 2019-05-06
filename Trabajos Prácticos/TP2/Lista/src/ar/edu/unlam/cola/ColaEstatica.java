@@ -6,14 +6,14 @@ public class ColaEstatica <T> implements Cola<T> {
 	private int primero;
 	private int ultimo;
 	private int cantElem;
-	private Object[] cola;
+	private T[] cola;
 	
 	public ColaEstatica(int tamCola) {
 		this.tamCola = tamCola;
 		this.primero = 0;
 		this.ultimo = -1;
 		this.cantElem = 0;
-		this.cola = new Object[tamCola];
+		this.cola = (T[]) new Object[tamCola];
 	}
 	
 	@Override

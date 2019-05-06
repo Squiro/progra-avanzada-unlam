@@ -3,11 +3,11 @@ package ar.edu.unlam.pila;
 public class PilaDinamica<T> implements Pila<T> {
 
 	private int tamPila = 64;
-	private Object[] pila;
+	private T[] pila;
 	private int tope;
 	
 	public PilaDinamica() {
-		this.pila = new Object[tamPila];
+		this.pila = (T[]) new Object[tamPila];
 		this.tope = 0;
 	}	
 	
@@ -42,11 +42,11 @@ public class PilaDinamica<T> implements Pila<T> {
 	public void empty() {
 		tamPila = 64;
 		tope = 0;
-		pila = new Object[64];
+		pila = (T[]) new Object[64];
 	}
 	
 	private void resizeArray() {
-		Object[] pila_nueva = new Object[pila.length*2];
+		T[] pila_nueva = (T[]) new Object[pila.length*2];
 		
 		for (int i = 0; i < pila.length; i++) {
 			pila_nueva[i] = pila[i];			

@@ -8,17 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestBomba {
-
-//	@Before
-//	public void separacionAntes() {
-//		System.out.println("-----------------------------------------------");
-//	}
-//
-//	@After
-//	public void separacionDespues() {
-//		System.out.println("-----------------------------------------------");
-//	}
-	
 	
 	@Test
 	public void queBombaMataBomberman() {

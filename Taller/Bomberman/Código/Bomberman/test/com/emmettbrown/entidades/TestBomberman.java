@@ -9,16 +9,6 @@ import org.junit.Test;
 
 public class TestBomberman {
 
-//	@Before
-//	public void separacionAntes() {
-//		System.out.println("-----------------------------------------------");
-//	}
-//
-//	@After
-//	public void separacionDespues() {
-//		System.out.println("-----------------------------------------------");
-//	}
-
 	@Test
 	public void seMueveElBombermanArriba() {
 		Mapa m = new Mapa();

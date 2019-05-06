@@ -1,7 +1,2 @@
 Problemas NP-Completos:
 15 de mayo, fecha de exposición
-
----
-
-En clase: TP3 PARTE 2 (Polinomios)
-6 de mayo: TP2
