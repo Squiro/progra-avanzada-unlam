@@ -1,63 +1,61 @@
 package ar.edu.unlam.pila;
 
+import java.util.NoSuchElementException;
+
 public class PilaDinamica<T> implements Pila<T> {
 
-	private int tamPila = 64;
-	private T[] pila;
-	private int tope;
+	private class Nodo<T> {		
+		public T dato;
+		public Nodo<T> sig;		
+		
+		public Nodo() {
+			this.dato = null;
+			this.sig = null;
+		}
+	}
+
+	private Nodo<T> first;
 	
 	public PilaDinamica() {
-		this.pila = (T[]) new Object[tamPila];
-		this.tope = 0;
-	}	
+		first = null;
+	}
 	
 	@Override
 	public boolean push(T object) {
-		if (tamPila == tope)
-			resizeArray();			
-		pila[tope++] = object;
+		Nodo<T> nuevo = new Nodo<T>();
+		
+		nuevo.dato = object;
+		nuevo.sig = first;
+		first = nuevo;
 		return true;
 	}
 
 	@Override
 	public T pop() {
-		if (tope == 0)
-			return null;
-		return elemento(--tope);
+		if (first == null)
+			throw new NoSuchElementException();
+		
+		T dato = first.dato;		
+		first = first.sig;
+		
+		return dato;
 	}
 
 	@Override
 	public T peek() {
-		if (tope == 0)
-			return null;
-		return elemento(tope-1);
+		if (first == null)
+			throw new NoSuchElementException();
+		
+		return first.dato;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return tope == 0;
+		return first == null;
 	}
 
 	@Override
 	public void empty() {
-		tamPila = 64;
-		tope = 0;
-		pila = (T[]) new Object[64];
-	}
-	
-	private void resizeArray() {
-		T[] pila_nueva = (T[]) new Object[pila.length*2];
-		
-		for (int i = 0; i < pila.length; i++) {
-			pila_nueva[i] = pila[i];			
-		}		
-		pila = pila_nueva;
-		tamPila = pila_nueva.length;
-	}
-	
-	@SuppressWarnings("unchecked")
-	private T elemento(int indice) {
-		return (T)pila[indice];
-	}
-
+		first = null;		
+	}		
 }

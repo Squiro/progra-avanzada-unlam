@@ -1,11 +1,10 @@
 package ar.edu.unlam.cola;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import ar.edu.unlam.cola.ColaDinamica;
-import junit.framework.Assert;
+
 
 public class TestColaDinamica {
 
@@ -49,7 +48,6 @@ public class TestColaDinamica {
 		
 		cola.empty();
 		Assert.assertEquals(true,  cola.isEmpty());
-		Assert.assertEquals(null,  cola.poll());
 	}
 	
 	@Test

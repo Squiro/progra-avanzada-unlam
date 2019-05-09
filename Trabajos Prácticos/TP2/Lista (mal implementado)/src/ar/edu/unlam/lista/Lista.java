@@ -2,17 +2,7 @@ package ar.edu.unlam.lista;
 
 import java.util.NoSuchElementException;
 
-public class Lista<T> {	
-	
-	private class Nodo<T> {		
-		public T dato;
-		public Nodo<T> sig;		
-		
-		public Nodo() {
-			this.dato = null;
-			this.sig = null;
-		}
-	}
+public class Lista<T> {
 	
 	private int size;
 	private Nodo<T> first;
@@ -23,61 +13,51 @@ public class Lista<T> {
 		first = null;
 		last = null;
 	}
-	
+
 	public void pushBack(T dato) {
 		Nodo<T> l = last;
-		Nodo<T> nuevo = new Nodo<T>();		
+		Nodo<T> nuevo = new Nodo<T>(l, dato, null);
 		
-		nuevo.dato = dato;
-		nuevo.sig = null;
 		last = nuevo;
 		
 		if (l == null) 
 			first = nuevo;
 		else
-			l.sig = nuevo;		
+			l.sig = nuevo;
 		
 		size++;		
 	}
 	
 	public T popBack() {
-		if (first == null)
-			throw new NoSuchElementException();
+		if (last == null)
+			throw new NoSuchElementException();		
 		
-		T dato;
-		Nodo<T> curr = first, prev = first;
+		T dato = last.dato;
+		Nodo<T> ant = last.ant;
 		
-		while (curr.sig != null) {
-			prev = curr;
-			curr = curr.sig;
-		}
+		last.dato = null;
+		last.ant = null;
+		last = ant;
 		
-		dato = last.dato;
-		prev.sig = null;	
-		
-		if (curr == first) {
+		if (ant == null)
 			first = null;
-			last = null;
-		}
-		else 
-			last = prev;	
-		
+		else
+			ant.sig = null;		
 		size--;
 		
-		return dato;		
-	}	
+		return dato;
+	}
 	
 	public void pushFront(T dato) {
 		Nodo<T> f = first;
-		Nodo<T> nuevo = new Nodo<T>();
+		Nodo<T> nuevo = new Nodo<T>(null, dato, f);
 		
-		nuevo.dato = dato;
-		nuevo.sig = first;		
 		first = nuevo;
 		
 		if (f == null)
 			last = nuevo;
-		
+		else 
+			f.ant = nuevo;
 		size++;
 	}
 	
@@ -86,105 +66,110 @@ public class Lista<T> {
 			throw new NoSuchElementException();
 		
 		T dato = first.dato;
+		Nodo<T> sig = first.sig;
 		
-		first = first.sig;
+		first.dato = null;
+		first.sig = null;
 		
-		if (first == null)
+		first = sig;
+		
+		if (sig == null)
 			last = null;
-				
+		else
+			sig.ant = null;		
 		size--;
 		
 		return dato;
-	}	
+	}
 	
 	public boolean remove(T dato) {
-		Nodo<T> prev = first;
-		
 		for (Nodo<T> x = first; x != null; x = x.sig) {
 			if (dato.equals(x.dato)) {
-				remover(x, prev);
+				remover(x);
 				return true;
 			}
-			prev = x;
 		}
 		
 		return false;
 	}
 	
-	public void remover(Nodo<T> act, Nodo<T> prev) {
-		prev.sig = act.sig;	
-				
-		if (act == first) 
-			first = act.sig;
+	public void remover(Nodo<T> x) {
+		Nodo<T> ant = x.ant;
+		Nodo<T> sig = x.sig;
 		
-		if (prev.sig == null) {
-			last = prev;
-		} 
+		if (ant == null) {
+			first = sig;			
+		}
+		else {
+			ant.sig = sig;
+			x.ant = null;
+		}
 		
-		act.dato = null;
+		if (sig == null) {
+			last = ant;
+		} else {
+			sig.ant = ant;
+			x.ant = null;
+		}
+		
+		x.dato = null;
 		size--;
 	}
 	
-	
 	public void reverse() {
-		Nodo<T> curr = first.sig, prev = first, aux;
-		
-		first.sig = null;
-		
-		first = last;
-		last = prev;
+		Nodo<T> curr = first;
+		Nodo<T> temp = null;
 		
 		while (curr != null) {
-			aux = curr.sig;
-			curr.sig = prev;
-			prev = curr;
-			curr = aux;
+			temp = curr.ant;
+			curr.ant = curr.sig;
+			curr.sig = temp;
+			curr = curr.ant;
 		}
+
+	    if (temp != null) { 
+	        first = temp.ant; 
+	    } 
 	}
 	
 	public boolean insertAt(int pos, T dato) {
 		if (pos < 0 || pos > size)
 			return false;
 		
-		Nodo<T> x = first, prev = first;
+		Nodo<T> x = first;
 		int indice = 0;
 		
 		while (indice != pos) {
-			prev = x;
 			x = x.sig;
 			indice++;
 		}		
-
-		Nodo<T> nuevo = new Nodo<T>();
-				
-		nuevo.dato = dato;
-		nuevo.sig = prev.sig;
 		
-		prev.sig = nuevo;
+		Nodo<T> ant = x.ant;
+		Nodo<T> nuevo = new Nodo<T>(ant, dato, x);
 		
-		if (nuevo.sig == null)
-			last = nuevo;
-		if (prev == first)
-			first = nuevo;		
+		x.ant = nuevo;
+		if (ant == null) {
+			first = nuevo;
+		} else {
+			ant.sig = nuevo;			
+		}
 		
 		size++;
 		return true;		
-	}	
+	}
 	
 	public boolean eraseAt(int pos) {
 		if (pos < 0 || pos > size)
 			return false;
-		
-		Nodo<T> x = first, prev = first;
+		Nodo<T> x = first;
 		int indice = 0;
 		
 		while (indice != pos) {
-			prev = x;
 			x = x.sig;
 			indice++;
 		}
 		
-		remover(x, prev);
+		remover(x);
 		
 		return true;
 	}
@@ -232,9 +217,9 @@ public class Lista<T> {
 	public void printList() {
 		Nodo<T> x = first;
 		
-		while (x != null) {
+		while (x.sig != null) {
 			System.out.println(x.dato);
 			x = x.sig;
 		}
-	}	
+	}
 }

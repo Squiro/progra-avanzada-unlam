@@ -16,7 +16,7 @@ public class Main {
 	}
 	
 	static long calcularTiempoPilaEstatica() {
-		PilaEstatica<Integer> pilaEst = new PilaEstatica<Integer>();
+		PilaEstatica<Integer> pilaEst = new PilaEstatica<Integer>(1000000);
 		long startTime = System.currentTimeMillis(), endTime;
 		
 		for (int i = 0; i < 1000000; i++) {
@@ -42,7 +42,7 @@ public class Main {
 	}
 	
 	static long calcularTiempoColaEstatica() {
-		ColaEstatica<Integer> cola = new ColaEstatica<Integer>();
+		ColaEstatica<Integer> cola = new ColaEstatica<Integer>(1000000);
 		long startTime = System.currentTimeMillis(), endTime;
 		
 		for (int i = 0; i < 1000000; i++) {

@@ -1,9 +1,11 @@
 package ar.edu.unlam.cola;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import ar.edu.unlam.cola.ColaEstatica;
+import junit.framework.Assert;
 
 public class TestColaEstatica {
 
@@ -14,21 +16,21 @@ public class TestColaEstatica {
 	
 	@Test
 	public void queAcolaCorrectamenteUnNum() {
-		ColaEstatica<Integer> cola = new ColaEstatica<Integer>();
+		ColaEstatica<Integer> cola = new ColaEstatica<Integer>(1);
 		cola.offer(1);
 		Assert.assertEquals(1, (int) cola.peek());
 	}
 	
 	@Test
 	public void queDesacolaCorrectamenteUnNum() {
-		ColaEstatica<Integer> cola = new ColaEstatica<Integer>();
+		ColaEstatica<Integer> cola = new ColaEstatica<Integer>(1);
 		cola.offer(1);		
 		Assert.assertEquals(1, (int) cola.poll());
 	}
 	
 	@Test
 	public void queAcolaYDesacolaCorrectamenteVariosNum() {
-		ColaEstatica<Integer> cola = new ColaEstatica<Integer>();
+		ColaEstatica<Integer> cola = new ColaEstatica<Integer>(10);
 		for (int i = 0; i < 10; i++) {
 			cola.offer(i);
 		}
@@ -37,10 +39,19 @@ public class TestColaEstatica {
 			Assert.assertEquals(i, (int) cola.poll());
 		}		
 	}
-		
+	
+	@Test
+	public void queSeLlenaCorrectamente() {
+		ColaEstatica<Integer> cola = new ColaEstatica<Integer>(10);
+		for (int i = 0; i < 10; i++) {
+			cola.offer(i);
+		}
+		Assert.assertEquals(false,  cola.offer(111));
+	}	
+	
 	@Test
 	public void queVaciaCorrectamente() {
-		ColaEstatica<Integer> cola = new ColaEstatica<Integer>();
+		ColaEstatica<Integer> cola = new ColaEstatica<Integer>(10);
 		for (int i = 0; i < 10; i++) {
 			cola.offer(i);
 		}
@@ -52,7 +63,7 @@ public class TestColaEstatica {
 	
 	@Test
 	public void queIsEmptyFuncionaCorrectamente() {
-		ColaEstatica<Integer> cola = new ColaEstatica<Integer>();
+		ColaEstatica<Integer> cola = new ColaEstatica<Integer>(10);
 		for (int i = 0; i < 10; i++) {
 			cola.offer(i);
 		}

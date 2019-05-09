@@ -1,12 +1,12 @@
 package ar.edu.unlam.pila;
 
-public class PilaEstatica<T> implements Pila<T> {
-	
-	private int tamPila = 2;
+public class PilaDinamica<T> implements Pila<T> {
+
+	private int tamPila = 64;
 	private T[] pila;
 	private int tope;
 	
-	public PilaEstatica() {
+	public PilaDinamica() {
 		this.pila = (T[]) new Object[tamPila];
 		this.tope = 0;
 	}	
@@ -59,4 +59,5 @@ public class PilaEstatica<T> implements Pila<T> {
 	private T elemento(int indice) {
 		return (T)pila[indice];
 	}
+
 }

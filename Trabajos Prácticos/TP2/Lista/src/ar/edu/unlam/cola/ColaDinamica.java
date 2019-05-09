@@ -1,72 +1,71 @@
 package ar.edu.unlam.cola;
 
+import java.util.NoSuchElementException;
+
 public class ColaDinamica<T> implements Cola<T> {
 
-	private int tamCola = 64;
-	private int primero;
-	private int ultimo;
-	private int cantElem;
-	private T[] cola;
-	
-	
-	public ColaDinamica() {
-		this.primero = 0;
-		this.ultimo = -1;
-		this.cantElem = 0;
-		this.cola = (T[]) new Object[tamCola];
+	private class Nodo<T> {		
+		public T dato;
+		public Nodo<T> sig;		
+		
+		public Nodo() {
+			this.dato = null;
+			this.sig = null;
+		}
 	}
+	
+	private Nodo<T> first;
+	private Nodo<T> last;
+	
 	
 	@Override
 	public boolean offer(T object) {
-		if (cantElem == tamCola)
-			resizeArray();
-		ultimo = (ultimo+1)%tamCola;
-		cantElem++;
-		cola[ultimo] = object;
+		Nodo<T> l = last;
+		Nodo<T> nuevo = new Nodo<T>();		
+		
+		nuevo.dato = object;
+		nuevo.sig = null;
+		last = nuevo;
+		
+		if (l == null) 
+			first = nuevo;
+		else
+			l.sig = nuevo;	
+		
 		return true;
 	}
+
 	@Override
 	public T poll() {
-		if (cantElem == 0)
-			return null;
+		if (first == null)
+			throw new NoSuchElementException();
 		
-		T elem = elemento(primero);
-		primero = (primero+1)%tamCola;
-		cantElem--;
-		return elem;
+		T dato = first.dato;
 		
+		first = first.sig;
+		
+		if (first == null)
+			last = null;
+		
+		return dato;
 	}
+
 	@Override
 	public T peek() {
-		if (cantElem == 0)
-			return null;
-		return elemento(primero);
+		if (first == null)
+			throw new NoSuchElementException();
+		
+		return first.dato;
 	}
+
 	@Override
 	public boolean isEmpty() {
-		return cantElem == 0;
+		return first == null;
 	}
+
 	@Override
 	public void empty() {
-		this.tamCola = 64;
-		this.cola = (T[]) new Object[tamCola];
-		this.primero = 0;
-		this.ultimo = -1;
-		this.cantElem = 0;		
-	}
-	
-	private void resizeArray() {
-		T[] cola_nueva = (T[]) new Object[cola.length*2];
-		
-		for (int i = 0; i < cola.length; i++) {
-			cola_nueva[i] = cola[i];			
-		}		
-		cola = cola_nueva;
-		tamCola = cola_nueva.length;
-	}
-	
-	@SuppressWarnings("unchecked")
-	private T elemento(int indice) {
-		return (T)cola[indice];
-	}
+		first = null;
+		last = null;		
+	}	
 }

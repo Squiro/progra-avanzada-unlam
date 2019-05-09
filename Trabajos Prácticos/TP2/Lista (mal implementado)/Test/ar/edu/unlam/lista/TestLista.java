@@ -1,7 +1,10 @@
 package ar.edu.unlam.lista;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
+
+import junit.framework.Assert;
 
 public class TestLista {
 
@@ -10,7 +13,7 @@ public class TestLista {
 		Lista<Integer> lista = new Lista<Integer>();
 		lista.pushBack(1);
 		
-		Assert.assertEquals(1, lista.searchAt(0).intValue());	
+		Assert.assertEquals(1, lista.searchAt(0).intValue());				
 	}
 	
 	@Test
@@ -56,7 +59,8 @@ public class TestLista {
 		
 		for (int i = 0; i < 10; i++) {
 			Assert.assertEquals(9-i, lista.popFront().intValue());
-		}						
+		}
+						
 	}
 	
 	@Test
@@ -129,7 +133,7 @@ public class TestLista {
 	}
 	
 	
-	@Test
+	/*@Test
 	public void queFuncionaReverse() {
 		Lista<Integer> lista = new Lista<Integer>();
 		for (int i = 0; i < 10; i++) {
@@ -141,7 +145,7 @@ public class TestLista {
 		lista.reverse();
 		System.out.println("REVERSE");
 		lista.printList();
-	}
+	}*/
 	
 	
 	

@@ -1,15 +1,15 @@
 package ar.edu.unlam.cola;
 
-public class ColaEstatica <T> implements Cola<T> {
-	
-	private int tamCola = 2;
+public class ColaDinamica<T> implements Cola<T> {
+
+	private int tamCola = 64;
 	private int primero;
 	private int ultimo;
 	private int cantElem;
 	private T[] cola;
 	
 	
-	public ColaEstatica() {
+	public ColaDinamica() {
 		this.primero = 0;
 		this.ultimo = -1;
 		this.cantElem = 0;

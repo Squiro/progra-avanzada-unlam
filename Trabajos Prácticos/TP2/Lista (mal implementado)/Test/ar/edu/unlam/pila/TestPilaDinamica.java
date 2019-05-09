@@ -1,7 +1,11 @@
 package ar.edu.unlam.pila;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
+
+import ar.edu.unlam.pila.PilaDinamica;
+import junit.framework.Assert;
 
 public class TestPilaDinamica {
 
@@ -40,6 +44,7 @@ public class TestPilaDinamica {
 		
 		pila.empty();
 		Assert.assertEquals(true,  pila.isEmpty());
+		Assert.assertEquals(null,  pila.pop());
 	}
 	
 	@Test
