@@ -9,33 +9,34 @@ import org.junit.Test;
 
 public class TestBomberman {
 
+	
 	@Test
 	public void seMueveElBombermanArriba() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[2];
-		listaBomb[0] = new Bomberman(0, 4, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].moverArriba();
-		listaBomb[0].moverArriba();
-		listaBomb[0].moverArriba();
-		listaBomb[0].moverArriba();
+		Bomberman bman = new Bomberman(0,4);
+
+		m.agregarBomberman(bman);		
+		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);
 		Ubicacion expected = new Ubicacion(0, 0);
-		Ubicacion actual = listaBomb[0].obtenerUbicacion();
+		Ubicacion actual = bman.obtenerUbicacion();
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void seMueveElBombermanAbajo() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[2];
-		listaBomb[0] = new Bomberman(0, 0, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].moverAbajo();		
-		listaBomb[0].moverAbajo();		
-		listaBomb[0].moverAbajo();			
-		listaBomb[0].moverAbajo();
+		Bomberman bman = new Bomberman(0,0);
+		
+		m.agregarBomberman(bman);	
+		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
 		Ubicacion expected = new Ubicacion(0, 4);
-		Ubicacion actual = listaBomb[0].obtenerUbicacion();
+		Ubicacion actual = bman.obtenerUbicacion();
 		Assert.assertEquals(expected, actual);
 	}	
 	
@@ -43,123 +44,122 @@ public class TestBomberman {
 	@Test
 	public void seMueveElBombermanDer() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[2];
-		listaBomb[0] = new Bomberman(0, 4, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].moverDerecha();
-		listaBomb[0].moverDerecha();
-		listaBomb[0].moverDerecha();
-		listaBomb[0].moverDerecha();
+		Bomberman bman = new Bomberman(0,4);		
+
+		m.agregarBomberman(bman);
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
 		Ubicacion expected = new Ubicacion(4, 4);
-		Ubicacion actual = listaBomb[0].obtenerUbicacion();
+		Ubicacion actual = bman.obtenerUbicacion();
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void seMueveElBombermanIzq() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[2];
-		listaBomb[0] = new Bomberman(4, 0, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].moverIzquierda();
-		listaBomb[0].moverIzquierda();
-		listaBomb[0].moverIzquierda();
-		listaBomb[0].moverIzquierda();
+		Bomberman bman = new Bomberman(4,0);		
+		
+		m.agregarBomberman(bman);
+		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
 		Ubicacion expected = new Ubicacion(0, 0);
-		Ubicacion actual = listaBomb[0].obtenerUbicacion();
+		Ubicacion actual = bman.obtenerUbicacion();
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void queColisionaExtremoMapaArriba() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(0, 0, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].moverArriba();
+		Bomberman bman = new Bomberman(0,0);
+
+		m.agregarBomberman(bman);
+		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);
 		Ubicacion expected = new Ubicacion(0, 0);
-		Ubicacion actual = listaBomb[0].obtenerUbicacion();
+		Ubicacion actual = bman.obtenerUbicacion();
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void queColisionaExtremoMapaAbajo() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(0, 4, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].moverAbajo();
-		Ubicacion expected = new Ubicacion(0, 4);
-		Ubicacion actual = listaBomb[0].obtenerUbicacion();
+		Bomberman bman = new Bomberman(0,9);
+		
+		m.agregarBomberman(bman);
+		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
+		Ubicacion expected = new Ubicacion(0, 9);
+		Ubicacion actual = bman.obtenerUbicacion();
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void queColisionaExtremoMapaIzquierda() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(0, 0, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].moverIzquierda();
+		Bomberman bman = new Bomberman(0,0);
+		
+		m.agregarBomberman(bman);
+		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
 		Ubicacion expected = new Ubicacion(0, 0);
-		Ubicacion actual = listaBomb[0].obtenerUbicacion();
+		Ubicacion actual = bman.obtenerUbicacion();
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void queColisionaExtremoMapaDerecha() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(4, 0, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].moverDerecha();
-		Ubicacion expected = new Ubicacion(4, 0);
-		Ubicacion actual = listaBomb[0].obtenerUbicacion();
+		Bomberman bman = new Bomberman(9,0);
+		
+		m.agregarBomberman(bman);
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
+		Ubicacion expected = new Ubicacion(9, 0);
+		Ubicacion actual = bman.obtenerUbicacion();
 		Assert.assertEquals(expected, actual);
 	}
 	@Test
 	public void queColisionaConBombaIzquierda() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(0, 0, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverDerecha();
-		listaBomb[0].moverIzquierda();
-		Assert.assertEquals(new Ubicacion(1, 0), listaBomb[0].obtenerUbicacion());
+		Bomberman bman = new Bomberman(0,0);
+		
+		m.agregarBomberman(bman);
+		m.agregarBomba(bman.obtenerUbicacion());		
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
+		Assert.assertEquals(new Ubicacion(1, 0), bman.obtenerUbicacion());
 	}
 	@Test
 	public void queColisionaConBombaDerecha() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(4, 0, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverIzquierda();
-		listaBomb[0].moverDerecha();
-		Assert.assertEquals(new Ubicacion(3, 0), listaBomb[0].obtenerUbicacion());
+		Bomberman bman = new Bomberman(4,0);
+		
+		m.agregarBomberman(bman);
+		m.agregarBomba(bman.obtenerUbicacion());
+		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
+		Assert.assertEquals(new Ubicacion(3, 0), bman.obtenerUbicacion());
 	}
 	@Test
 	public void queColisionaConBombaAbajo() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(0, 4, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverArriba();
-		listaBomb[0].moverAbajo();
-		Assert.assertEquals(new Ubicacion(0, 3), listaBomb[0].obtenerUbicacion());
+		Bomberman bman = new Bomberman(0,4);		
+				
+		m.agregarBomberman(bman);
+		m.agregarBomba(bman.obtenerUbicacion());
+		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
+		Assert.assertEquals(new Ubicacion(0, 3), bman.obtenerUbicacion());
 	}
 	@Test
 	public void queColisionaConBombaArriba() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(0, 0, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverAbajo();
-		listaBomb[0].moverArriba();
+		Bomberman bman = new Bomberman(0,0);
 		
-		Assert.assertEquals(new Ubicacion(0, 1), listaBomb[0].obtenerUbicacion());
+		m.agregarBomberman(bman);
+		m.agregarBomba(bman.obtenerUbicacion());
+		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);		
+		Assert.assertEquals(new Ubicacion(0, 1), bman.obtenerUbicacion());
 	}
 }

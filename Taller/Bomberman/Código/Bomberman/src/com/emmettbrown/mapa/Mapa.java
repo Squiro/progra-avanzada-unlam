@@ -1,18 +1,42 @@
 package com.emmettbrown.mapa;
 
-import com.emmettbrown.entidades.*;
-
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.emmettbrown.entidades.Bomba;
+import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.entidades.Entidad;
+import com.emmettbrown.entidades.Muro;
+import com.emmettbrown.entidades.Obstaculo;
+
 public class Mapa {
 	public static final int ANCHO = 9;
 	public static final int ALTO = 9;
-	private Map<Ubicacion, Entidad> conjuntoEntidades = new TreeMap<Ubicacion, Entidad>();
-	private Bomberman[] listaBomberman;
+	private Map<Ubicacion, Entidad> conjuntoEntidades;
+	private List<Bomberman> listaBomberman;
 
+	
+	/////////////////////////////////////// 
+	//								    //
+	//		    CONSTUCTORES		   //
+	//								  //
+	///////////////////////////////////	
+	
+	public Mapa() 
+	{
+		conjuntoEntidades = new TreeMap<Ubicacion, Entidad>();
+		listaBomberman = new ArrayList<Bomberman>();
+	}	
+	
+	/////////////////////////////////////// 
+	//								    //
+	//				METODOS			   //
+	//								  //
+	///////////////////////////////////	
+	
 	public void generarMapa() {
 		for (int i = 0; i < ANCHO; i++) {
 			for (int j = 0; j < ALTO; j++) {
@@ -26,7 +50,7 @@ public class Mapa {
 		}
 	}
 
-	private boolean posicionValida(final int posX, final int posY) {
+	private boolean posicionValida(int posX, int posY) {
 		if (posX == 0 && posY == 0 || posX == 0 && posY == 1 || posX == 1 && posY == 0) {
 			return false;
 		}
@@ -44,70 +68,8 @@ public class Mapa {
 			return false;
 		}
 		return true;
-	}
+	}	
 	
-	public boolean puedeMoverse(Ubicacion ubic) {
-		if (ubic.getPosX() < 0 || ubic.getPosX() >= Mapa.ANCHO) 
-			return false;
-		if (ubic.getPosY() < 0 || ubic.getPosY() >= Mapa.ALTO)
-			return false;
-		
-		return estaLibre(ubic);		
-	}
-	
-	public void moverBomberman(int numeroBomberman, String direccion) {
-		Ubicacion aux = listaBomberman[numeroBomberman-1].obtenerUbicacion().clone();
-		switch (direccion) {
-		case Bomberman.DERECHA:
-			aux.cambiarPosX(Bomberman.VELOCIDAD);
-			if(puedeMoverse(aux)) {
-				listaBomberman[numeroBomberman-1].moverDer();
-				
-			}
-			System.out.println(aux);
-			break;
-
-		case Bomberman.IZQUIERDA:
-			aux.cambiarPosX(-Bomberman.VELOCIDAD);
-			if(puedeMoverse(aux)) {
-				listaBomberman[numeroBomberman-1].moverIzq();
-			}
-			break;
-			
-		case Bomberman.ABAJO:
-			aux.cambiarPosY(Bomberman.VELOCIDAD);
-			if(puedeMoverse(aux)) {
-				listaBomberman[numeroBomberman-1].moverAbajo();
-			}
-			break;
-
-		case Bomberman.ARRIBA:
-			aux.cambiarPosY(-Bomberman.VELOCIDAD);
-			if(puedeMoverse(aux)) {
-				listaBomberman[numeroBomberman-1].moverArriba();
-			}
-			break;
-		}
-	}
-	
-//	public void actualizarPosiciones(Ubicacion posAnt) {
-//		for(int i=0; i<listaBomberman.length; i++) {
-//			if(!puedeMoverse(listaBomberman[i].obtenerUbicacion())) {
-//				listaBomberman[i].moverse(posAnt.getPosX(), posAnt.getPosY());
-//			}
-//		}
-//	}
-
-	public Map<Ubicacion, Entidad> obtenerListaEntidades() {
-		return conjuntoEntidades;
-	}
-
-	public void agregarBomba(Ubicacion miUbicacion) {
-		Ubicacion copia = miUbicacion.clone();
-		conjuntoEntidades.put(copia, new Bomba(copia));
-
-	}
-
 	public void mostrarMapa() {
 		Ubicacion ver;
 		Iterator<Ubicacion> it = conjuntoEntidades.keySet().iterator();
@@ -134,35 +96,217 @@ public class Mapa {
 		}
 		System.out.println();
 	}
+	
+	/////////////////////////////////////// 
+	//								    //
+	//			  ENTIDADES 		   //
+	//								  //
+	///////////////////////////////////
+	
+	
+	public Map<Ubicacion, Entidad> obtenerListaEntidades() {
+		return conjuntoEntidades;
+	}
+	
+	/** Busca todas las posibles entidades en una unbicación. 
+	 * 
+	 * @param ubic: la ubicación a buscar.
+	 * @return
+	 */
+	
+	public Entidad obtenerEntidadEn(Ubicacion ubic) {
+		Entidad ent;
+		
+		ent = conjuntoEntidades.get(ubic);
+		
+		if (ent != null)
+			return ent;
+		
+		ent = obtenerBombermanEn(ubic);
+		
+		if (ent != null)
+			return ent;		
+		
+		return null;
+	}	
+	
+	/** Devuelve una entidad del Treemap de entidades del mapa.
+	 * 
+	 * @param ubic: la ubicación en la que se encuentra la entidad (KEY).
+	 * @return
+	 */
+	
+	public Entidad obtenerEntidadDelConjunto(Ubicacion ubic) {
+		return conjuntoEntidades.get(ubic);
+	}
+	
+	/** Remueve una entidad del Treemap de entidades del mapa.
+	 * 
+	 * @param ubic: la ubicación de la entidad
+	 */
+	
+	public void removerEntidadDelConjunto(Ubicacion ubic) {
+		conjuntoEntidades.remove(ubic);
+	}
 
-	public boolean estaLibre(Ubicacion miUbicacion) {
-		if (conjuntoEntidades.get(miUbicacion) == null) {
+	/////////////////////////////////////// 
+	//								    //
+	//			  BOMBERMANS		   //
+	//								  //
+	///////////////////////////////////
+	
+	/** Realiza una serie de chequeos y en caso de validar correctamente, mueve el bomberman a una nueva
+	 *  ubicación en el mapa.
+	 * 
+	 * @param bomberman: el bomberman a mover
+	 * @param despX: el desplazamiento en el eje X que realizaría el bomberman
+	 * @param despY: el desplazamiento en el eje Y que realizaría el bomberman
+	 */
+	
+	public void moverBomberman(Bomberman bomberman, double despX, double despY) {
+		Ubicacion ubic = bomberman.obtenerUbicacion().clone();
+		ubic.cambiarPosX(despX);
+		ubic.cambiarPosY(despY);
+		
+		if (puedeMoverse(ubic)) {
+			bomberman.obtenerUbicacion().cambiarPosX(despX);
+			bomberman.obtenerUbicacion().cambiarPosY(despY);
+		}			
+	}
+	
+	/** Chequea si el bomberman puede moverse a la posición que recibe por parámetro.
+	 * 
+	 * @param ubic: ubicación auxiliar que refleja la posible nueva ubicació del Bomberman
+	 * @return true: puede moverse, false: no puede moverse
+	 */
+	public boolean puedeMoverse(Ubicacion ubic) {
+		if (ubic.getPosX() < 0 || ubic.getPosX() >= Mapa.ANCHO) 
+			return false;
+		if (ubic.getPosY() < 0 || ubic.getPosY() >= Mapa.ALTO)
+			return false;
+		
+		return estaLibre(ubic);		
+	}
+	
+	/** Chequea si no existe ninguna otra entidad colisionable del juego presente 
+	 * en la ubicación que llega por parámetro.
+	 * 
+	 * @param ubic: ubicación a revisar en buscar de entidades
+	 * @return true: no hay ninguna entidad presente, false: hay una entidad en dicha posición
+	 */
+	
+	public boolean estaLibre(Ubicacion ubic) {
+		if (conjuntoEntidades.get(ubic) == null) {
 			return true;
 		}
 		return false;
 	}
-
-	public void agregarBombermans(Bomberman[] lista) {
-		listaBomberman = lista;
+	
+	/** Reciben como parámetros el bomberman a mover, y el desplazamiento sin NINGUN tipo de signo. */
+	
+	public void moverBombermanArriba(Bomberman bomberman, double desplazamiento) {
+		//Fool proof
+		desplazamiento = Math.abs(desplazamiento);
+		this.moverBomberman(bomberman, 0, -desplazamiento);
 	}
 	
-	public void eliminarBomba(Ubicacion ubicacion) {
-		conjuntoEntidades.remove(ubicacion);
+	public void moverBombermanAbajo(Bomberman bomberman, double desplazamiento) {
+		//Fool proof
+		desplazamiento = Math.abs(desplazamiento);
+		this.moverBomberman(bomberman, 0, desplazamiento);
 	}
-
-	public Bomberman[] obtenerBombermans() {
+	
+	public void moverBombermanIzq(Bomberman bomberman, double desplazamiento) {
+		//Fool proof
+		desplazamiento = Math.abs(desplazamiento);
+		this.moverBomberman(bomberman, -desplazamiento, 0);
+	}
+	
+	public void moverBombermanDer(Bomberman bomberman, double desplazamiento) {
+		//Fool proof
+		desplazamiento = Math.abs(desplazamiento);
+		this.moverBomberman(bomberman, desplazamiento, 0);
+	}	
+	
+	/** Agrega un bomberman nuevo a la lista de bombermans del mapa.
+	 * 
+	 * @param b: bomberman a agregar
+	 */
+	
+	public void agregarBomberman(Bomberman b) {
+		this.listaBomberman.add(b);
+	}	
+	
+	/** Retorna la lista de bombermans del mapa.
+	 * 
+	 * @return List<Bomberman> listaBomberman
+	 */
+	
+	public List<Bomberman> obtenerListaBomberman() {
 		return listaBomberman;
 	}
-
-	public void explotarBomba(Ubicacion u) {
-		Bomba b = ((Bomba) conjuntoEntidades.get(u));
-		b.explotar(this);
-
+	
+	/** Recorre la lista de bombermans y retorna al que encuentre en la ubicación indicada.
+	 * 
+	 * @param ubic: la ubicación a buscar
+	 * @return instanceof Bomberman si lo encuentra, null si no
+	 */
+	
+	public Bomberman obtenerBombermanEn(Ubicacion ubic) {
+		for (Bomberman bomberman : listaBomberman) {
+			if (bomberman.obtenerUbicacion().equals(ubic))
+				return bomberman;
+		}
+		
+		return null;
 	}
+	
+	/////////////////////////////////////// 
+	//								    //
+	//				BOMBAS			   //
+	//								  //
+	///////////////////////////////////	
 
+	/** Agregar una bomba en el conjunto de entidades de la clase Mapa
+	 * 
+	 * @param ubicacion: la ubicación en la que se encuentra la bomba
+	 */
+	
+	public void agregarBomba(Ubicacion ubicacion) {
+		Ubicacion copia = ubicacion.clone();
+		conjuntoEntidades.put(copia, new Bomba(copia));
+	}
+	
+	/** Explota una bomba a través de sus coordenadas
+	 * 
+	 * @param posX: coord. eje X
+	 * @param posY: coord. eje Y
+	 */
+		
 	public void explotarBomba(int posX, int posY) {
 		Bomba b = ((Bomba) conjuntoEntidades.get(new Ubicacion(posX, posY)));
-		b.explotar(this);
-
+		
+		if (b != null)	
+			b.explotar(this);
+	}
+	
+	/** Explota una bomba a través de su ubicación
+	 * 
+	 * @param ubic: la ubicación en la que se encuentra la bomba
+	 */
+	
+	public void explotarBomba(Ubicacion ubic) {
+		Bomba b = ((Bomba) conjuntoEntidades.get(ubic));
+		
+		if (b != null)	
+			b.explotar(this);
+	}	
+	
+	/** Explota una bomba a través de su instancia
+	 * 
+	 * @param bomba: instancia de la bomba a explotar
+	 */
+	public void explotarBomba(Bomba bomba) {
+		bomba.explotar(this);
 	}
 }

@@ -12,47 +12,60 @@ public class TestBomba {
 	@Test
 	public void queBombaMataBomberman() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[1];
-		listaBomb[0] = new Bomberman(2, 2, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverIzquierda();
+		Bomberman bman = new Bomberman(2,2);
+		
+		/*Bomberman[] listaBomb = new Bomberman[1];
+		listaBomb[0] = new Bomberman(2, 2, m);*/
+		
+		m.agregarBomberman(bman);
+		m.agregarBomba(bman.obtenerUbicacion());
+		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);				
 		m.explotarBomba(2,2);
-		Assert.assertEquals(false,listaBomb[0].verSiEsVisible());
+		Assert.assertEquals(false, bman.verSiEsVisible());
 	}
 	
 	@Test
 	public void queBombaMataBombermans() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[2];
+		Bomberman bman = new Bomberman(2,2);
+		Bomberman bman2 = new Bomberman(1,2);
+		
+		/*Bomberman[] listaBomb = new Bomberman[2];
 		listaBomb[0] = new Bomberman(2, 2, m);
-		listaBomb[1] = new Bomberman(1, 2, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverDerecha();
+		listaBomb[1] = new Bomberman(1, 2, m);*/
+		
+		m.agregarBomberman(bman);
+		m.agregarBomberman(bman2);		
+		m.agregarBomba(bman.obtenerUbicacion());
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);		
 		m.explotarBomba(2,2);
-		Assert.assertEquals(false,listaBomb[0].verSiEsVisible());
-		Assert.assertEquals(false,listaBomb[1].verSiEsVisible());
+		Assert.assertEquals(false, bman.verSiEsVisible());
+		Assert.assertEquals(false, bman2.verSiEsVisible());
 	}
 
 	@Test
 	public void queExplotaEnCadena() {
 		Mapa m = new Mapa();
-		Bomberman[] listaBomb = new Bomberman[2];
+		Bomberman bman = new Bomberman(2,2);
+		Bomberman bman2 = new Bomberman(1,2);
 		
+		/*Bomberman[] listaBomb = new Bomberman[2];
 		listaBomb[1] = new Bomberman(1, 2, m);
-		listaBomb[0] = new Bomberman(2, 2, m);
-		m.agregarBombermans(listaBomb);
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverDerecha();
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverArriba();
-		listaBomb[0].ponerBomba();
-		listaBomb[0].moverDerecha();
+		listaBomb[0] = new Bomberman(2, 2, m);*/
+		
+		m.agregarBomberman(bman);
+		m.agregarBomberman(bman2);	
+		
+		m.agregarBomba(bman.obtenerUbicacion());
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
+		m.agregarBomba(bman.obtenerUbicacion());
+		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);
+		m.agregarBomba(bman.obtenerUbicacion());
+		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
 
 		m.explotarBomba(2,2);
-		Assert.assertEquals(false,listaBomb[0].verSiEsVisible());
-		Assert.assertEquals(false,listaBomb[1].verSiEsVisible());
+		Assert.assertEquals(false, bman.verSiEsVisible());
+		Assert.assertEquals(false, bman2.verSiEsVisible());
 	}
 	
 	@Test
@@ -74,7 +87,5 @@ public class TestBomba {
 		
 		m.explotarBomba(1,0);
 		Assert.assertEquals(false, m.estaLibre(new Ubicacion(1,1)));
-	}
-	
-
+	}	
 }

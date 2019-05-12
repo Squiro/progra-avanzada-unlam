@@ -7,7 +7,6 @@ public abstract class Entidad {
 	protected boolean esVisible;
 	protected boolean destructible = true;
 	
-	
 	public Entidad(final int posX,final int posY)
 	{
 		this.ubicacion = new Ubicacion(posX,posY);
@@ -26,5 +25,9 @@ public abstract class Entidad {
 	
 	public void cambiarVisibilidad() {
 		esVisible = !esVisible;
+	}
+	
+	public Ubicacion obtenerUbicacion() {
+		return this.ubicacion;
 	}
 }
