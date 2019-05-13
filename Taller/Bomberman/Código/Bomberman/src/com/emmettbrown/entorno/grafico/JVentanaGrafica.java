@@ -28,6 +28,7 @@ public class JVentanaGrafica extends JFrame{
 		setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
+		
 	}
 	public static void main(String[] args) {
 		Mapa miMapa = new Mapa();
