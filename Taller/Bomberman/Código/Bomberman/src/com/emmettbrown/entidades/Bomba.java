@@ -120,7 +120,7 @@ public class Bomba extends Entidad {
 		//la que esté ahí
 		Entidad ent = map.obtenerEntidadEn(ubic);
 		
-		if (ent != null && ent.destructible && ent.esVisible) {
+		if (ent != null && ent.esVisible) {
 			//Si la entidad es una instancia de bomba...
 			if (ent instanceof Bomba) {
 				//Casteo furioso a Bomba

@@ -108,7 +108,7 @@ public class Mapa {
 		return conjuntoEntidades;
 	}
 	
-	/** Busca todas las posibles entidades en una unbicación. 
+	/** Busca todas las posibles entidades en una ubicación. 
 	 * 
 	 * @param ubic: la ubicación a buscar.
 	 * @return
@@ -180,9 +180,9 @@ public class Mapa {
 	 * @return true: puede moverse, false: no puede moverse
 	 */
 	public boolean puedeMoverse(Ubicacion ubic) {
-		if (ubic.getPosX() < 0 || ubic.getPosX() >= Mapa.ANCHO) 
+		if (ubic.getPosX() < 0 || ubic.getPosX() > Mapa.ANCHO) 
 			return false;
-		if (ubic.getPosY() < 0 || ubic.getPosY() >= Mapa.ALTO)
+		if (ubic.getPosY() < 0 || ubic.getPosY() > Mapa.ALTO)
 			return false;
 		
 		return estaLibre(ubic);		
@@ -196,36 +196,29 @@ public class Mapa {
 	 */
 	
 	public boolean estaLibre(Ubicacion ubic) {
-		if (conjuntoEntidades.get(ubic) == null) {
-			return true;
-		}
-		return false;
+		return conjuntoEntidades.get(ubic) == null;
 	}
 	
 	/** Reciben como parámetros el bomberman a mover, y el desplazamiento sin NINGUN tipo de signo. */
 	
 	public void moverBombermanArriba(Bomberman bomberman, double desplazamiento) {
 		//Fool proof
-		desplazamiento = Math.abs(desplazamiento);
-		this.moverBomberman(bomberman, 0, -desplazamiento);
+		this.moverBomberman(bomberman, 0, -Math.abs(desplazamiento));
 	}
 	
 	public void moverBombermanAbajo(Bomberman bomberman, double desplazamiento) {
 		//Fool proof
-		desplazamiento = Math.abs(desplazamiento);
-		this.moverBomberman(bomberman, 0, desplazamiento);
+		this.moverBomberman(bomberman, 0, Math.abs(desplazamiento));
 	}
 	
 	public void moverBombermanIzq(Bomberman bomberman, double desplazamiento) {
 		//Fool proof
-		desplazamiento = Math.abs(desplazamiento);
-		this.moverBomberman(bomberman, -desplazamiento, 0);
+		this.moverBomberman(bomberman, -Math.abs(desplazamiento), 0);
 	}
 	
 	public void moverBombermanDer(Bomberman bomberman, double desplazamiento) {
 		//Fool proof
-		desplazamiento = Math.abs(desplazamiento);
-		this.moverBomberman(bomberman, desplazamiento, 0);
+		this.moverBomberman(bomberman, Math.abs(desplazamiento), 0);
 	}	
 	
 	/** Agrega un bomberman nuevo a la lista de bombermans del mapa.
@@ -286,7 +279,7 @@ public class Mapa {
 	public void explotarBomba(int posX, int posY) {
 		Bomba b = ((Bomba) conjuntoEntidades.get(new Ubicacion(posX, posY)));
 		
-		if (b != null)	
+		if (b != null )	
 			b.explotar(this);
 	}
 	

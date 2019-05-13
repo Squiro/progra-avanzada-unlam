@@ -1,0 +1,15 @@
+	Monticulo:
+
+(Arbol binario completo a excepcion del ultimo nivel).
+
+-Propiedades: 
+
+1) Un monticulo es un arbol binario completamente lleno con la excepcion del nivel mas bajo, el cual se llena de izquierda a derecha. Un arbol asi se llama arbol binario completo. 
+
+2) Orden de monticulo: en un monticulo para todo nodo X, la clave del padre es menor o igual a la clave de X (con excepción de la raíz).
+
+El monticulo puede ser de minimos o de maximos. Cambia la condicion de la propiedad 2 para cada caso.
+
+	Cola de prioridad:
+
+Una cola normal es FIFO. La cola de prioridad no, cada uno tiene una prioridad y se atienden en base a eso.

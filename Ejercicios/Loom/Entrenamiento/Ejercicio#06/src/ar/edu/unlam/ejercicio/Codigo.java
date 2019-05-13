@@ -30,12 +30,12 @@ public class Codigo {
 	}
 	
 	public String hallarTelefono() {
-		List<String> listado = new ArrayList<String>();
+		List<String> listado = new ArrayList<String>();		
 		
 		for (int i = 0; i < nombres.length; i++) {
 			if (decodificar(nombres[i]).equals(codigo))
 				listado.add(nombres[i]);
-		}		
+		}
 
 		if (listado.size() > 1) {
 			return "Hay dos o más personas con el mismo código. Se necesita más información";
@@ -43,7 +43,7 @@ public class Codigo {
 
 		return hallarNumero(listado.get(0));
 	}		
-	
+		
 	static Map<Character, Integer> establecerMapeo() {
 		Map<Character, Integer> map = new HashMap<Character, Integer>();
 		
