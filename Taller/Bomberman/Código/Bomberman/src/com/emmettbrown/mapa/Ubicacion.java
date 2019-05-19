@@ -1,25 +1,25 @@
 package com.emmettbrown.mapa;
 
 public class Ubicacion implements Comparable<Ubicacion> {
-	private double posX;
-	private double posY;
+	private int posX;
+	private int posY;
 
-	public Ubicacion(double posX, double posY) {
+	public Ubicacion(int posX, int posY) {
 		this.posX = posX;
 		this.posY = posY;
 	}
 	
-	public double getPosX() {
+	public int getPosX() {
 		return this.posX;
 	}
 
-	public double getPosY() {
+	public int getPosY() {
 		return this.posY;
 	}
 
-	@Override
+	//@Override
 	public int compareTo(Ubicacion ubicacion) {
-		double cmp;
+		int cmp;
 		if((cmp = this.posX - ubicacion.posX) == 0) 
 			return (int)((this.posY - ubicacion.posY)*100);
 		return (int)(cmp*100);
