@@ -2,6 +2,7 @@ package com.emmettbrown.entidades;
 
 import javax.swing.ImageIcon;
 
+import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.principal.Motor;
 
 public class Obstaculo extends Entidad{
@@ -16,16 +17,10 @@ public class Obstaculo extends Entidad{
 		this.img = new ImageIcon("./src/resources/game-map/brick/obstaculo.png");
 	}
 	
-	public void destruir() {
-		if(esVisible == true) {
-			esVisible = false;
-			System.out.println("Obstaculo "+ idObstaculo +" Destruido");
-		}
-	}
-	
 	@Override
-	public boolean verSiEsVisible() {
-		return this.esVisible;
-	}
-	
+	public void explotar(Mapa map) {
+		System.out.println("Obstaculo "+ idObstaculo +" Destruido");
+		this.esVisible = false;
+		map.removerEntidadDelConjunto(this.ubicacion);
+	}	
 }

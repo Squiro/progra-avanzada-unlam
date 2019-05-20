@@ -2,6 +2,7 @@ package com.emmettbrown.entidades;
 
 import javax.swing.ImageIcon;
 
+import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mapa.Ubicacion;
 
 public class Bomberman extends Entidad {
@@ -41,5 +42,10 @@ public class Bomberman extends Entidad {
 	
 	public void cambiarUbicacion(Ubicacion ubic) {
 		this.ubicacion = ubic;
+	}
+
+	@Override
+	public void explotar(Mapa map) {
+		
 	}
 }

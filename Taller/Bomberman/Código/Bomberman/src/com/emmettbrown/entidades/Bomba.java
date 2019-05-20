@@ -60,7 +60,7 @@ public class Bomba extends Entidad {
 	 * @param map:
 	 *            el mapa del juego
 	 */
-
+	@Override
 	public void explotar(Mapa map) {
 		//System.out.println("BUM, la bomba " + idBomba + " Exploto");
 		// Seteamos visible = false para dejar de renderizar la bomba
@@ -86,13 +86,6 @@ public class Bomba extends Entidad {
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosX() - i >= 0;  i++) {
 			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() - i, this.ubicacion.getPosY()), map);
-			
-			if (!hayObstaculo) {
-				Explosion expl = new Explosion((ubicacion.getPosX()-i)*Motor.tileSize, ubicacion.getPosY()*Motor.tileSize, Motor.tileSize, Motor.tileSize);
-				expl.ubicacion = new Ubicacion(ubicacion.getPosX()-i, ubicacion.getPosY());
-				expl.startTimer(map);
-				map.agregarEntidadAlConjunto(expl.ubicacion, expl);
-			}
 		}
 	}
 
@@ -103,13 +96,6 @@ public class Bomba extends Entidad {
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosX() + i < Mapa.ANCHO;  i++) {
 			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() + i, this.ubicacion.getPosY()), map);
-			
-			if (!hayObstaculo) {
-				Explosion expl = new Explosion((ubicacion.getPosX()+i)*Motor.tileSize, ubicacion.getPosY()*Motor.tileSize, Motor.tileSize, Motor.tileSize);
-				expl.ubicacion = new Ubicacion(ubicacion.getPosX()+i, ubicacion.getPosY());
-				expl.startTimer(map);
-				map.agregarEntidadAlConjunto(expl.ubicacion, expl);
-			}
 		}
 	}
 
@@ -120,13 +106,6 @@ public class Bomba extends Entidad {
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosY() - i >= 0 ; i++) {
 			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() - i), map);
-			
-			if (!hayObstaculo) {
-				Explosion expl = new Explosion(ubicacion.getPosX()*Motor.tileSize, (ubicacion.getPosY()-i)*Motor.tileSize, Motor.tileSize, Motor.tileSize);
-				expl.ubicacion = new Ubicacion(ubicacion.getPosX(), ubicacion.getPosY()-i);
-				expl.startTimer(map);
-				map.agregarEntidadAlConjunto(expl.ubicacion, expl);
-			}
 		}
 	}
 
@@ -137,13 +116,6 @@ public class Bomba extends Entidad {
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosY() + i <= Mapa.ALTO; i++) {
 			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() + i), map);
-			
-			if (!hayObstaculo) {
-				Explosion expl = new Explosion(ubicacion.getPosX()*Motor.tileSize, (ubicacion.getPosY()+i)*Motor.tileSize, Motor.tileSize, Motor.tileSize);
-				expl.ubicacion = new Ubicacion(ubicacion.getPosX(), ubicacion.getPosY()+i);
-				expl.startTimer(map);
-				map.agregarEntidadAlConjunto(expl.ubicacion, expl);
-			}
 		}
 	}
 
@@ -169,23 +141,15 @@ public class Bomba extends Entidad {
 		}
 
 		if (ent != null && ent.esVisible) {
-			// Si la entidad es una instancia de bomba...
-			if (ent instanceof Bomba) {
-				// Casteo furioso a Bomba
-				((Bomba) ent).explotar(map);
-				return false;
-			} else if (ent instanceof Obstaculo) {
-				// Casteo furioso a Obstaculo
-				((Obstaculo) ent).destruir();
-				// Removemos a la entidad
-				map.removerEntidadDelConjunto(ubic);
-				// Encontramos un obstaculo, retornamos true
-				return true;
-			} else if (ent instanceof Muro) {
-				// Encontramos un muro, retornamos true
-				return true;
-			}
+			ent.explotar(map);
+			return true;
 		}
+		
+		//Creamos una explosion en la ubicacion
+		Explosion expl = new Explosion(ubic.getPosX()*Motor.tileSize, ubic.getPosY()*Motor.tileSize, Motor.tileSize, Motor.tileSize);		
+		expl.startTimer(map);
+		map.agregarEntidadAlConjunto(expl.ubicacion, expl);
+		
 		return false;
 	}
 

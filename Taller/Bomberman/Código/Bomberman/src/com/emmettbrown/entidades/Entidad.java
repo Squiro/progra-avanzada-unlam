@@ -4,7 +4,9 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mapa.Ubicacion;
+import com.emmettbrown.principal.Motor;
 import com.sun.javafx.geom.Rectangle;
 
 public abstract class Entidad {
@@ -20,7 +22,7 @@ public abstract class Entidad {
 	
 	public Entidad(int posX, int posY, int width, int height)
 	{
-		this.ubicacion = new Ubicacion(posX, posY);
+		this.ubicacion = new Ubicacion(posX/Motor.tileSize, posY/Motor.tileSize);
 		this.x = posX;
 		this.y = posY;
 		this.width = width;
@@ -88,4 +90,6 @@ public abstract class Entidad {
 	public Rectangle getHitBox() {
 		return new Rectangle(x,  y, width, height);
 	}
+	
+	public abstract void explotar(Mapa map);
 }

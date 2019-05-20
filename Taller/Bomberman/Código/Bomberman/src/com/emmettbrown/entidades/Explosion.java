@@ -36,4 +36,10 @@ public class Explosion extends Entidad {
 		t = new Timer(3000, new miOyente(map, this.ubicacion));
 		t.start();
 	}
+
+	@Override
+	public void explotar(Mapa map) {
+		// TODO Auto-generated method stub
+		
+	}
 }
