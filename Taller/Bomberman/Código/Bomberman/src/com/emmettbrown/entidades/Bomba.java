@@ -62,10 +62,11 @@ public class Bomba extends Entidad {
 	 */
 	@Override
 	public void explotar(Mapa map) {
-		//System.out.println("BUM, la bomba " + idBomba + " Exploto");
 		// Seteamos visible = false para dejar de renderizar la bomba
 		this.cambiarVisibilidad();
-
+		// Removemos la bomba de la lista de entidades
+		map.removerEntidadDelConjunto(this.ubicacion);
+		
 		// Creamos una "explosión" en en lugar
 		explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY()), map);
 
@@ -74,9 +75,6 @@ public class Bomba extends Entidad {
 		explosionDerecha(map);
 		explosionArriba(map);
 		explosionAbajo(map);
-
-		// Removemos la bomba de la lista de entidades
-		map.removerEntidadDelConjunto(this.ubicacion);
 	}
 
 	private void explosionIzquierda(Mapa map) {
@@ -140,12 +138,14 @@ public class Bomba extends Entidad {
 			bomber.morir();
 		}
 
-		if (ent != null && ent.esVisible) {
+		//ent != this no queremos explotarnos de vuelta a nosotros mismos
+		if (ent != null && ent.esVisible && ent != this) {
+			//¡Polimorfismo!
 			ent.explotar(map);
 			return true;
 		}
 		
-		//Creamos una explosion en la ubicacion
+		//Creamos una explosion (el grafico) en la ubicacion
 		Explosion expl = new Explosion(ubic.getPosX()*Motor.tileSize, ubic.getPosY()*Motor.tileSize, Motor.tileSize, Motor.tileSize);		
 		expl.startTimer(map);
 		map.agregarEntidadAlConjunto(expl.ubicacion, expl);
