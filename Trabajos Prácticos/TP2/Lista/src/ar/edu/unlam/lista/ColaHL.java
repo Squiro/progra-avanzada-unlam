@@ -18,6 +18,6 @@ public class ColaHL<T> extends Lista<T> implements Cola<T> {
 	@Override
 	public T peek() {
 		return this.searchAt(0);
-	}/**devuelve una referencia al dato en lugar de una copia del dato**/
+	}
 
 }

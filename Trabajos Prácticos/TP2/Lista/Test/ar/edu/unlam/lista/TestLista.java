@@ -143,18 +143,19 @@ public class TestLista {
 		lista.printList();
 	}
 	
-//	@Test
-//	public void queListaInserta() {
-//		Lista<Integer> lista = new Lista<Integer>();
-//		lista.pushBack(1);
-//		lista.insertAt(1, 2);
-//	}
-//	
 	@Test
-//	public void queListaInserta() {
-//		Lista<Integer> lista = new Lista<Integer>();
-//		lista.searchAt(0);
-//	}
+	public void queSearchAtNoRompe() {
+		Lista<Integer> lista = new Lista<Integer>();		
+		Assert.assertEquals(null, lista.searchAt(0));
+	}
 	
-
+	@Test
+	public void queListaInserta() {
+		System.out.println("INSERT TEST");
+		Lista<Integer> lista = new Lista<Integer>();
+		lista.pushBack(1);
+		lista.insertAt(1, 2);
+		lista.printList();
+	}
+		
 }

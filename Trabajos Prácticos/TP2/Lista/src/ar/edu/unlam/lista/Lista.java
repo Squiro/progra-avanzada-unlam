@@ -149,14 +149,17 @@ public class Lista<T> {
 	public boolean insertAt(int pos, T dato) {
 		if (pos < 0 || pos > size)
 			return false;
+		
 		Nodo<T> nuevo = new Nodo<T>();
 		nuevo.dato = dato;
+		
 		if(first == null)
 		{
 			nuevo.sig = null;
 			first = last = nuevo;
 			return true;
 		}
+		
 		Nodo<T> x = first, prev = first;
 		int indice = 0;
 		
@@ -172,16 +175,11 @@ public class Lista<T> {
 		prev.sig = nuevo;
 		
 		if (nuevo.sig == null)
-			last = nuevo;
-		if (prev == first)
-			first = nuevo;		
+			last = nuevo;	
 		
 		size++;
 		return true;		
-	}	/**VER TODO 
-		Lista<Integer> lista = new Lista<Integer>();
-		lista.pushBack(1);
-		lista.insertAt(1, 2);**/
+	}	
 	
 	public boolean eraseAt(int pos) {
 		if (pos < 0 || pos > size)
@@ -222,7 +220,7 @@ public class Lista<T> {
 	}
 	
 	public T searchAt(int pos) {
-		if (pos < 0 || pos > size)
+		if (pos < 0 || pos > size || first == null)
 			return null;
 		
 		Nodo<T> x = first;
@@ -234,9 +232,6 @@ public class Lista<T> {
 		}
 		
 		return x.dato;
-//		rompe con
-//		Lista<Integer> lista = new Lista<Integer>();
-//		lista.searchAt(0);
 	}
 	
 	public int size() {
