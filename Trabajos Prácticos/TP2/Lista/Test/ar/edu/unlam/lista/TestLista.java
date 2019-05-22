@@ -143,7 +143,18 @@ public class TestLista {
 		lista.printList();
 	}
 	
-	
+//	@Test
+//	public void queListaInserta() {
+//		Lista<Integer> lista = new Lista<Integer>();
+//		lista.pushBack(1);
+//		lista.insertAt(1, 2);
+//	}
+//	
+	@Test
+//	public void queListaInserta() {
+//		Lista<Integer> lista = new Lista<Integer>();
+//		lista.searchAt(0);
+//	}
 	
 
 }

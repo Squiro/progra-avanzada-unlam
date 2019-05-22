@@ -17,7 +17,7 @@ public class PilaHL<T> extends Lista<T> implements Pila<T> {
 
 	@Override
 	public T peek() {
-		this.searchAt(0);
-		return null;
+		
+		return this.searchAt(0);
 	}
 }

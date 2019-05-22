@@ -9,7 +9,7 @@ public class PilaEstatica<T> implements Pila<T> {
 	public PilaEstatica() {
 		this.pila = (T[]) new Object[tamPila];
 		this.tope = 0;
-	}	
+	}
 	
 	@Override
 	public boolean push(T object) {
@@ -40,9 +40,9 @@ public class PilaEstatica<T> implements Pila<T> {
 
 	@Override
 	public void empty() {
-		tamPila = 64;
+		tamPila = 2;
 		tope = 0;
-		pila = (T[]) new Object[64];
+		pila = (T[]) new Object[2];
 	}
 	
 	private void resizeArray() {

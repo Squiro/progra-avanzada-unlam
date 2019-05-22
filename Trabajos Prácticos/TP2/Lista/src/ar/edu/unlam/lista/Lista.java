@@ -127,6 +127,10 @@ public class Lista<T> {
 	
 	
 	public void reverse() {
+		if(first == null || first == last)
+		  return;
+		  
+		 
 		Nodo<T> curr = first.sig, prev = first, aux;
 		
 		first.sig = null;
@@ -145,7 +149,14 @@ public class Lista<T> {
 	public boolean insertAt(int pos, T dato) {
 		if (pos < 0 || pos > size)
 			return false;
-		
+		Nodo<T> nuevo = new Nodo<T>();
+		nuevo.dato = dato;
+		if(first == null)
+		{
+			nuevo.sig = null;
+			first = last = nuevo;
+			return true;
+		}
 		Nodo<T> x = first, prev = first;
 		int indice = 0;
 		
@@ -155,9 +166,7 @@ public class Lista<T> {
 			indice++;
 		}		
 
-		Nodo<T> nuevo = new Nodo<T>();
-				
-		nuevo.dato = dato;
+		
 		nuevo.sig = prev.sig;
 		
 		prev.sig = nuevo;
@@ -169,7 +178,10 @@ public class Lista<T> {
 		
 		size++;
 		return true;		
-	}	
+	}	/**VER TODO 
+		Lista<Integer> lista = new Lista<Integer>();
+		lista.pushBack(1);
+		lista.insertAt(1, 2);**/
 	
 	public boolean eraseAt(int pos) {
 		if (pos < 0 || pos > size)
@@ -206,7 +218,6 @@ public class Lista<T> {
                 return indice;
             indice++;
         }
-    
 		return -1;		
 	}
 	
@@ -223,6 +234,9 @@ public class Lista<T> {
 		}
 		
 		return x.dato;
+//		rompe con
+//		Lista<Integer> lista = new Lista<Integer>();
+//		lista.searchAt(0);
 	}
 	
 	public int size() {

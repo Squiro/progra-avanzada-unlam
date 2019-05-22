@@ -24,7 +24,7 @@ public class ColaCL<T> implements Cola<T>{
 	@Override
 	public T peek() {
 		return this.lista.searchAt(0);
-	}
+	}/**devuelve una referencia al dato en lugar de una copia del dato**/
 
 	@Override
 	public boolean isEmpty() {

@@ -82,4 +82,15 @@ DOS REGLAS AL MISMO TIEMPO:
 ausentes(X):-parcial1(X,_),not(parcial2(X,_)).
 ausentes(X):-parcial2(X,_),not(parcial1(X,_)).
 
+LAS REGLAS SE EVALUAN TODAS:
+
+De arriba hacia abajo, de izquierda a derecha. Si tengo reglas con el mismo nombre,
+se van a evaluar todas.
+
+MAS OPERADORES:
+
+! --> Operador de corte. Corta la ejecución.
+
+= --> Operador de unificacion. Unifica, pero no asigna. No resuelve.
+
 

@@ -17,8 +17,7 @@ public class ColaHL<T> extends Lista<T> implements Cola<T> {
 
 	@Override
 	public T peek() {
-		this.searchAt(0);
-		return null;
-	}
+		return this.searchAt(0);
+	}/**devuelve una referencia al dato en lugar de una copia del dato**/
 
 }
