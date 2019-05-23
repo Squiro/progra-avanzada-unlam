@@ -2,10 +2,12 @@ package ar.edu.unlam.acorrer;
 
 public class Corredor {
 	
+	private int numInscrip;
 	private int edad;
 	private char sexo;
 	
-	public Corredor (int edad, char sexo) {
+	public Corredor (int numInscrip, int edad, char sexo) {
+		this.numInscrip = numInscrip;
 		this.edad = edad;
 		this.sexo = sexo;
 	}
@@ -24,6 +26,14 @@ public class Corredor {
 
 	public void setSexo(char sexo) {
 		this.sexo = sexo;
+	}
+
+	public int getNumInscrip() {
+		return numInscrip;
+	}
+
+	public void setNumInscrip(int numInscrip) {
+		this.numInscrip = numInscrip;
 	}
 	
 	
