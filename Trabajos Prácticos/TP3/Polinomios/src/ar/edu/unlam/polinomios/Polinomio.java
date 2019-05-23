@@ -1,7 +1,5 @@
 package ar.edu.unlam.polinomios;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Polinomio {
 	private int grado;
@@ -32,7 +30,7 @@ public class Polinomio {
 		System.out.println("TIEMPO: " + (tiempoFin - tiempoIni));
 		
 		tiempoIni = System.currentTimeMillis();
-		System.out.println("Recursiva Par: " + p.evaluarRecursivaPar(4));
+		System.out.println("Recursiva Par: " + p.evaluarRecursivaPar(3));
 		hacerTiempo();
 		tiempoFin = System.currentTimeMillis();
 		System.out.println("TIEMPO: " + (tiempoFin - tiempoIni));
@@ -109,7 +107,7 @@ public class Polinomio {
 		double resultado = 0, potencia = 0;
 		
 		for (int i = 0; i <= this.grado; i++) {
-			potencia = potencia(x, this.grado-i);
+			potencia = potenciaPar(x, this.grado-i);
 			resultado += potencia*this.coeficientes[i];
 		}
 		
@@ -143,22 +141,6 @@ public class Polinomio {
 		
 		return resultado;
 	}		
-	
-	//OBVIAR ESTO
-	/*double calcularConMap(Map<Double, Double> map, double x, double grado) {
-		if (grado <= 0)
-			return 1;
-		
-		if (grado == 1)
-			return x;
-		
-		if (map.containsKey(grado))
-			return map.get(grado);
-		
-		
-		return  x * calcularConMap(map, x, grado-1);
-	}*/
-	
 	
 	double evaluarMejorada(double x) {
 		double pot = 1;

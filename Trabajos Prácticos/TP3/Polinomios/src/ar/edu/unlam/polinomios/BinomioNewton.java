@@ -37,9 +37,15 @@ public class BinomioNewton {
 		}
 	}	
 	
+	public double resolverBinomio(double x) {
+		return Math.pow(this.terminoA*x+this.terminoB,exponente);
+	}
+	
 	public static void main(String[] args) {
-		BinomioNewton bin = new BinomioNewton(2, 3, 2);
 		
-		System.out.println(bin.hallarCoeficienteK(1)); 
+		BinomioNewton bin = new BinomioNewton(2, 3, 2);
+		System.out.println(bin.resolverBinomio(2));
+		
+		System.out.println(bin.hallarCoeficienteK(2)); 
 	}
 }
