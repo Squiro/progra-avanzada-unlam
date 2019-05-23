@@ -27,7 +27,7 @@ public class Montaña {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Montaña mon = leerArchivo("entrada.in");
+		Montaña mon = leerArchivo("./Casos de prueba/Entrada/1_entrada.in");
 		mon.calcularCoordenadasX();
 		mon.calcularYCarrito();
 		mon.calcularPosFinalCarrito();
@@ -67,7 +67,18 @@ public class Montaña {
 	}	
 	
 	public boolean seEncuentraEnSubida() {
-		return cimasX[indiceCimaSig] < vallesX[indiceValleSig];
+		int alturaRelativa = (carrito.getX()-vallesX[indiceValleSig-1] + vallesY[indiceValleSig-1]);
+
+		//Si el proximo valle es el primero de todos... es obvio que estamos en bajada
+		if (indiceValleSig == 1) {
+			return false;
+		}
+		//Si no hay valle siguiente...
+		if (indiceValleSig == 0 || alturaRelativa <= carrito.getY()) {
+			return true;
+		}
+		
+		return false;		
 	}
 	
 	public void calcularYCarrito() {
@@ -77,7 +88,13 @@ public class Montaña {
 		this.indiceCimaSig = posCima;
 		this.indiceValleSig = posValle;
 		
-		//Si la cima que le sigue al carrito es mas grande que el primer valle luego de este, 
+		//Si no hay siguiente valle...
+		if (posValle == 0) {
+			carrito.setY(carrito.getX()-vallesX[posCima] + vallesY[posCima]);
+			return;
+		}
+		
+		//Si la cima que le sigue al carrito esta despues que el primer valle, 
 		//quiere decir que el carrito se encuentra entre una CIMA - VALLE 
 		if (cimasX[posCima] > vallesX[posValle]) {
 			carrito.setY(vallesX[posValle]-carrito.getX() + vallesY[posValle]);			
@@ -90,7 +107,7 @@ public class Montaña {
 	
 	public int hallarSiguienteCima() {
 		for (int i = 0; i < cimasX.length; i++) {
-			if (cimasX[i] >= carrito.getX())
+			if (cimasX[i] > carrito.getX())
 				return i;
 		}
 		return 0;
@@ -98,7 +115,7 @@ public class Montaña {
 	
 	public int hallarSiguienteValle() {
 		for (int i = 0; i < vallesX.length; i++) {
-			if (vallesX[i] >= carrito.getX())
+			if (vallesX[i] > carrito.getX())
 				return i;
 		}
 		return 0;
