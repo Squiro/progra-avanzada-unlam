@@ -30,9 +30,11 @@ public abstract class Entidad {
 		this.esVisible = true;
 	}
 	
-	public Entidad(Ubicacion ubicacionAct)
+	public Entidad(Ubicacion ubicacionAct,int width,int height)
 	{
 		this.ubicacion = ubicacionAct;
+		this.width = width;
+		this.height = height;
 		this.esVisible = true;
 	}
 	
@@ -62,14 +64,6 @@ public abstract class Entidad {
 	public Image getImagen() {
 		return img.getImage();
 	}
-	
-	/*public int getImageWidth() {
-		return this.img.getIconWidth();
-	}
-	
-	public int getImageHeight() {
-		return this.img.getIconWidth();
-	}	*/
 	
 	public void setWidth(int width) {
 		this.width = width;

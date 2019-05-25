@@ -49,7 +49,6 @@ public class JPanelGrafico extends JPanel {
 			if (mostBomb.verSiEsVisible() == true) {
 				ubic = mostBomb.obtenerUbicacion();
 				g.drawImage(mostBomb.getImagen(), mostBomb.getX(), mostBomb.getY(), Bomberman.defaultWidth, Bomberman.defaultHeight, null);
-
 			}
 		}
 	}

@@ -7,8 +7,8 @@ import com.emmettbrown.mapa.Ubicacion;
 
 public class Bomberman extends Entidad {
 	
-	public static final int defaultWidth = 70;
-	public static final int defaultHeight = 70;
+	public static final int defaultWidth = 60;
+	public static final int defaultHeight = 60;
 	
 	private static int nroBomberman = 0;
 	private int idBomberman;
@@ -29,7 +29,6 @@ public class Bomberman extends Entidad {
 	
 	public void morir() {
 		esVisible = false;
-		System.out.println("El bomberman " + idBomberman + " ha muerto");
 	}
 	
 	public void cambiarPosX(double despX) {

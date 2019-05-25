@@ -28,7 +28,7 @@ public class Bomba extends Entidad {
 	}
 
 	public Bomba(Ubicacion ubic) {
-		super(ubic);
+		super(ubic,Motor.tileSize,Motor.tileSize);
 		idBomba = nroBomba++;
 		segsExplosion = 3;
 		this.destructible = true;

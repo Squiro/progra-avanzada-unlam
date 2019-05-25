@@ -9,7 +9,6 @@ import com.emmettbrown.entidades.Bomba;
 import com.emmettbrown.entidades.Bomberman;
 import com.emmettbrown.entidades.Entidad;
 import com.emmettbrown.entidades.Explosion;
-import com.emmettbrown.entidades.Explotable;
 import com.emmettbrown.entidades.Muro;
 import com.emmettbrown.entidades.Obstaculo;
 import com.emmettbrown.principal.Motor;
@@ -39,14 +38,21 @@ public class Mapa {
 
 	////////////////////////////////////////
 	// 									 //
-	// 				METODOS 			//
-	// 								   //
+	// 				METODOS 	//
+	// 								     //
 	////////////////////////////////////
 
 	public void generarMapa() {
-		for (int i = 0; i < ANCHO; i++) {
-			for (int j = 0; j < ALTO; j++) {
-				if (i % 2 != 0 && j % 2 != 0) { 
+			for(int l = 0;l<ALTO;l++) {
+				conjuntoEntidades.put(new Ubicacion(0, l), new Muro(0 * Motor.tileSize, l * Motor.tileSize));
+				conjuntoEntidades.put(new Ubicacion(l, 0), new Muro(l * Motor.tileSize, 0 * Motor.tileSize));
+				conjuntoEntidades.put(new Ubicacion(ANCHO-1, l), new Muro((ANCHO-1) * Motor.tileSize, l * Motor.tileSize));
+				conjuntoEntidades.put(new Ubicacion(l, ALTO-1), new Muro(l * Motor.tileSize, (ALTO-1)* Motor.tileSize));
+			}
+				
+		for (int i = 1; i < ANCHO-1; i++) {
+			for (int j = 1; j < ALTO-1; j++) {
+				if (i % 2 == 0 && j % 2 == 0) { 
 					//EN LAS POSICIONES I,J IMPARES PONDREMOS INDESTRUCTIBLES, EN CASO
 					//CONTRARIO EVALUAREMOS PONER OBSTACULOS
 					conjuntoEntidades.put(new Ubicacion(i, j), new Muro(i * Motor.tileSize, j * Motor.tileSize));
@@ -57,22 +63,22 @@ public class Mapa {
 			}
 		}
 	}
-
+	/// LIBERA LAS POSICIONES 11 12 21 PARA QUE EL BOMBERMAN PUEDA RESPAWNEAR EN ESAS POSICIONES
 	private boolean posicionValida(int posX, int posY) {
-		if (posX == 0 && posY == 0 || posX == 0 && posY == 1 || posX == 1 && posY == 0) {
+		if (posX == 1 && posY == 1 || posX == 1 && posY == 2 || posX == 2 && posY == 1) {
 			return false;
 		}
 
-		if (posX == ANCHO - 1 && posY == 0 || posX == ANCHO - 2 && posY == 0 || posX == ANCHO - 1 && posY == 1) {
+		if (posX == ANCHO - 2 && posY == 1 || posX == ANCHO - 3 && posY == 1 || posX == ANCHO - 2 && posY == 2) {
 			return false;
 		}
 
-		if (posX == 0 && posY == ALTO - 1 || posX == 0 && posY == ALTO - 2 || posX == 1 && posY == ALTO - 1) {
+		if (posX == 1 && posY == ALTO - 2 || posX == 1 && posY == ALTO - 3 || posX == 2 && posY == ALTO - 2) {
 			return false;
 		}
 
-		if (posX == ANCHO - 1 && posY == ALTO - 1 || posX == ANCHO - 2 && posY == ALTO - 1
-				|| posX == ANCHO - 1 && posY == ALTO - 2) {
+		if (posX == ANCHO - 2 && posY == ALTO - 2 || posX == ANCHO - 3 && posY == ALTO - 2
+				|| posX == ANCHO - 2 && posY == ALTO - 3) {
 			return false;
 		}
 		return true;
@@ -170,11 +176,6 @@ public class Mapa {
 	 * @return true: puede moverse, false: no puede moverse
 	 */
 	public boolean puedeMoverse(int x, int y, Entidad ent) {
-		if (x < 0 || x >= Motor.ANCHO)
-			return false;
-		if (y < 0 || y >= Motor.ALTO)
-			return false;
-		
 		return !chequearColisiones(ent, x, y); //estaLibre(ubic) && 
 	}
 
@@ -200,7 +201,6 @@ public class Mapa {
 	public boolean chequearColisiones(Entidad ent, int x, int y) {
 		//Hitbox de la primera entidad
 		Rectangle hitBoxEnt = new Rectangle(x, y, ent.getWidth(), ent.getHeight());
-		
 		//Recorremos el conjunto de entidades
 		for(Map.Entry<Ubicacion, Entidad> entry : conjuntoEntidades.entrySet()) {
 			//Agarramos cada entry
@@ -212,7 +212,7 @@ public class Mapa {
 			
 			//Si la interseccion no es vacia, entonces retornamos que hay colision
 			if (!intersection.isEmpty()) {
-				//Esto no me gusta para NADA. ¿Se podria cambiar?
+				//Esto no me gusta para NADA
 				if (obj instanceof Explosion) {
 					((Bomberman) ent).morir();
 				}
@@ -267,6 +267,7 @@ public class Mapa {
 	public List<Bomberman> obtenerListaBomberman() {
 		return listaBomberman;
 	}
+	
 
 	/**
 	 * Recorre la lista de bombermans y retorna al que encuentre en la ubicacion
@@ -311,10 +312,9 @@ public class Mapa {
 				ubic.cambiarPosY(1);
 			
 			Bomba bomb = new Bomba(ubic);
-			conjuntoEntidades.put(ubic, bomb);
+			conjuntoEntidades.put(bomb.obtenerUbicacion(), bomb);
 			Temporizador t = new Temporizador(bomb.getMs(), bomb, this);
 			t.iniciarTimer();
-			
 			nextBomb = System.currentTimeMillis();
 		}
 	}

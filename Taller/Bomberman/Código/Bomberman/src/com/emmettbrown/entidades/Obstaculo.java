@@ -19,7 +19,7 @@ public class Obstaculo extends Entidad{
 	
 	@Override
 	public void explotar(Mapa map) {
-		System.out.println("Obstaculo "+ idObstaculo +" Destruido");
+//		System.out.println("Obstaculo "+ idObstaculo +" Destruido");
 		this.esVisible = false;
 		map.removerEntidadDelConjunto(this.ubicacion);
 	}	
