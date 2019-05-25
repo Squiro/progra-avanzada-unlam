@@ -18,7 +18,7 @@ public class Tren {
 	public Tren(Animal animales[], int agresMax) {
 		this.animales = animales;
 		this.agresividadMax = agresMax;
-		this.cantVagones = 1;
+		this.cantVagones = 0;
 		this.agresividadMayor = 0;
 	}
 	
@@ -30,24 +30,30 @@ public class Tren {
 	}
 	
 	public void calcularVagonesMin() {
-		//O(nlog(n))
-		Arrays.sort(animales);
 		
-		//INDICE del primer animal del vagon
-		int primAniVagon = 0;
+		if (animales.length > 0) {
+			//Si o si va a haber un vagon, al menos
+			cantVagones++;
 		
-		//O(n)
-		for (int i = 1; i < animales.length; i++) {
-			int difAgres = (animales[i].getAgresividad() - animales[primAniVagon].getAgresividad());
+			//O(nlog(n))
+			Arrays.sort(animales);
 			
-			if (difAgres >= this.agresividadMax) {
-				cantVagones++;
-				primAniVagon = i;
-			} else {
-				calcularAgresMax(difAgres);
-			}
+			//INDICE del primer animal del vagon
+			int primAniVagon = 0;
 			
+			//O(n)
+			for (int i = 1; i < animales.length; i++) {
+				int difAgres = (animales[i].getAgresividad() - animales[primAniVagon].getAgresividad());
+				
+				if (difAgres >= this.agresividadMax) {
+					cantVagones++;
+					primAniVagon = i;
+				} else {
+					calcularAgresMax(difAgres);
+				}				
+			} 
 		}
+		
 	}
 	
 	public void calcularAgresMax(int difAgres) {
