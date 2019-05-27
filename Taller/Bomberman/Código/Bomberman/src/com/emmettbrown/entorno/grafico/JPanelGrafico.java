@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JPanel;
 
 import com.emmettbrown.entidades.Bomberman;
@@ -29,20 +28,21 @@ public class JPanelGrafico extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+				
 		Iterator<Ubicacion> iterEnt = conjuntoEntidades.keySet().iterator();
-		Iterator<Bomberman> iterBomb = listaBomberman.iterator();
-		Bomberman mostBomb;
 		Ubicacion ubic;
 		Entidad mostEnt;
 		
 		while (iterEnt.hasNext()) {
 			ubic = iterEnt.next();
-			mostEnt = conjuntoEntidades.get(ubic);
-			
-			g.drawImage(mostEnt.getImagen(), ubic.getPosX() * Motor.tileSize + 2, ubic.getPosY() * Motor.tileSize + 2, 71, 71, null);
+			mostEnt = conjuntoEntidades.get(ubic);			
+			g.drawImage(mostEnt.getImagen(), mostEnt.getX(), mostEnt.getY(), Motor.tileSize, Motor.tileSize, null);
 		}
 		
 		g.setColor(Color.GREEN);
+		
+		Iterator<Bomberman> iterBomb = listaBomberman.iterator();
+		Bomberman mostBomb;
 		
 		while (iterBomb.hasNext()) {
 			mostBomb = iterBomb.next();

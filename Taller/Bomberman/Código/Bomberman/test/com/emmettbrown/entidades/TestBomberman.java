@@ -124,7 +124,7 @@ public class TestBomberman {
 		Bomberman bman = new Bomberman(0, 0, Bomberman.defaultHeight, Bomberman.defaultWidth);
 		
 		m.agregarBomberman(bman);
-		m.agregarBomba(bman.getX(), bman.getY());		
+		m.agregarBomba(bman.getX(), bman.getY(), bman);		
 		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
 		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
 		Assert.assertEquals(new Ubicacion(1, 0), bman.obtenerUbicacion());
@@ -135,7 +135,7 @@ public class TestBomberman {
 		Bomberman bman = new Bomberman(4, 0, Bomberman.defaultHeight, Bomberman.defaultWidth);
 		
 		m.agregarBomberman(bman);
-		m.agregarBomba(bman.getX(), bman.getY());
+		m.agregarBomba(bman.getX(), bman.getY(), bman);
 		m.moverBombermanIzq(bman, Bomberman.VELOCIDAD);
 		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
 		Assert.assertEquals(new Ubicacion(3, 0), bman.obtenerUbicacion());
@@ -146,7 +146,7 @@ public class TestBomberman {
 		Bomberman bman = new Bomberman(0, 4, Bomberman.defaultHeight, Bomberman.defaultWidth);		
 				
 		m.agregarBomberman(bman);
-		m.agregarBomba(bman.getX(), bman.getY());
+		m.agregarBomba(bman.getX(), bman.getY(), bman);
 		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);
 		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
 		Assert.assertEquals(new Ubicacion(0, 3), bman.obtenerUbicacion());
@@ -157,7 +157,7 @@ public class TestBomberman {
 		Bomberman bman = new Bomberman(0, 0, Bomberman.defaultHeight, Bomberman.defaultWidth);
 		
 		m.agregarBomberman(bman);
-		m.agregarBomba(bman.getX(), bman.getY());
+		m.agregarBomba(bman.getX(), bman.getY(), bman);
 		m.moverBombermanAbajo(bman, Bomberman.VELOCIDAD);
 		m.moverBombermanArriba(bman, Bomberman.VELOCIDAD);		
 		Assert.assertEquals(new Ubicacion(0, 1), bman.obtenerUbicacion());

@@ -1,9 +1,7 @@
 package com.emmettbrown.entorno.grafico;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JFrame;
 import com.emmettbrown.controles.Teclado;
 import com.emmettbrown.entidades.Bomberman;
@@ -27,7 +25,7 @@ public class JVentanaGrafica extends JFrame {
 		setBackground(Color.RED);
 		setLocationRelativeTo(null);
 		contentPane = new JPanelGrafico(miMapa);
-		setBackground(Color.WHITE);
+		contentPane.setBackground(new Color(32,155,221));
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 		List<Bomberman> miLista = miMapa.obtenerListaBomberman();
@@ -42,23 +40,23 @@ public class JVentanaGrafica extends JFrame {
 
 			if (this.teclado.isArriba()) {
 				miMapa.moverBombermanArriba(bomberman[0], Bomberman.VELOCIDAD);
-				this.teclado.setArriba(false);
+				//this.teclado.setArriba(false);
 			}
 			if (this.teclado.isIzq()) {
 				miMapa.moverBombermanIzq(bomberman[0], Bomberman.VELOCIDAD);
-				this.teclado.setIzq(false);
+				//this.teclado.setIzq(false);
 			}
 			if (this.teclado.isDer()) {
 				miMapa.moverBombermanDer(bomberman[0], Bomberman.VELOCIDAD);
-				this.teclado.setDer(false);
+				//this.teclado.setDer(false);
 			}
 			if (this.teclado.isAbajo()) {
 				miMapa.moverBombermanAbajo(bomberman[0], Bomberman.VELOCIDAD);
-				this.teclado.setAbajo(false);
+				//this.teclado.setAbajo(false);
 			}
 			if (this.teclado.isL()) {
-				miMapa.agregarBomba(bomberman[0].getX(), bomberman[0].getY());
-				this.teclado.setL(false);
+				miMapa.agregarBomba(bomberman[0].getX(), bomberman[0].getY(), bomberman[0]);
+				//this.teclado.setL(false);
 			}
 
 		}
@@ -66,23 +64,23 @@ public class JVentanaGrafica extends JFrame {
 
 			if (this.teclado.isW()) {
 				miMapa.moverBombermanArriba(bomberman[1], Bomberman.VELOCIDAD);
-				this.teclado.setW(false);
+				//this.teclado.setW(false);
 			}
 			if (this.teclado.isA()) {
 				miMapa.moverBombermanIzq(bomberman[1], Bomberman.VELOCIDAD);
-				this.teclado.setA(false);
+				//this.teclado.setA(false);
 			}
 			if (this.teclado.isD()) {
 				miMapa.moverBombermanDer(bomberman[1], Bomberman.VELOCIDAD);
-				this.teclado.setD(false);
+				//this.teclado.setD(false);
 			}
 			if (this.teclado.isS()) {
 				miMapa.moverBombermanAbajo(bomberman[1], Bomberman.VELOCIDAD);
-				this.teclado.setS(false);
+				//this.teclado.setS(false);
 			}
 			if (this.teclado.isF()) {
-				miMapa.agregarBomba(bomberman[1].getX(), bomberman[1].getY());
-				this.teclado.setF(false);
+				miMapa.agregarBomba(bomberman[1].getX(), bomberman[1].getY(), bomberman[1]);
+				//this.teclado.setF(false);
 			}
 
 		}

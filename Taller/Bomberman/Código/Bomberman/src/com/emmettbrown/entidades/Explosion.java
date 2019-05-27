@@ -9,11 +9,16 @@ import com.emmettbrown.mapa.Ubicacion;
 
 public class Explosion extends Entidad {
 
+	private final static int duracion = 2;
 	private Timer t;
+	private ImageIcon fuegoArrAba;
+	private ImageIcon fuegoIzqDer;
 	
 	public Explosion(int posX, int posY, int width, int height) {
 		super(posX, posY, width, height);
-		this.img = new ImageIcon("./src/resources/bomb/explosion.png");
+		fuegoArrAba = new ImageIcon("./src/resources/bomb/fuegoArrAba.png");
+		fuegoIzqDer = new ImageIcon("./src/resources/bomb/fuegoIzqDer.png");
+		img = new ImageIcon("./src/resources/bomb/fuegoCen.png");
 	}
 	
 	class miOyente implements ActionListener {
@@ -30,10 +35,10 @@ public class Explosion extends Entidad {
 			map.removerEntidadDelConjunto(ubic);
 			t.stop();
 		}
-	}
+	}	
 	
 	public void startTimer(Mapa map) {
-		t = new Timer(3000, new miOyente(map, this.ubicacion));
+		t = new Timer(duracion*1000, new miOyente(map, this.ubicacion));
 		t.start();
 	}
 
@@ -41,5 +46,13 @@ public class Explosion extends Entidad {
 	public void explotar(Mapa map) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void cambiarImagenArrAba() {
+		setImage(fuegoArrAba);
+	}
+	
+	public void cambiarImagenIzqDer() {
+		setImage(fuegoIzqDer);
 	}
 }

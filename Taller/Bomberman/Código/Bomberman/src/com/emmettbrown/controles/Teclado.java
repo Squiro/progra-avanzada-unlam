@@ -13,58 +13,12 @@ public class Teclado implements KeyListener{
 	private boolean w;
 	private boolean a;
 	private boolean d;
-	private boolean s;
-	public boolean isF() {
-		return f;
-	}
-
-	public void setF(boolean f) {
-		this.f = f;
-	}
-
-	public void setArriba(boolean arriba) {
-		this.arriba = arriba;
-	}
-
-	public void setAbajo(boolean abajo) {
-		this.abajo = abajo;
-	}
-
-	public void setIzq(boolean izq) {
-		this.izq = izq;
-	}
-
-	public void setDer(boolean der) {
-		this.der = der;
-	}
-
-	public void setL(boolean l) {
-		this.l = l;
-	}
-
-	public void setEsc(boolean esc) {
-		this.esc = esc;
-	}
-
-	public void setW(boolean w) {
-		this.w = w;
-	}
-
-	public void setA(boolean a) {
-		this.a = a;
-	}
-
-	public void setD(boolean d) {
-		this.d = d;
-	}
-
-	public void setS(boolean s) {
-		this.s = s;
-	}
-
+	private boolean s;	
 	private boolean f;
 	
-	
+	public boolean isF() {
+		return f;
+	}	
 	
 	public boolean isW() {
 		return w;
@@ -120,10 +74,12 @@ public class Teclado implements KeyListener{
 		this.d = false;
 	}
 	
-	//@Override
+	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
+		//Jugador 1 (local)
+		
 		if (key == KeyEvent.VK_ESCAPE) {
 			this.esc = true;
 		}
@@ -140,11 +96,11 @@ public class Teclado implements KeyListener{
 			this.abajo = true;
 		}
 		
-		if (key == KeyEvent.VK_SPACE) {
+		if (key == KeyEvent.VK_L) {
 			this.l = true;
 		}
 		
-		
+		//Jugador 2 (local)
 		
 		if (key == KeyEvent.VK_W) {
 			this.w = true;			
@@ -163,30 +119,54 @@ public class Teclado implements KeyListener{
 			this.f = true;
 		}
 	}
-//
-	//@Override
-	public void keyReleased(KeyEvent e) {
-//		int key = e.getKeyCode();
-//
-//		if (key == KeyEvent.VK_RIGHT) {
-//			this.der = false;
-//		}
-//		if (key == KeyEvent.VK_LEFT) {
-//			this.izq = false;
-//		}
-//		if (key == KeyEvent.VK_UP) {
-//			this.arriba = false;
-//		}
-//		if (key == KeyEvent.VK_DOWN) {
-//			this.abajo = false;
-//		}
-//		if (key == KeyEvent.VK_SPACE) {
-//			this.ponerBomba = false;
-//		}
-	}
-//	
 
-	//@Override
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+		
+		//Jugador 1 (local)
+
+		if (key == KeyEvent.VK_ESCAPE) {
+			this.esc = false;
+		}
+		if (key == KeyEvent.VK_RIGHT) {
+			this.der = false;			
+		}
+		if (key == KeyEvent.VK_LEFT) {
+			this.izq = false;
+		}
+		if (key == KeyEvent.VK_UP) {
+			this.arriba = false;
+		}
+		if (key == KeyEvent.VK_DOWN) {
+			this.abajo = false;
+		}
+		
+		if (key == KeyEvent.VK_L) {
+			this.l = false;
+		}
+		
+		//Jugador 2 (local)
+		
+		if (key == KeyEvent.VK_W) {
+			this.w = false;			
+		}
+		if (key == KeyEvent.VK_A) {
+			this.a = false;
+		}
+		if (key == KeyEvent.VK_S) {
+			this.s = false;
+		}
+		if (key == KeyEvent.VK_D) {
+			this.d = false;
+		}
+		
+		if (key == KeyEvent.VK_F) {
+			this.f = false;
+		}		
+	}
+	
+	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		

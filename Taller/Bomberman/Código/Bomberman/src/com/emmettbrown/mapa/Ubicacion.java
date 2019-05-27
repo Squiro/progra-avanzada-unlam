@@ -17,7 +17,7 @@ public class Ubicacion implements Comparable<Ubicacion> {
 		return this.posY;
 	}
 
-	//@Override
+	@Override
 	public int compareTo(Ubicacion ubicacion) {
 		int cmp;
 		if((cmp = this.posX - ubicacion.posX) == 0) 
@@ -33,16 +33,13 @@ public class Ubicacion implements Comparable<Ubicacion> {
 	public Ubicacion clone() {
 		return new Ubicacion(getPosX(),getPosY());
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(posX);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(posY);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + posX;
+		result = prime * result + posY;
 		return result;
 	}
 
@@ -55,18 +52,18 @@ public class Ubicacion implements Comparable<Ubicacion> {
 		if (getClass() != obj.getClass())
 			return false;
 		Ubicacion other = (Ubicacion) obj;
-		if (Double.doubleToLongBits(posX) != Double.doubleToLongBits(other.posX))
+		if (posX != other.posX)
 			return false;
-		if (Double.doubleToLongBits(posY) != Double.doubleToLongBits(other.posY))
+		if (posY != other.posY)
 			return false;
 		return true;
 	}
 
-	public void cambiarPosY(double i) {
+	public void cambiarPosY(int i) {
 		this.posY += i;	
 	}
 
-	public void cambiarPosX(double i) {
+	public void cambiarPosX(int i) {
 		this.posX += i;
 	}
 	
