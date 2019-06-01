@@ -1,0 +1,24 @@
+		Patrones de diseño
+
+CPD: CopyPasteDetector. 
+
+Formas de reutilizar:
+
+-Copypaste.
+-Metodos.
+-Clases
+-API (les pido cosas sin engacharme)
+-Framework (me engancho del framework)
+-Patron de diseño
+
+El patron de diseño esboza una idea. Algo que voy a necesita de una manera recurrentemente. Enuncian soluciones de una manera generica, que lo puedo utilizar millones de veces sin hacerlo dos veces de la misma manera.
+
+Desing Patterns - Gang of Four (Buscarlo).
+
+Un patron de diseño es una forma de abstraer codigo.
+
+
+
+Patron Composite:
+
+Es una estructura en la cual puedo invocar a una coleccion como a una parte de la misma. 
