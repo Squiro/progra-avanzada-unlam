@@ -10,17 +10,12 @@ import com.sun.javafx.geom.Rectangle;
 
 import com.emmettbrown.entidades.Bomba;
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.entidades.DefConst;
 import com.emmettbrown.entidades.Entidad;
 import com.emmettbrown.entidades.Muro;
 import com.emmettbrown.entidades.Obstaculo;
-import com.emmettbrown.principal.Motor;
 
-public class Mapa {
-	public static final int ANCHO = 9;
-	public static final int ALTO = 9;
-	//Controlan el delay al momento de poner bombas // ¿moverlo a otro lado mas pertinente?
-	private static final double bombDelay = 1000; //ms
-	private double nextBomb;
+public class Mapa{
 	
 	private TreeMap<Ubicacion, Entidad> conjuntoEntidades;
 	private List<Bomberman> listaBomberman;
@@ -46,22 +41,22 @@ public class Mapa {
 	////////////////////////////////////
 
 	public void generarMapa() {
-			for(int l = 0;l<ALTO;l++) {
-				conjuntoEntidades.put(new Ubicacion(0, l), new Muro(0 * Motor.tileSize, l * Motor.tileSize));
-				conjuntoEntidades.put(new Ubicacion(l, 0), new Muro(l * Motor.tileSize, 0 * Motor.tileSize));
-				conjuntoEntidades.put(new Ubicacion(ANCHO-1, l), new Muro((ANCHO-1) * Motor.tileSize, l * Motor.tileSize));
-				conjuntoEntidades.put(new Ubicacion(l, ALTO-1), new Muro(l * Motor.tileSize, (ALTO-1)* Motor.tileSize));
+			for(int l = 0;l<DefConst.ALTOMAPA;l++) {
+				conjuntoEntidades.put(new Ubicacion(0, l), new Muro(0 * DefConst.TILESIZE, l * DefConst.TILESIZE));
+				conjuntoEntidades.put(new Ubicacion(l, 0), new Muro(l * DefConst.TILESIZE, 0 * DefConst.TILESIZE));
+				conjuntoEntidades.put(new Ubicacion(DefConst.ANCHOMAPA-1, l), new Muro((DefConst.ANCHOMAPA-1) *DefConst.TILESIZE, l * DefConst.TILESIZE));
+				conjuntoEntidades.put(new Ubicacion(l, DefConst.ALTOMAPA-1), new Muro(l * DefConst.TILESIZE, (DefConst.ALTOMAPA-1)* DefConst.TILESIZE));
 			}
 				
-		for (int i = 1; i < ANCHO-1; i++) {
-			for (int j = 1; j < ALTO-1; j++) {
+		for (int i = 1; i < DefConst.ANCHOMAPA-1; i++) {
+			for (int j = 1; j < DefConst.ALTOMAPA-1; j++) {
 				if (i % 2 == 0 && j % 2 == 0) { 
 					//EN LAS POSICIONES I,J IMPARES PONDREMOS INDESTRUCTIBLES, EN CASO
 					//CONTRARIO EVALUAREMOS PONER OBSTACULOS
-					conjuntoEntidades.put(new Ubicacion(i, j), new Muro(i * Motor.tileSize, j * Motor.tileSize));
-				} else if ((posicionValida(i, j)) && Math.random() >= 0.25) {
+					conjuntoEntidades.put(new Ubicacion(i, j), new Muro(i * DefConst.TILESIZE, j * DefConst.TILESIZE));
+				} else if ((posicionValida(i, j)) && Math.random() >= DefConst.TOLCREAROBST) {
 					//75% DE PROBABILIDAD DE CREAR UN OBSTACULO
-					conjuntoEntidades.put(new Ubicacion(i, j), new Obstaculo(i * Motor.tileSize, j * Motor.tileSize));
+					conjuntoEntidades.put(new Ubicacion(i, j), new Obstaculo(i * DefConst.TILESIZE, j * DefConst.TILESIZE));
 				}
 			}
 		}
@@ -72,16 +67,16 @@ public class Mapa {
 			return false;
 		}
 
-		if (posX == ANCHO - 2 && posY == 1 || posX == ANCHO - 3 && posY == 1 || posX == ANCHO - 2 && posY == 2) {
+		if (posX == DefConst.ANCHOMAPA - 2 && posY == 1 || posX == DefConst.ANCHOMAPA - 3 && posY == 1 || posX == DefConst.ANCHOMAPA - 2 && posY == 2) {
 			return false;
 		}
 
-		if (posX == 1 && posY == ALTO - 2 || posX == 1 && posY == ALTO - 3 || posX == 2 && posY == ALTO - 2) {
+		if (posX == 1 && posY == DefConst.ALTOMAPA - 2 || posX == 1 && posY == DefConst.ALTOMAPA - 3 || posX == 2 && posY == DefConst.ALTOMAPA - 2) {
 			return false;
 		}
 
-		if (posX == ANCHO - 2 && posY == ALTO - 2 || posX == ANCHO - 3 && posY == ALTO - 2
-				|| posX == ANCHO - 2 && posY == ALTO - 3) {
+		if (posX == DefConst.ANCHOMAPA - 2 && posY == DefConst.ALTOMAPA - 2 || posX == DefConst.ANCHOMAPA - 3 && posY == DefConst.ALTOMAPA - 2
+				|| posX == DefConst.ANCHOMAPA - 2 && posY == DefConst.ALTOMAPA - 3) {
 			return false;
 		}
 		return true;
@@ -169,7 +164,7 @@ public class Mapa {
 			bomberman.cambiarPosX(despX);
 			bomberman.cambiarPosY(despY);	
 			//Actualizamos la ubicacion relativa en la matriz
-			Ubicacion ubic = new Ubicacion(bomberman.getX()/Motor.tileSize, bomberman.getY()/Motor.tileSize);
+			Ubicacion ubic = new Ubicacion(bomberman.getX()/DefConst.TILESIZE, bomberman.getY()/DefConst.TILESIZE);
 			bomberman.cambiarUbicacion(ubic);	
 			//Actualizamos el flag "ignorarColisionCreador" de las bombas del bomberman
 			bomberman.actualizarColBomba();
@@ -315,25 +310,27 @@ public class Mapa {
 	 */
 	
 	public void agregarBomba(int x, int y, Bomberman creador) {		
-		if (System.currentTimeMillis() - nextBomb > bombDelay) {			
-			Ubicacion ubic = new Ubicacion(x/Motor.tileSize, y/Motor.tileSize);
+		//if (System.currentTimeMillis() - creador.getNextBomb() > DefConst.BOMBDELAY) {			
+			Ubicacion ubic = new Ubicacion(x/DefConst.TILESIZE, y/DefConst.TILESIZE);
 			
-			//Si el módulo de la posición con el tamaño del tile da mayor a la mitad del tamaño,
-			//movemos la posicion en un casillero para que la bomba se cree en el casillero aledaño
-			if (x % Motor.tileSize > 37.5)
-				ubic.cambiarPosX(1);
-			if (y % Motor.tileSize > 37.5)
-				ubic.cambiarPosY(1);
-			
-			Bomba bomb = new Bomba(ubic, creador);
-			//Agregamos una bomba a la lista de bombas del creador
-			creador.agregarBomba(bomb);
-			conjuntoEntidades.put(bomb.obtenerUbicacion(), bomb);
-			bomb.startTimer(this);
-			/*Temporizador t = new Temporizador(bomb.getMs(), bomb, this);
-			t.iniciarTimer();*/
-			nextBomb = System.currentTimeMillis();
-		}
+			if (obtenerEntidadDelConjunto(ubic) == null) {			
+				//Si el módulo de la posición con el tamaño del tile da mayor a la mitad del tamaño,
+				//movemos la posicion en un casillero para que la bomba se cree en el casillero aledaño
+				if (x % DefConst.TILESIZE > DefConst.TOLCAMBIOPOS)
+					ubic.cambiarPosX(1);
+				if (y % DefConst.TILESIZE > DefConst.TOLCAMBIOPOS)
+					ubic.cambiarPosY(1);
+				
+				Bomba bomb = new Bomba(ubic, creador);
+				//Agregamos una bomba a la lista de bombas del creador
+				creador.agregarBomba(bomb);
+				conjuntoEntidades.put(bomb.obtenerUbicacion(), bomb);
+				bomb.startTimer(this);
+				/*Temporizador t = new Temporizador(bomb.getMs(), bomb, this);
+				t.iniciarTimer();*/
+				//creador.setNextBomb((System.currentTimeMillis())); 
+			}
+		//}
 	}	
 
 	/**

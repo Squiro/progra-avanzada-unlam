@@ -10,6 +10,13 @@ public class Monticulo<T extends Comparable<T>> {
 		this.cantElem = 0;
 		this.monticulo = (T[]) new Comparable[size];
 	}
+	
+	public boolean esHoja(int pos) {
+		if (pos >= cantElem/2 && pos <= cantElem) {
+			return true;
+		}
+		return false;
+	}
 		
 	public void insertar(T dato) {
 		if (monticulo.length == size) 
@@ -40,6 +47,31 @@ public class Monticulo<T extends Comparable<T>> {
 			i = i/2;
 		}		
 	}
+	
+	
+	/** Este ajustar está hecho para un montículo máximo. No va a funcionar con el montículo que tenemos acá (porque es mínimo). De todas formas
+	 * lo puse para tenerlo a mano. Se puede modificar para un mínimo fácilmente cambiando las condiciones de los ifs. 
+	 * 
+	 */
+	public void adjustar(int pos) {
+		if (esHoja(pos)) 
+			return;
+		
+		//Si es menor que alguno de sus hijos
+		if (this.monticulo[pos].compareTo(this.monticulo[2*pos]) < 0 || this.monticulo[pos].compareTo(this.monticulo[2*pos+1]) < 0) {
+			//Lo intercambiamos con el mayor de los hijos
+			if (this.monticulo[2*pos].compareTo(this.monticulo[2*pos+1]) > 0) {
+				swap(pos, 2*pos);
+				//Llamamos a adjustar con la posición del intercambio
+				adjustar(2*pos);
+			}
+			else 
+			{
+				swap(pos, 2*pos+1);
+				adjustar(2*pos+1);
+			}
+		}
+	}	
 	
 	public void reordenarQuitar() {
 		if (cantElem == 1)

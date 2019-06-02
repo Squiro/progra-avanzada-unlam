@@ -8,6 +8,23 @@ rectangulo(10,6).
 circulo(10).
 circulo(3).
 
+
+
+
+area(triangulo, A):-triangulo(B,H),A is B*H/2.
+area(cuadrado,A):-cuadrado(L), A is L*L.
+area(rectangulo,A):-rectangulo(B,H), A is B*H.
+area(circulo,A):-circulo(R), A is pi*R*R.
+
+prod_cad(Fig1, X, Fig2, Y):-area(Fig1,X),area(Fig2,Y).
+seleccion(Fig1,X,Fig2,Y):-prod_cad(Fig1,X,Fig2,Y),X<Y.
+proyeccion(Fig1, X):-seleccion(Fig1,X,_,_).
+mayor_area(Fig, X):-area(Fig, X),not(proyeccion(Fig,X)).
+
+
+
+
+
 area_triang(X,Y,Res):-triangulo(X,Y),Res is (X*Y)/2.
 area_cuad(X,Res):-cuadrado(X),Res is X*X.
 area_rec(X,Y,Res):-rectangulo(X,Y),Res is X*Y.

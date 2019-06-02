@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.entidades.DefConst;
 
 public class TestMapa {
 	@Test
@@ -32,10 +33,10 @@ public class TestMapa {
 		Mapa m = new Mapa();
 		m.generarMapa();
 		
-		Bomberman bman = new Bomberman(0, 0, Bomberman.defaultHeight, Bomberman.defaultWidth);		
+		Bomberman bman = new Bomberman(0, 0, DefConst.DEFAULTHEIGHT, DefConst.DEFAULTWIDTH);		
 		m.agregarBomberman(bman);
 		
-		m.moverBombermanDer(bman, Bomberman.VELOCIDAD);
+		m.moverBombermanDer(bman, DefConst.VELOCIDAD);
 		System.out.println(bman.obtenerUbicacion());
 	}
 

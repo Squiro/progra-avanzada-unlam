@@ -7,7 +7,6 @@ import javax.swing.Timer;
 
 import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mapa.Ubicacion;
-import com.emmettbrown.principal.Motor;
 
 public class Bomba extends Entidad {
 	
@@ -15,6 +14,10 @@ public class Bomba extends Entidad {
 	private int rango;
 	private final int ARRABA = 1;
 	private final int IZQDER = -1;
+	private final int ARRIBAPUNTA = 2;
+	private final int ABAJOPUNTA = -2;
+	private final int DERECHAPUNTA = 3;
+	private final int IZQUIERDAPUNTA = -3;
 	private Bomberman creador;
 	private boolean ignorarColisionCreador;
 	private Timer timer;
@@ -26,7 +29,7 @@ public class Bomba extends Entidad {
 	/////////////////////////////////////
 
 	public Bomba(int posX, int posY, Bomberman bman) {
-		super(posX, posY, Motor.tileSize, Motor.tileSize);
+		super(posX, posY, DefConst.TILESIZE, DefConst.TILESIZE);
 		segsExplosion = 3;
 		this.destructible = true;
 		this.rango = 2;
@@ -36,7 +39,7 @@ public class Bomba extends Entidad {
 	}
 
 	public Bomba(Ubicacion ubic, Bomberman bman) {
-		super(ubic, Motor.tileSize, Motor.tileSize);
+		super(ubic, DefConst.TILESIZE, DefConst.TILESIZE);
 		segsExplosion = 3;
 		this.destructible = true;
 		this.rango = 2;
@@ -98,7 +101,10 @@ public class Bomba extends Entidad {
 		// Se ejecuta hasta llegar al rango maximo, o toparse con un
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosX() - i >= 0;  i++) {
-			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() - i, this.ubicacion.getPosY()), map,IZQDER);
+			if( i == this.rango)
+				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() - i, this.ubicacion.getPosY()), map,IZQUIERDAPUNTA);
+			else
+				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() - i, this.ubicacion.getPosY()), map,IZQDER);
 		}
 	}
 
@@ -107,8 +113,11 @@ public class Bomba extends Entidad {
 
 		// Se ejecuta hasta llegar al rango maximo, o toparse con un
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
-		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosX() + i < Mapa.ANCHO;  i++) {
-			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() + i, this.ubicacion.getPosY()), map,IZQDER);
+		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosX() + i < DefConst.ANCHOMAPA;  i++) {
+			if(i == this.rango)
+				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() + i, this.ubicacion.getPosY()), map,DERECHAPUNTA);
+			else
+				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() + i, this.ubicacion.getPosY()), map,IZQDER);
 		}
 	}
 
@@ -118,7 +127,10 @@ public class Bomba extends Entidad {
 		// Se ejecuta hasta llegar al rango maximo, o toparse con un
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosY() - i >= 0 ; i++) {
-			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() - i), map,ARRABA);
+			if(i == this.rango)
+				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() - i), map,ARRIBAPUNTA);
+			else
+				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() - i), map,ARRABA);
 		}
 	}
 
@@ -127,8 +139,11 @@ public class Bomba extends Entidad {
 
 		// Se ejecuta hasta llegar al rango maximo, o toparse con un
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
-		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosY() + i <= Mapa.ALTO; i++) {
-			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() + i), map,ARRABA);
+		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosY() + i <= DefConst.ALTOMAPA; i++) {
+			if(i == this.rango)
+				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() + i), map,ABAJOPUNTA);
+			else
+				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() + i), map,ARRABA);
 		}
 	}
 
@@ -161,11 +176,19 @@ public class Bomba extends Entidad {
 		}
 		
 		//Creamos una explosion (el grafico) en la ubicacion
-		Explosion expl = new Explosion(ubic.getPosX()*Motor.tileSize, ubic.getPosY()*Motor.tileSize, Motor.tileSize, Motor.tileSize);
+		Explosion expl = new Explosion(ubic.getPosX()*DefConst.TILESIZE, ubic.getPosY()*DefConst.TILESIZE, DefConst.TILESIZE, DefConst.TILESIZE);
 		if(dir == ARRABA)
 			expl.cambiarImagenArrAba();
 		if(dir == IZQDER)
 			expl.cambiarImagenIzqDer();
+		if(dir == ARRIBAPUNTA)
+			expl.cambiarImagenArribaPunta();
+		if(dir == ABAJOPUNTA)
+			expl.cambiarImagenAbajoPunta();
+		if(dir == DERECHAPUNTA)
+			expl.cambiarImagenDerechaPunta();
+		if(dir == IZQUIERDAPUNTA)
+			expl.cambiarImagenIzquierdaPunta();
 		expl.startTimer(map);
 		map.agregarEntidadAlConjunto(expl.ubicacion, expl);
 		
@@ -189,6 +212,10 @@ public class Bomba extends Entidad {
 		timer.start();
 	}
 	
+	public void stopTimer() {
+		timer.stop();
+	}
+	
 	class miOyente implements ActionListener {
 		private Mapa map;
 		private Bomba bomba;
@@ -200,7 +227,9 @@ public class Bomba extends Entidad {
 		
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			this.bomba.explotar(map);
+			if (bomba.esVisible) {
+				this.bomba.explotar(map);
+			}			
 			timer.stop();
 		}
 	}

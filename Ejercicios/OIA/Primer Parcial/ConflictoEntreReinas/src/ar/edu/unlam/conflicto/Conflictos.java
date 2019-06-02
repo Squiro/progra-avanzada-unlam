@@ -89,7 +89,7 @@ public class Conflictos {
 	public void chequearDiagonales(Reina r, int fila, int col) {
 		boolean found = false;
 
-		//Diagonal izquierda superior
+		//Diagonal derecha superior
 		for (int i = fila-1, j = col-1; i >= 0  && j >= 0 && !found; i--, j--) {
 			if (this.tablero[i][j] != 0) {
 				r.addConflictoCon(this.tablero[i][j]);
@@ -98,7 +98,7 @@ public class Conflictos {
 		}
 		
 		found = false;
-		//Diagonal izquierda inferior
+		//Diagonal derecha inferior
 		for (int i = fila+1, j = col+1; i < this.dimension && j < this.dimension && !found; i++, j++) {
 			if (this.tablero[i][j] != 0) {
 				r.addConflictoCon(this.tablero[i][j]);
@@ -107,7 +107,7 @@ public class Conflictos {
 		}
 		
 		found = false;
-		//Diagonal derecha inferior
+		//Diagonal izquierda inferior
 		for (int i = fila+1, j = col-1; i < this.dimension && j >= 0 && !found; i++, j--) {
 			if (this.tablero[i][j] != 0) {
 				r.addConflictoCon(this.tablero[i][j]);
@@ -116,7 +116,7 @@ public class Conflictos {
 		}
 		
 		found = false;
-		//Diagonal derecha superior
+		//Diagonal izquierda superior
 		for (int i = fila-1, j = col+1; i >= 0 && j < this.dimension && !found; i--, j++) {
 			if (this.tablero[i][j] != 0) {
 				r.addConflictoCon(this.tablero[i][j]);

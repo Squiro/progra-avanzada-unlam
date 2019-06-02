@@ -1,13 +1,12 @@
 package com.emmettbrown.entidades;
 
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
+import com.sun.javafx.geom.Rectangle;
 
 import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mapa.Ubicacion;
-import com.emmettbrown.principal.Motor;
-import com.sun.javafx.geom.Rectangle;
+
 
 public abstract class Entidad {
 	
@@ -22,7 +21,7 @@ public abstract class Entidad {
 	
 	public Entidad(int posX, int posY, int width, int height)
 	{
-		this.ubicacion = new Ubicacion(posX/Motor.tileSize, posY/Motor.tileSize);
+		this.ubicacion = new Ubicacion(posX/DefConst.TILESIZE, posY/DefConst.TILESIZE);
 		this.x = posX;
 		this.y = posY;
 		this.width = width;
@@ -33,8 +32,8 @@ public abstract class Entidad {
 	public Entidad(Ubicacion ubic, int width, int height)
 	{
 		this.ubicacion = ubic;
-		this.x = ubicacion.getPosX()*Motor.tileSize;
-		this.y = ubicacion.getPosY()*Motor.tileSize;
+		this.x = ubicacion.getPosX()*DefConst.TILESIZE;
+		this.y = ubicacion.getPosY()*DefConst.TILESIZE;
 		this.width = width;
 		this.height = height;
 		this.esVisible = true;

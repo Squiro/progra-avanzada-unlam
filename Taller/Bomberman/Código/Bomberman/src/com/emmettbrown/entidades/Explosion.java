@@ -9,15 +9,23 @@ import com.emmettbrown.mapa.Ubicacion;
 
 public class Explosion extends Entidad {
 
-	private final static int duracion = 2;
+	private final static int DURACION = 1;
 	private Timer t;
 	private ImageIcon fuegoArrAba;
 	private ImageIcon fuegoIzqDer;
+	private ImageIcon fuegoArribaPunta;
+	private ImageIcon fuegoAbajoPunta;
+	private ImageIcon fuegoDerechaPunta;
+	private ImageIcon fuegoIzquierdaPunta;
 	
 	public Explosion(int posX, int posY, int width, int height) {
 		super(posX, posY, width, height);
-		fuegoArrAba = new ImageIcon("./src/resources/bomb/fuegoArrAba.png");
-		fuegoIzqDer = new ImageIcon("./src/resources/bomb/fuegoIzqDer.png");
+		fuegoArrAba = new ImageIcon("./src/resources/bomb/FuegoArrAba.png");
+		fuegoIzqDer = new ImageIcon("./src/resources/bomb/FuegoIzqDer.png");
+		fuegoArribaPunta = new ImageIcon("./src/resources/bomb/finFuegoArriba.png");
+		fuegoAbajoPunta = new ImageIcon("./src/resources/bomb/finFuegoAbajo.png");
+		fuegoDerechaPunta = new ImageIcon("./src/resources/bomb/finFuegoDerecha.png");
+		fuegoIzquierdaPunta = new ImageIcon("./src/resources/bomb/finFuegoIzquierda.png");
 		img = new ImageIcon("./src/resources/bomb/fuegoCen.png");
 	}
 	
@@ -38,9 +46,10 @@ public class Explosion extends Entidad {
 	}	
 	
 	public void startTimer(Mapa map) {
-		t = new Timer(duracion*1000, new miOyente(map, this.ubicacion));
+		t = new Timer(DURACION*1000, new miOyente(map, this.ubicacion));
 		t.start();
 	}
+
 
 	@Override
 	public void explotar(Mapa map) {
@@ -54,5 +63,21 @@ public class Explosion extends Entidad {
 	
 	public void cambiarImagenIzqDer() {
 		setImage(fuegoIzqDer);
+	}
+	
+	public void cambiarImagenArribaPunta() {
+		setImage(fuegoArribaPunta);
+	}
+	
+	public void cambiarImagenAbajoPunta() {
+		setImage(fuegoAbajoPunta);
+	}
+	
+	public void cambiarImagenIzquierdaPunta() {
+		setImage(fuegoIzquierdaPunta);
+	}
+	
+	public void cambiarImagenDerechaPunta() {
+		setImage(fuegoDerechaPunta);
 	}
 }

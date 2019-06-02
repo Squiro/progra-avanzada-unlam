@@ -1,16 +1,12 @@
 package com.emmettbrown.principal;
 
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.entidades.DefConst;
 import com.emmettbrown.entorno.grafico.JVentanaGrafica;
 import com.emmettbrown.mapa.Mapa;
 
 public class Motor {
 
-	public static int tileSize = 75;	
-	public static final int ANCHO = tileSize*Mapa.ANCHO;
-	public static final int ALTO = tileSize*Mapa.ALTO+25;
-	
-	final int FPS = 30;
 	private Mapa miMapa;
 	private JVentanaGrafica miVentana;
 	private boolean iniciado;
@@ -20,11 +16,11 @@ public class Motor {
 		miMapa = new Mapa();
 		miMapa.generarMapa();
 		//Bomberman propio del usuario conectado.
-		Bomberman miBomber = new Bomberman(Motor.tileSize, Motor.tileSize, Bomberman.defaultWidth, Bomberman.defaultHeight); 
-		Bomberman miBomber2 = new Bomberman(Motor.tileSize*(Mapa.ANCHO-2), Motor.tileSize*(Mapa.ALTO-2), Bomberman.defaultWidth, Bomberman.defaultHeight); 
+		Bomberman miBomber = new Bomberman(DefConst.TILESIZE, DefConst.TILESIZE, DefConst.DEFAULTWIDTH,DefConst.DEFAULTHEIGHT); 
+		Bomberman miBomber2 = new Bomberman(DefConst.TILESIZE*(DefConst.ANCHOMAPA-2), DefConst.TILESIZE*(DefConst.ANCHOMAPA-2), DefConst.DEFAULTWIDTH,DefConst.DEFAULTHEIGHT); 
 		miMapa.agregarBomberman(miBomber);
 		miMapa.agregarBomberman(miBomber2);
-		miVentana = new JVentanaGrafica(miMapa,ANCHO, ALTO);
+		miVentana = new JVentanaGrafica(miMapa,DefConst.ANCHO, DefConst.ALTO);
 	}
 
 	private void iniciarJuego() {
@@ -34,28 +30,16 @@ public class Motor {
 
 	private void gameLoop() {
 		long initialTime = System.nanoTime();
-		//final double timeU = 1000000000 / UPS;
-		final double timeF = 1000000000 / FPS;
+		final double timeF = 1000000000 / DefConst.FPS;
 		double deltaF = 0; // deltaU = 0, 
-		//int frames = 0, ticks = 0;
 
 		    while (iniciado) {
 
 		        long currentTime = System.nanoTime();
-		        //deltaU += (currentTime - initialTime) / timeU;
 		        deltaF += (currentTime - initialTime) / timeF;
 		        initialTime = currentTime;
-
-		        /*if (deltaU >= 1) {
-		            getInput();
-		            update();
-		            ticks++;
-		            deltaU--;
-		        }*/
-
 		        if (deltaF >= 1) {
 		            actualizar();
-		            //frames++;
 		            deltaF--;
 		        }
 		    }

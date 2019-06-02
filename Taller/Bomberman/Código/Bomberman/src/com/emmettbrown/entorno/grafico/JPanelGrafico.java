@@ -8,10 +8,10 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.entidades.DefConst;
 import com.emmettbrown.entidades.Entidad;
 import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mapa.Ubicacion;
-import com.emmettbrown.principal.Motor;
 
 public class JPanelGrafico extends JPanel {
 
@@ -36,7 +36,7 @@ public class JPanelGrafico extends JPanel {
 		while (iterEnt.hasNext()) {
 			ubic = iterEnt.next();
 			mostEnt = conjuntoEntidades.get(ubic);			
-			g.drawImage(mostEnt.getImagen(), mostEnt.getX(), mostEnt.getY(), Motor.tileSize, Motor.tileSize, null);
+			g.drawImage(mostEnt.getImagen(), mostEnt.getX(), mostEnt.getY(), DefConst.TILESIZE, DefConst.TILESIZE, null);
 		}
 		
 		g.setColor(Color.GREEN);
@@ -48,7 +48,7 @@ public class JPanelGrafico extends JPanel {
 			mostBomb = iterBomb.next();
 			if (mostBomb.verSiEsVisible() == true) {
 				ubic = mostBomb.obtenerUbicacion();
-				g.drawImage(mostBomb.getImagen(), mostBomb.getX(), mostBomb.getY(), Bomberman.defaultWidth, Bomberman.defaultHeight, null);
+				g.drawImage(mostBomb.getImagen(), mostBomb.getX(), mostBomb.getY(), DefConst.DEFAULTWIDTH, DefConst.DEFAULTHEIGHT, null);
 			}
 		}
 	}

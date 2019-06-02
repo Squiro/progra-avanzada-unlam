@@ -9,10 +9,9 @@ import com.sun.javafx.geom.Rectangle;
 
 public class Bomberman extends Entidad {
 	
-	public static final int defaultWidth = 60;
-	public static final int defaultHeight = 60;
-	public static final int VELOCIDAD = 5;
-	
+//	public static final int defaultWidth = 60;
+//	public static final int defaultHeight = 60;
+//	public static final int VELOCIDAD = 5;
 	private static int nroBomberman = 0;
 	private int idBomberman;
 	private ImageIcon bomberIzq;
