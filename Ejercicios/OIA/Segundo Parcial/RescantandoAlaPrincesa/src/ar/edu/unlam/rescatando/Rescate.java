@@ -2,104 +2,67 @@ package ar.edu.unlam.rescatando;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Rescate {
-	
-	private int cantClaros;
-	private int cantSenderos;
 	private int dragones[];
 	private int claroPrincipe;
 	private int claroPrincesa;
-	public int matrizClaros[][];
-	
+	private Grafo grafo;
+	private String salida;
+		
 	public Rescate(int cantClaros, int cantSenderos, int dragones[], int claroPrincesa, int claroPrincipe, int mat[][]) {
-		this.cantClaros = cantClaros;
-		this.cantSenderos = cantSenderos;
 		this.dragones = dragones;
 		this.claroPrincesa = claroPrincesa;
 		this.claroPrincipe = claroPrincipe;
-		this.matrizClaros = mat;
+		this.grafo = new Grafo(mat);		
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		Rescate res = leerArchivo("entrada.in");
-		res.buscarCamino(res.claroPrincipe);		
-		System.out.println("A");
+		res.resolver();	
+		res.escribirArchivo("salida.in");
 	}
-	
-	//Halla el nodo minimo que no está incluido en el conjunto solución
-	public int hallarNodoMinimo(boolean[] conjSol, int[] key) {
-		int minKey = Integer.MAX_VALUE;
-		int nodo = 0;
 		
-		for (int i = 0; i < cantClaros; i++) {
-			//Si no está incluido en el conjunto de solución, y 
-			//el valor de su distancia es menor que el valor infinito
-			if (conjSol[i] == false && minKey > key[i]) {
-				minKey = key[i];
-				nodo = i;
+	public void resolver() {
+		//Caminos mas cortos hacia los claros vistos desde la princesa
+		int[] distPrincesa = grafo.dijkstra(this.claroPrincesa-1); 
+		
+		int distPrincipe = distPrincesa[this.claroPrincipe-1];
+		this.salida = "";
+		
+		if (distPrincipe == 0) {
+			this.salida = "NO HAY CAMINO";
+			return;
+		} else {
+			for (int i = 0; i < dragones.length; i++) {
+				//Si hay un dragon que se encuentra a una distancia mas corta o igual a la del principe
+				if (distPrincesa[dragones[i]-1] > 0 && distPrincesa[dragones[i]-1] <= distPrincipe) {
+					this.salida = "INTERCEPTADO";
+					return;
+				}				
 			}
-		}
-		//Retornamos el menor de los nodos
-		return nodo;
-	}
-	
-	
-	//Djkstra
-	public void buscarCamino(int claroIni) {
-		//Este array almacena los nodos que ya se encuentran en el conjunto de solución.
-		boolean conjSol[] = new boolean[cantClaros];
-		//Distancia. Pesos de las aritas en relacion con claroIni
-		int dist[] = new int[cantClaros];
-		int infinidad = Integer.MAX_VALUE;
-		int precedencia[] = new int[cantClaros];
-		
-		//Inicializamos todas las distancias en infinito
-		for (int i = 0; i < this.cantClaros; i++) {
-			dist[i] = infinidad;
-			precedencia[i] = claroIni;
-		}
-		
-		dist[claroIni] = 0;
-		
-		for (int i = 0; i < cantClaros; i++) {
-			int nodo_u = hallarNodoMinimo(conjSol, dist);
 			
-			//Añadimos el nodo al conjunto de solución
-			conjSol[nodo_u] = true;
-			
-			//Iteramos por cada nodo adyacente del nodo_u
-			for (int nodo_v = 0; nodo_v < cantClaros; nodo_v++) {				
-				if (matrizClaros[nodo_u][nodo_v] > 0) {
-					
-					//Si el nodo_v no se encuentra en el conj. de solución, y si existe
-					//adyacencia con el nodo_u
-					if (conjSol[nodo_v] == false && matrizClaros[nodo_u][nodo_v] != infinidad) {
-						//El peso del nodo_u, mas el costo de ir desde nodo_u a nodo_v
-						//D[w] + C[w,i]
-						int min = dist[nodo_u] + matrizClaros[nodo_u][nodo_v];
-						
-						//Si el costo calculado anterior resulta menor que la distancia actual
-						//lo actualizamos
-						if (min < dist[nodo_v])	{
-							dist[nodo_v] = min;
-							//En la posición del nodo_v, guardamos el nodo_u (w) como precedencia
-							//Ya que hubo un cambio en el costo. Quiere decir que el anterior a w
-							//va a ser este nodo que estamos evaluando
-							precedencia[nodo_v] = nodo_u;
-						}
-					}
-				}
-			}			
+			//Si no se interceptó al principito
+			System.out.println("PINTAME UN CORDEROOOOOOOOOOOOOOOOOOOOOOOOOO");
+			ArrayList<Integer> camino = grafo.getCamino(claroPrincipe-1);
+			for (int i = 0; i < camino.size(); i++) {
+				this.salida += (camino.get(i) + 1) + " ";
+			}
 		}	
-		
-		for (int i = cantClaros-1; precedencia[i] != claroIni; i--) {
-			System.out.println(precedencia[i]);
-			i = precedencia[i];
-		}
-	}
+	}	
 	
+	public void escribirArchivo(String path) throws IOException {
+		PrintWriter out = new PrintWriter(new FileWriter(path));
+		
+		out.println(salida);
+		
+		out.close();
+	}
 	
 	public static Rescate leerArchivo(String path) throws FileNotFoundException {
 		Scanner sc = new Scanner(new FileReader(path));
@@ -114,8 +77,11 @@ public class Rescate {
 		
 		int matriz[][] = new int[cantC][cantC];
 		
-		for (int i = 0; i < cantC; i++) {
-			int claroIni = sc.nextInt(), claroFin = sc.nextInt(), peso = sc.nextInt();
+		//Tenemos que guardar la cantidad de conexiones que hay
+		//es decir, los senderos, las aristas
+		for (int i = 0; i < cantS; i++) {
+			//Les restamos 1 porque la matriz comienza desde 0
+			int claroIni = sc.nextInt()-1, claroFin = sc.nextInt()-1, peso = sc.nextInt();
 			
 			matriz[claroIni][claroFin] = peso;
 			matriz[claroFin][claroIni] = peso;			
