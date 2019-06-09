@@ -1,0 +1,32 @@
+		Networking
+
+Sockets en Java:
+
+Realizan una conexión peer-to-peer entre instancias de sockets de equipos distintos.
+
+Ciclo de vida de un socket:
+
+-Crear  socket (apertura del socket)
+-Lectura y escritura (recepcion y envio de datos)
+-Destruccion (cierre del socket)
+
+---------------
+
+Servidor:
+-ServerSocket(listeningPort)
+	-Metodo accept(): proceso bloqueante. Espera un evento para poder avanzar. Devuelve un
+			  objeto Socket al establecer la conexion.
+	-OutputStream <---- InputStream    |Envio de Texto
+	-InputStream -----> OutputStream   |Envio de Texto
+	-Object.Stream | Envio de objetos, debe implementar una interfaz serializable
+
+Cliente 1:
+-Socket(IP, puerto)
+
+
+Cliente 2
+-Socket2(IP, puerto)
+
+
+Luego de un accept(), tengo que volver lo más rápido al accept.
+
