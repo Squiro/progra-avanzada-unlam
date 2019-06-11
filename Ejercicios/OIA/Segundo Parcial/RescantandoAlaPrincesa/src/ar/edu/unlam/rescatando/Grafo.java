@@ -8,7 +8,6 @@ public class Grafo {
 	private int predecesores[];	
 	private int nodoInicial;
 	
-	
 	public Grafo(int matriz[][]) {
 		this.matrizAdy = matriz;
 		this.predecesores = new int[matrizAdy.length];		
