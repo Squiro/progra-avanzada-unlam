@@ -5,9 +5,4 @@ Profes taller:
 
 Fin de cursada: día 13
 
-Sobre el TP:
-
-
---
-
 github.com/programacion-avanzada/2019a

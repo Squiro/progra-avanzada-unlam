@@ -1,0 +1,3 @@
+LINKS UTILES
+
+Algoritmo de Kruskal (MST): https://algorithms.tutorialhorizon.com/kruskals-algorithm-minimum-spanning-tree-mst-complete-java-implementation/
