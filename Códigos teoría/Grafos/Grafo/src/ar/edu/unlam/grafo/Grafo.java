@@ -382,4 +382,70 @@ public class Grafo {
 			}
 		}
 	}
+	
+	
+	/* METODOS PARA EL ALGORITMO DE FLOYD */ 
+	
+	public int[][] floyd() {
+		int dist[][] = new int[cantNodos][cantNodos];
+		dist = matrizAdy.clone();
+		
+		//Esto no tendría que ser necesario si las matrices son cargadas con ceros en las diag. principales
+		for (int i = 0; i < cantNodos; i++) {
+			dist[i][i] = 0;
+		}
+		
+		//El algoritmo de Floyd tiene que recorrer "cantNodos matrices" en su totalidad. 
+		//Es decir, según lo que vimos en clase, es una matriz "nueva" por nodo recorrido, y se tienen
+		//que recorrer todos
+		for (int k = 0; k < cantNodos; k++) {
+			//Recorremos todos los nodos...
+			for (int i = 0; i < cantNodos; i++) {
+				//Y por cada nodo adyacente al que estamos parado...
+				for (int j = 0; j < cantNodos; j++) {
+					//Preguntamos si la distancia pasando por un nodo K es menor que la distancia original 
+					if (dist[i][k] + dist[k][j] < dist[i][j]) {
+						dist[i][j] = dist[i][k] + dist[k][j];
+					}
+				}
+			}
+		}
+		
+		/*Como vimos, no es necesario crear otra matriz nueva. Esto es porque actualizamos la matriz
+		 * a medida que avanzamos con el algoritmo. */
+		
+		return dist;		
+	}
+	
+	/* METODOS PARA EL ALGORITMO DE WARSHALL */ 
+	
+	public boolean[][] warshall() {
+		//Matriz de clausura transitiva
+		boolean mct[][] = new boolean[cantNodos][cantNodos];
+		
+		for (int i = 0; i < cantNodos; i++) {
+			for (int j = 0; j < cantNodos; j++) {
+				if (matrizAdy[i][j] > 0 && matrizAdy[i][j] != infinito) {
+					mct[i][j] = true;
+				} else {
+					mct[i][j] = false;
+				}
+			}
+		}
+
+		for (int k = 0; k < cantNodos; k++) {
+			//Recorremos todos los nodos...
+			for (int i = 0; i < cantNodos; i++) {
+				//Y por cada nodo adyacente al que estamos parado...
+				for (int j = 0; j < cantNodos; j++) {
+					//Preguntamos si hay alguna conexión
+					if (mct[i][j] || (mct[i][k] && mct[k][j]) ) {
+						mct[i][j] = true;
+					}
+				}
+			}
+		}
+		
+		return mct;		
+	}
 }
