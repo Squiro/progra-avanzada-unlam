@@ -1,7 +1,10 @@
 package ar.edu.unlam.grafo;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Grafo {
 	
@@ -320,5 +323,63 @@ public class Grafo {
 				pq.add(new Arista(nodo, i, matrizAdy[nodo][i]));
 			}
 		}		
+	}
+	
+	/* METODOS PARA EL ALGORITMO DE BFS (Busqueda por anchura) */
+	
+	
+	public void BFS(int nodoInicial) {
+		boolean estado[] = new boolean[cantNodos];
+		int dist[] = new int[cantNodos]; //Vector de distancias relativas
+		int padre[] = new int[cantNodos];
+		Queue<Integer> cola = new LinkedList<>();
+		
+		estado[nodoInicial] = true;
+		cola.add(nodoInicial);
+		dist[nodoInicial] = 0;
+		
+		while (!cola.isEmpty()) {
+			//Desencolamos el nodo más proximo de la cola
+			int nodo = cola.poll();
+			//Recorremos por cada nodo que sea adyacente al nodo actual
+			for (int i = 0; i < cantNodos; i++)	{
+				//Si son adyacentes
+				if (matrizAdy[nodo][i] > 0 && matrizAdy[nodo][i] != infinito) {
+					//Si no fue visitado
+					if (estado[i] == false) {
+						//Sumamos las distancias relativas
+						dist[i] = dist[nodo] + 1;
+						//Indicamos que el padre del nodo adyacente es el nodo en el que estamos parados
+						padre[i] = nodo;
+						//Encolamos el nodo adyacente al que estamos analizando
+						cola.add(i);
+					}
+				}
+			}
+		}
+	}
+	
+	/* METODOS PARA EL ALGORITMO DE DFS (Busqueda por profundidad) */
+	
+	public void DFS(int nodoInicial) {
+		boolean estado[] = new boolean[cantNodos];
+		Stack<Integer> pila = new Stack<Integer>();
+				
+		estado[nodoInicial] = true;
+		pila.push(nodoInicial);
+		
+		while (!pila.isEmpty()) {
+			int nodo = pila.pop();
+			//Para cada nodo adyacente al nodo que acabamos de sacar
+			for (int i = 0; i < cantNodos; i++) {
+				if (matrizAdy[nodo][i] > 0 && matrizAdy[nodo][i] != infinito) {
+					//Si no visitamos a ese nodo adyacente ya
+					if (estado[i] == false) {
+						estado[i] = true;
+						pila.push(i);
+					}
+				}
+			}
+		}
 	}
 }
