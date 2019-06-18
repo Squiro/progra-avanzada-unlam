@@ -335,7 +335,7 @@ public class Grafo {
 		Queue<Integer> cola = new LinkedList<>();
 		
 		estado[nodoInicial] = true;
-		cola.add(nodoInicial);
+		cola.offer(nodoInicial);
 		dist[nodoInicial] = 0;
 		
 		while (!cola.isEmpty()) {
@@ -347,12 +347,14 @@ public class Grafo {
 				if (matrizAdy[nodo][i] > 0 && matrizAdy[nodo][i] != infinito) {
 					//Si no fue visitado
 					if (estado[i] == false) {
+						//No queremos volver a pasar por este nodo
+						estado[i] = true;
 						//Sumamos las distancias relativas
 						dist[i] = dist[nodo] + 1;
 						//Indicamos que el padre del nodo adyacente es el nodo en el que estamos parados
 						padre[i] = nodo;
 						//Encolamos el nodo adyacente al que estamos analizando
-						cola.add(i);
+						cola.offer(i);
 					}
 				}
 			}
@@ -423,6 +425,7 @@ public class Grafo {
 		//Matriz de clausura transitiva
 		boolean mct[][] = new boolean[cantNodos][cantNodos];
 		
+		//Inicializamos la matriz 0 con los valores que se hayan en la matrizAdy
 		for (int i = 0; i < cantNodos; i++) {
 			for (int j = 0; j < cantNodos; j++) {
 				if (matrizAdy[i][j] > 0 && matrizAdy[i][j] != infinito) {

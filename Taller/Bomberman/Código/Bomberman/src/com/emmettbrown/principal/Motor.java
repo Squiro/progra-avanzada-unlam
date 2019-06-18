@@ -11,7 +11,7 @@ public class Motor {
 	private JVentanaGrafica miVentana;
 	private boolean iniciado;
 
-	 
+	
 	public Motor() {
 		miMapa = new Mapa();
 		miMapa.generarMapa();
@@ -23,18 +23,18 @@ public class Motor {
 		miVentana = new JVentanaGrafica(miMapa,DefConst.ANCHO, DefConst.ALTO);
 	}
 
-	private void iniciarJuego() {
+	public void iniciarJuego() {
 		this.iniciado = true;
 		miVentana.setVisible(true);
 	}
 
-	private void gameLoop() {
+	public void gameLoop() {
 		long initialTime = System.nanoTime();
 		final double timeF = 1000000000 / DefConst.FPS;
 		double deltaF = 0; // deltaU = 0, 
 
 		    while (iniciado) {
-
+		    	
 		        long currentTime = System.nanoTime();
 		        deltaF += (currentTime - initialTime) / timeF;
 		        initialTime = currentTime;
@@ -53,6 +53,12 @@ public class Motor {
 		iniciado = false;
 	}
 
+	public void jugar(){
+		Motor m = new Motor();
+		m.iniciarJuego();
+		m.gameLoop();
+	}
+	
 	public static void main(String[] args) {
 		Motor m = new Motor();
 		m.iniciarJuego();

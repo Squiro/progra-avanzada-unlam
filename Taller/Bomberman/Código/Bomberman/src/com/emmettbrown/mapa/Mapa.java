@@ -2,11 +2,9 @@ package com.emmettbrown.mapa;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import javax.swing.ImageIcon;
-import com.sun.javafx.geom.Rectangle;
 
 import com.emmettbrown.entidades.Bomba;
 import com.emmettbrown.entidades.Bomberman;
@@ -14,10 +12,11 @@ import com.emmettbrown.entidades.DefConst;
 import com.emmettbrown.entidades.Entidad;
 import com.emmettbrown.entidades.Muro;
 import com.emmettbrown.entidades.Obstaculo;
+import com.sun.javafx.geom.Rectangle;
 
 public class Mapa{
 	
-	private TreeMap<Ubicacion, Entidad> conjuntoEntidades;
+	private HashMap<Ubicacion, Entidad> conjuntoEntidades;
 	private List<Bomberman> listaBomberman;
 	private ImageIcon fondo;	
 	
@@ -29,7 +28,7 @@ public class Mapa{
 	///////////////////////////////////
 
 	public Mapa() {
-		conjuntoEntidades = new TreeMap<Ubicacion, Entidad>();
+		conjuntoEntidades = new HashMap<Ubicacion, Entidad>();
 		listaBomberman = new ArrayList<Bomberman>();
 		this.fondo = new ImageIcon("./src/resources/game-map/fondo.jpg");
 	}
@@ -91,14 +90,14 @@ public class Mapa{
 	// 									//
 	/////////////////////////////////////
 
-	public TreeMap<Ubicacion, Entidad> obtenerListaEntidades() {
+	public HashMap<Ubicacion, Entidad> obtenerListaEntidades() {
 		return conjuntoEntidades;
 	}
 
 	/**
 	 * Busca todas las posibles entidades en una ubicacion.
 	 * 
-	 * @param ubic: la ubicacion a buscar.
+	 * @param ubic la ubicacion a buscar.
 	 * @return
 	 */
 
@@ -119,9 +118,9 @@ public class Mapa{
 	}
 
 	/**
-	 * Devuelve una entidad del Treemap de entidades del mapa.
+	 * Devuelve una entidad del HashMap de entidades del mapa.
 	 * 
-	 * @param ubic: la ubicacion en la que se encuentra la entidad (KEY).
+	 * @param ubic la ubicacion en la que se encuentra la entidad (KEY).
 	 * @return
 	 */
 
@@ -154,9 +153,9 @@ public class Mapa{
 	 * Realiza una serie de chequeos y en caso de validar correctamente, mueve el
 	 * bomberman a una nueva ubicacion en el mapa.
 	 * 
-	 * @param bomberman: el bomberman a mover
-	 * @param despX:     el desplazamiento en el eje X que realizara el bomberman
-	 * @param despY:     el desplazamiento en el eje Y que realizara el bomberman
+	 * @param bomberman el bomberman a mover
+	 * @param despX     el desplazamiento en el eje X que realizara el bomberman
+	 * @param despY     el desplazamiento en el eje Y que realizara el bomberman
 	 */
 
 	private void moverBomberman(Bomberman bomberman, int despX, int despY) {
@@ -174,7 +173,7 @@ public class Mapa{
 	/**
 	 * Chequea si el bomberman puede moverse a la posicion que recibe por parametro.
 	 * 
-	 * @param ubic: ubicacion auxiliar que refleja la posible nueva ubicacion del
+	 * @param ubic ubicacion auxiliar que refleja la posible nueva ubicacion del
 	 *              Bomberman
 	 * @return true: puede moverse, false: no puede moverse
 	 */
@@ -186,7 +185,7 @@ public class Mapa{
 	 * Chequea si no existe ninguna otra entidad colisionable del juego presente en
 	 * la ubicacion que llega por parametro.
 	 * 
-	 * @param ubic: ubicacion a revisar en buscar de entidades
+	 * @param ubic ubicacion a revisar en buscar de entidades
 	 * @return true: no hay ninguna entidad presente, false: hay una entidad en
 	 *         dicha posicion
 	 */
@@ -197,36 +196,90 @@ public class Mapa{
 	
 	/** Chequea si una entidad está colisionando con alguna del conjunto de entidades
 	 * 
-	 * @param ent: la entidad con la que se va a chequear si hay colision
+	 * @param ent la entidad con la que se va a chequear si hay colision
 	 * @return true: hay colision, false: no hay
 	 */
 	
 	public boolean chequearColisiones(Bomberman bomberman, int x, int y) {
 		//Como puede haber mas de una colision al mismo tiempo, usamos una variable booleana
 		//en vez de retornar el valor individual de una colision
-		boolean col = false;		
+		boolean col = false;	
 		
-		//Hitbox del bomberman
-		Rectangle hitBoxBman = new Rectangle(x, y, bomberman.getWidth(), bomberman.getHeight());
+		//Recibo el X, Y del bomberman con un desplazamiento...
+		//Ubicacion del desplazamiento
+		Ubicacion ubicDesp = new Ubicacion(x/DefConst.TILESIZE, y/DefConst.TILESIZE);
 		
-		//Recorremos el conjunto de entidades
-		for(Map.Entry<Ubicacion, Entidad> entry : conjuntoEntidades.entrySet()) {
-			//Agarramos cada entry
-			Entidad ent = entry.getValue();
-			//Y calculamos su rectangulo
-			Rectangle hitBoxEnt = ent.getHitBox();
-			//Vemos si existe una interseccion entre ambos rectangulos
-			Rectangle intersection = hitBoxBman.intersection(hitBoxEnt);		  			
-						
-			//Si la interseccion no es vacia, entonces retornamos que hay colision
-			if (!intersection.isEmpty()) {
-				if (bomberman.manejarColisionCon(ent)) {
-					col = true; 		  
-				}					
+		/* Solo tengo que fijarme si en los casilleros aledaños hay una colisión con el Bomberman
+		* El bomberman siempre va a tener 9 casilleros aledaños:
+		* 	Tres arriba suyo		
+		*	Tres en la misma fila
+		* 	Y tres abajo suyo
+		*/
+		
+		for (int i = 0; i < 3; i++) {
+			//Entidad que se encuentra en la fila superior a la del bomberman
+			Entidad entidadSup = conjuntoEntidades.get(new Ubicacion((ubicDesp.getPosX()-1)+i, ubicDesp.getPosY()-1));		
+			//Entidad que se encuentra en la misma fila que la del bomberman
+			Entidad entidadSame = conjuntoEntidades.get(new Ubicacion((ubicDesp.getPosX()-1)+i, ubicDesp.getPosY()));
+			//Entidad que se encuentra en la fila inferior a la del bomberman
+			Entidad entidadInf = conjuntoEntidades.get(new Ubicacion((ubicDesp.getPosX()-1)+i, ubicDesp.getPosY()+1));
+			
+			//Si existe colision con alguna de las tres...
+			if (hayColision(bomberman, x, y, entidadSup) || hayColision(bomberman, x, y, entidadSame) 
+					|| hayColision(bomberman, x, y, entidadInf)) {
+				col = true;
+			}			
+		}		
+		
+		return col;
+	}
+	
+	/** Chequea que haya una colisión, y en caso de haberlo, maneja las mismas. 
+	 * 
+	 * @param bman
+	 * @param x
+	 * @param y
+	 * @param ent
+	 * @return
+	 */
+	
+	public boolean hayColision(Bomberman bman, int x, int y, Entidad ent)  {
+		if (ent != null) {
+			//Si existe una colision de hitboxes
+			if (interseccionHitBox(bman, x, y, ent)) {
+				//Manejamos la colision con la entidad
+				if (bman.manejarColisionCon(ent)) {
+					return true;
+				}
 			}
 		}
-		//Devolvemos el valor almacenado en col
-		return col;
+		
+		return false;
+	}
+	
+	/** Chequea si existe una intereseccion entre los hitboxes de un bomberman y una entidad cualquiera.
+	 *  
+	 * 
+	 * @param bman el bomberman
+	 * @param x posicion X del bomberman, puede ser la posicion de desplazamiento o no
+	 * @param y posicion Y del bomberman, puede ser la posicion de desplazamiento o no
+	 * @param ent la entidad
+	 * @return true: hay interseccion de hitbox, false: no hay
+	 */
+	
+	public boolean interseccionHitBox(Bomberman bman, int x, int y, Entidad ent) {
+		//Hitbox del bomberman
+		Rectangle hitBoxBman = new Rectangle(x, y, bman.getWidth(), bman.getHeight());
+		//Hitbox de la entidad
+		Rectangle hitBoxEnt = ent.getHitBox();
+		//Vemos si existe una interseccion entre ambos rectangulos
+		Rectangle intersection = hitBoxBman.intersection(hitBoxEnt);
+		//Si la interseccion no es vacia, entonces retornamos que hay colision
+		if (!intersection.isEmpty()) {
+			return true;
+		}
+		
+		return false;		
 	}
 
 	/**
@@ -261,7 +314,7 @@ public class Mapa{
 	/**
 	 * Agrega un bomberman nuevo a la lista de bombermans del mapa.
 	 * 
-	 * @param b: bomberman a agregar
+	 * @param b bomberman a agregar
 	 */
 
 	public void agregarBomberman(Bomberman b) {
@@ -282,7 +335,7 @@ public class Mapa{
 	 * Recorre la lista de bombermans y retorna al que encuentre en la ubicacion
 	 * indicada.
 	 * 
-	 * @param ubic: la ubicacion a buscar
+	 * @param ubic la ubicacion a buscar
 	 * @return instanceof Bomberman si lo encuentra, null si no
 	 */
 
@@ -305,8 +358,8 @@ public class Mapa{
 	 *  es mejor ubicarla. La bomba es agregada al conjunto de entidades del mapa. También se crea un timer
 	 *  que la detona pasados algunos segundos.
 	 * 
-	 * @param x: posición X del bomberman
-	 * @param y: posición Y del bomberman
+	 * @param x posición X del bomberman
+	 * @param y posición Y del bomberman
 	 */
 	
 	public void agregarBomba(int x, int y, Bomberman creador) {		
@@ -326,8 +379,6 @@ public class Mapa{
 				creador.agregarBomba(bomb);
 				conjuntoEntidades.put(bomb.obtenerUbicacion(), bomb);
 				bomb.startTimer(this);
-				/*Temporizador t = new Temporizador(bomb.getMs(), bomb, this);
-				t.iniciarTimer();*/
 				//creador.setNextBomb((System.currentTimeMillis())); 
 			}
 		//}
@@ -336,8 +387,8 @@ public class Mapa{
 	/**
 	 * Explota una bomba a traves de sus coordenadas
 	 * 
-	 * @param posX: coord. eje X
-	 * @param posY: coord. eje Y
+	 * @param posX coord. eje X
+	 * @param posY coord. eje Y
 	 */
 
 	public void explotarBomba(int posX, int posY) {
@@ -350,7 +401,7 @@ public class Mapa{
 	/**
 	 * Explota una bomba a traves de su ubicacion
 	 * 
-	 * @param ubic: la ubicacion en la que se encuentra la bomba
+	 * @param ubic la ubicacion en la que se encuentra la bomba
 	 */
 
 	public void explotarBomba(Ubicacion ubic) {
@@ -363,7 +414,7 @@ public class Mapa{
 	/**
 	 * Explota una bomba a traves de su instancia
 	 * 
-	 * @param bomba: instancia de la bomba a explotar
+	 * @param bomba instancia de la bomba a explotar
 	 */
 	public void explotarBomba(Bomba bomba) {
 		bomba.explotar(this);

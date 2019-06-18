@@ -1,6 +1,7 @@
 package com.emmettbrown.entorno.grafico;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JFrame;
 import com.emmettbrown.controles.Teclado;
@@ -25,6 +26,7 @@ public class JVentanaGrafica extends JFrame {
 		setBounds(20, 20, ancho, alto);
 		setBackground(Color.RED);
 		setLocationRelativeTo(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/resources/icons/bomb.png")));
 		contentPane = new JPanelGrafico(miMapa);
 		contentPane.setBackground(new Color(32,155,221));
 		setContentPane(contentPane);

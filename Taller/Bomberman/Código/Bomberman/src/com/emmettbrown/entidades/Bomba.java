@@ -10,14 +10,14 @@ import com.emmettbrown.mapa.Ubicacion;
 
 public class Bomba extends Entidad {
 	
-	private int segsExplosion;
-	private int rango;
 	private final int ARRABA = 1;
 	private final int IZQDER = -1;
 	private final int ARRIBAPUNTA = 2;
 	private final int ABAJOPUNTA = -2;
 	private final int DERECHAPUNTA = 3;
 	private final int IZQUIERDAPUNTA = -3;
+	private int segsExplosion;
+	private int rango;
 	private Bomberman creador;
 	private boolean ignorarColisionCreador;
 	private Timer timer;
@@ -73,8 +73,7 @@ public class Bomba extends Entidad {
 	 * en false), y crea explosiones en las cuatro direcciones hasta llegar al
 	 * rango maximo... o toparse con un obstaculo/muro
 	 * 
-	 * @param map:
-	 *            el mapa del juego
+	 * @param map El mapa del juego
 	 */
 	@Override
 	public void explotar(Mapa map) {
@@ -150,9 +149,9 @@ public class Bomba extends Entidad {
 	/**
 	 * Crea una explosión en un punto único del mapa.
 	 * 
-	 * @param ubic:
+	 * @param ubic
 	 *            ubicación a crear la explosión
-	 * @param map:
+	 * @param map
 	 *            mapa del juego
 	 * @return true si encontró un obstaculo o un muro, false si no encontró
 	 */
@@ -177,17 +176,17 @@ public class Bomba extends Entidad {
 		
 		//Creamos una explosion (el grafico) en la ubicacion
 		Explosion expl = new Explosion(ubic.getPosX()*DefConst.TILESIZE, ubic.getPosY()*DefConst.TILESIZE, DefConst.TILESIZE, DefConst.TILESIZE);
-		if(dir == ARRABA)
-			expl.cambiarImagenArrAba();
-		if(dir == IZQDER)
+		if(dir == ARRABA) 
+			expl.cambiarImagenArrAba(); 
+		else if(dir == IZQDER)
 			expl.cambiarImagenIzqDer();
-		if(dir == ARRIBAPUNTA)
+		else if(dir == ARRIBAPUNTA)
 			expl.cambiarImagenArribaPunta();
-		if(dir == ABAJOPUNTA)
+		else if(dir == ABAJOPUNTA)
 			expl.cambiarImagenAbajoPunta();
-		if(dir == DERECHAPUNTA)
+		else if (dir == DERECHAPUNTA)
 			expl.cambiarImagenDerechaPunta();
-		if(dir == IZQUIERDAPUNTA)
+		else if(dir == IZQUIERDAPUNTA)
 			expl.cambiarImagenIzquierdaPunta();
 		expl.startTimer(map);
 		map.agregarEntidadAlConjunto(expl.ubicacion, expl);
