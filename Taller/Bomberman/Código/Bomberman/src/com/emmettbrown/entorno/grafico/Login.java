@@ -1,12 +1,10 @@
 package com.emmettbrown.entorno.grafico;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
+import com.emmettbrown.cliente.Cliente;
 import com.emmettbrown.principal.Motor;
 
 import javax.swing.JLabel;
@@ -25,8 +23,9 @@ public class Login extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtUsername;
+	private JPasswordField txtPassword;
+	private Cliente cliente;
 
 	/**
 	 * Launch the application.
@@ -65,29 +64,47 @@ public class Login extends JFrame {
 		lblIngreseContrasea.setBounds(50, 75, 126, 14);
 		contentPane.add(lblIngreseContrasea);
 
-		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
+		txtUsername = new JTextField();
+		txtUsername.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				validarUsuario(textField.getText(),new String (passwordField.getPassword()));
+				validarUsuario(txtUsername.getText(),new String (txtPassword.getPassword()));
 			}
 		});
-		textField.setBounds(197, 47, 107, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtUsername.setBounds(197, 47, 107, 20);
+		contentPane.add(txtUsername);
+		txtUsername.setColumns(10);
 
-		passwordField = new JPasswordField();
-		passwordField.addActionListener(new ActionListener() {
+		txtPassword = new JPasswordField();
+		txtPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				validarUsuario(textField.getText(),new String (passwordField.getPassword()));
+				validarUsuario(txtUsername.getText(),new String (txtPassword.getPassword()));
 			}
 		});
-		passwordField.setBounds(197, 72, 107, 20);
-		contentPane.add(passwordField);
+		txtPassword.setBounds(197, 72, 107, 20);
+		contentPane.add(txtPassword);
 
 		JButton btnIniciarSesin = new JButton("Iniciar Sesi\u00F3n");
 		btnIniciarSesin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				validarUsuario(textField.getText(),new String (passwordField.getPassword()));
+				if (validarUsuario(txtUsername.getText(),new String (txtPassword.getPassword()))) {
+					cliente = new Cliente("localhost", 5000, txtUsername.getText());
+					dispose();
+					Motor m = new Motor(cliente);
+					m.iniciarJuego();
+					m.gameLoop();					
+					/*EventQueue.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								Motor m = new Motor(cliente);
+								m.iniciarJuego();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});*/
+					
+				}
 			}
 		});
 		btnIniciarSesin.setBounds(162, 100, 142, 23);
@@ -98,13 +115,11 @@ public class Login extends JFrame {
 		contentPane.add(btnCrearUsuario);
 	}
 
+	//Esto debería ser server side...
 	public boolean validarUsuario(String user, String pass){
-		if(user.equals("bomber")&&pass.equals("1234")){
-			Motor m = new Motor();
-			m.jugar();
-//			dispose();
+		if (pass.equals("1234")){ //if (user.equals("bomber") && pass.equals("1234")){
 			return true;
-		}else{
+		} else {
 			JOptionPane.showMessageDialog(null, "Incorrecto, intente de nuevo", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

@@ -1,0 +1,18 @@
+package com.emmettbrown.servidor.entidades;
+
+import com.emmettbrown.entidades.DefConst;
+import com.emmettbrown.servidor.entidades.Entidad;
+import com.emmettbrown.servidor.mapa.ServerMap;
+
+public class Muro extends Entidad{
+	
+	public Muro(int posX, int posY) {
+		super(posX, posY, DefConst.TILESIZE, DefConst.TILESIZE);
+		this.destructible = false;
+	}
+
+	@Override
+	public void explotar(ServerMap map) {
+		//Los muros no explotan
+	}
+}

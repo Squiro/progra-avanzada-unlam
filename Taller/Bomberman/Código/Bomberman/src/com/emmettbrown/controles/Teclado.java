@@ -3,7 +3,8 @@ package com.emmettbrown.controles;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Teclado implements KeyListener{
+public class Teclado implements KeyListener {
+	
 	private boolean arriba;
 	private boolean abajo;
 	private boolean izq;

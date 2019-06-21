@@ -13,4 +13,6 @@ public final class DefConst {
 	public static final double TOLCAMBIOPOS = 37.5;
 	public static final double TOLCREAROBST = 0.25;
 	public static final String TITLE = "Bomberman";
+	public static final String IP = "localhost";
+	public static final int PORT = 5000;
 }
