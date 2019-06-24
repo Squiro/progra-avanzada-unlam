@@ -37,6 +37,8 @@ public class Grafo {
 		int nodo = 0;
 		
 		//Desde 0 hasta la cantidad de nodos 
+		//Recorro todos los nodos y busco aquel que no pertenezca al conjunto solución
+		//y cuya distancia sea la menor de todos los otros
 		for (int i = 0; i < matrizAdy.length; i++) {
 			//Si no está incluido en el conjunto de solución, y 
 			//el valor de su distancia es menor que el valor infinito
@@ -52,15 +54,15 @@ public class Grafo {
 	//Djkstra
 	public int[] dijkstra(int nodoInicial) {
 		//Este array almacena los nodos que ya se encuentran en el conjunto de solución.
-		boolean conjSol[] = new boolean[matrizAdy.length];
-		//Distancia. Pesos de las aritas en relacion con claroIni
-		int dist[] = new int[matrizAdy.length];
+		boolean conjSol[] = new boolean[cantNodos];
+		//Distancia. Pesos de las aritas en relacion con nodoIni
+		int dist[] = new int[cantNodos];
 		int infinidad = Integer.MAX_VALUE;
 		this.nodoInicial = nodoInicial;
 		
 		//Inicializamos todas las distancias en infinito
 		//Y todos los nodos predecesores como el nodo inicial
-		for (int i = 0; i < matrizAdy.length; i++) {
+		for (int i = 0; i < cantNodos; i++) {
 			dist[i] = infinidad;
 			predecesores[i] = nodoInicial;
 		}
@@ -69,7 +71,7 @@ public class Grafo {
 		dist[nodoInicial] = 0;
 		
 		//Recorremos todos los nodos
-		for (int i = 0; i < matrizAdy.length; i++) {
+		for (int i = 0; i < cantNodos; i++) {
 			//Hallamos el nodo que tenga menor distancia
 			int nodoActual = hallarNodoMinDist(conjSol, dist);
 			
@@ -77,11 +79,11 @@ public class Grafo {
 			conjSol[nodoActual] = true;
 			
 			//Iteramos por cada nodo adyacente (vecino) del nodoActual
-			for (int vecino = 0; vecino < matrizAdy.length; vecino++) {		
-				if (matrizAdy[nodoActual][vecino] > 0) {
-					//Si el vecino no se encuentra en el conj. de solución, y si existe
-					//adyacencia con el nodoActual
-					if (conjSol[vecino] == false && matrizAdy[nodoActual][vecino] != infinidad) {
+			for (int vecino = 0; vecino < cantNodos; vecino++) {
+				//Si existe adyacencia con el nodoActual
+				if (matrizAdy[nodoActual][vecino] > 0 && matrizAdy[nodoActual][vecino] != infinidad) {
+					//Si el vecino no se encuentra en el conj. de solución 
+					if (conjSol[vecino] == false ) {
 						//El peso del nodoActual, mas el costo de ir desde nodoActual al vecino
 						//D[w] + C[w,i]
 						int minimoTentativo = dist[nodoActual] + matrizAdy[nodoActual][vecino];
