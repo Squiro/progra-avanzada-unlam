@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class Oponente {
 	
 	private int nodoOrigen;	
-	private ArrayList<Integer> aliados;
+	private int cantAliados;
 	
 	public Oponente(int nodo) {
 		this.nodoOrigen = nodo;
-		this.aliados = new ArrayList<Integer>();
+		this.cantAliados = 0;
 	}
 	
 	public int getNodoOrigen() {
@@ -20,11 +20,12 @@ public class Oponente {
 		this.nodoOrigen = nodoOrigen;
 	}
 
-	public void addAliado(int aliado) {
-		this.aliados.add(aliado);
+	public int getCantAliados() {
+		return cantAliados;
 	}
-	
-	public ArrayList<Integer> getAliados() {
-		return this.aliados;
+
+	public void setCantAliados(int cantAliados) {
+		this.cantAliados = cantAliados;
 	}
+
 }
