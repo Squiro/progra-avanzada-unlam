@@ -1,26 +1,28 @@
 package com.emmettbrown.servidor.entidades;
-
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-
-import com.emmettbrown.servidor.entidades.Bomba;
+import com.emmettbrown.servidor.entidades.SvBomba;
 import com.emmettbrown.servidor.entidades.Entidad;
 import com.emmettbrown.servidor.entidades.Explosion;
 import com.emmettbrown.servidor.mapa.ServerMap;
 import com.emmettbrown.mapa.Ubicacion;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import com.sun.javafx.geom.Rectangle;
 
-public class Bomberman extends Entidad {
-	private static int nroBomberman = 0;
+public class SvBomberman extends Entidad implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static int nroBomberman = 0;
 	private int idBomberman;
-	private ArrayList<Bomba> bombas;
+	private ArrayList<SvBomba> bombas;
 
-	public Bomberman(int posX, int posY, int width, int height) {
+	public SvBomberman(int posX, int posY, int width, int height) {
 		super(posX, posY, width, height);
 		idBomberman = nroBomberman++;
 		this.destructible = true;
-		this.bombas = new ArrayList<Bomba>();
+		this.bombas = new ArrayList<SvBomba>();
 	}
 
 	public void morir() {
@@ -38,6 +40,10 @@ public class Bomberman extends Entidad {
 	public void cambiarUbicacion(Ubicacion ubic) {
 		this.ubicacion = ubic;
 	}
+	
+	public int getIdBomberman() {
+		return this.idBomberman;
+	}
 
 	@Override
 	public void explotar(ServerMap map) {
@@ -45,7 +51,7 @@ public class Bomberman extends Entidad {
 	}
 	
 	public void actualizarColBomba() {
-		for (Bomba bomba : bombas) {
+		for (SvBomba bomba : bombas) {
 			Rectangle hitBoxBomber = this.getHitBox();
 			Rectangle hitBoxBomba = bomba.getHitBox();
 			//Vemos si existe una interseccion entre ambos rectangulos
@@ -59,8 +65,8 @@ public class Bomberman extends Entidad {
 	}
 	
 	public boolean manejarColisionCon(Entidad ent) {
-		if (ent instanceof Bomba) {
-			return ((Bomba) ent).hayColisionConCreador(this);
+		if (ent instanceof SvBomba) {
+			return ((SvBomba) ent).hayColisionConCreador(this);
 		}
 		
 		if (ent instanceof Explosion) {
@@ -71,11 +77,16 @@ public class Bomberman extends Entidad {
 		return true;
 	}
 	
-	public void agregarBomba(Bomba bomba) {
+	public void agregarBomba(SvBomba bomba) {
 		this.bombas.add(bomba);
 	}
 	
-	public void removerBomba(Bomba bomba) {
+	public void removerBomba(SvBomba bomba) {
 		this.bombas.remove(bomba);
+	}
+
+	public int obtenerID() {
+	
+		return this.idBomberman;
 	}
 }

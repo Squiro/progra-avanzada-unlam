@@ -1,12 +1,18 @@
 package com.emmettbrown.servidor.entidades;
 
+import java.io.Serializable;
+
 import com.emmettbrown.entidades.DefConst;
 import com.emmettbrown.mapa.Ubicacion;
 import com.emmettbrown.servidor.mapa.ServerMap;
 import com.sun.javafx.geom.Rectangle;
 
-public abstract class Entidad {
+public abstract class Entidad implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected Ubicacion ubicacion;
 	protected boolean esVisible;
 	protected boolean destructible;

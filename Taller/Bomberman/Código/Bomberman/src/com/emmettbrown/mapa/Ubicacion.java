@@ -1,6 +1,12 @@
 package com.emmettbrown.mapa;
 
-public class Ubicacion implements Comparable<Ubicacion> {
+import java.io.Serializable;
+
+public class Ubicacion implements Comparable<Ubicacion> , Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int posX;
 	private int posY;
 

@@ -2,29 +2,20 @@ package com.emmettbrown.servidor.entidades;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
 import javax.swing.Timer;
-
-import com.emmettbrown.servidor.entidades.Bomberman;
+import com.emmettbrown.servidor.entidades.SvBomberman;
 import com.emmettbrown.entidades.DefConst;
 import com.emmettbrown.servidor.entidades.Entidad;
 import com.emmettbrown.servidor.entidades.Explosion;
-import com.emmettbrown.servidor.entidades.Bomba.miOyente;
 import com.emmettbrown.servidor.mapa.ServerMap;
 import com.emmettbrown.mapa.Ubicacion;
 
-public class Bomba extends Entidad {
-	
-	private final int ARRABA = 1;
-	private final int IZQDER = -1;
-	private final int ARRIBAPUNTA = 2;
-	private final int ABAJOPUNTA = -2;
-	private final int DERECHAPUNTA = 3;
-	private final int IZQUIERDAPUNTA = -3;
+public class SvBomba extends Entidad {
+
+	private static final long serialVersionUID = 1L;
 	private int segsExplosion;
 	private int rango;
-	private Bomberman creador;
+	private SvBomberman creador;
 	private boolean ignorarColisionCreador;
 	private Timer timer;
 
@@ -34,7 +25,7 @@ public class Bomba extends Entidad {
 	// 									//
 	/////////////////////////////////////
 
-	public Bomba(int posX, int posY, Bomberman bman) {
+	public SvBomba(int posX, int posY, SvBomberman bman) {
 		super(posX, posY, DefConst.TILESIZE, DefConst.TILESIZE);
 		segsExplosion = 3;
 		this.destructible = true;
@@ -43,12 +34,12 @@ public class Bomba extends Entidad {
 		this.ignorarColisionCreador = true;
 	}
 
-	public Bomba(Ubicacion ubic, Bomberman bman) {
+	public SvBomba(Ubicacion ubic, SvBomberman creador2) {
 		super(ubic, DefConst.TILESIZE, DefConst.TILESIZE);
 		segsExplosion = 3;
 		this.destructible = true;
 		this.rango = 2;
-		this.creador = bman;
+		this.creador = creador2;
 		this.ignorarColisionCreador = true;
 	}
 
@@ -89,7 +80,7 @@ public class Bomba extends Entidad {
 		creador.removerBomba(this);
 		
 		// Creamos una "explosión" en en lugar
-		explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY()), map,0);
+		explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY()), map);
 
 		// Creamos "explosiones" en las cuatro direcciones, dependiendo del rango
 		explosionIzquierda(map);
@@ -104,10 +95,7 @@ public class Bomba extends Entidad {
 		// Se ejecuta hasta llegar al rango maximo, o toparse con un
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosX() - i >= 0;  i++) {
-			if( i == this.rango)
-				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() - i, this.ubicacion.getPosY()), map,IZQUIERDAPUNTA);
-			else
-				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() - i, this.ubicacion.getPosY()), map,IZQDER);
+			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() - i, this.ubicacion.getPosY()), map);
 		}
 	}
 
@@ -117,10 +105,7 @@ public class Bomba extends Entidad {
 		// Se ejecuta hasta llegar al rango maximo, o toparse con un
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosX() + i < DefConst.ANCHOMAPA;  i++) {
-			if(i == this.rango)
-				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() + i, this.ubicacion.getPosY()), map,DERECHAPUNTA);
-			else
-				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() + i, this.ubicacion.getPosY()), map,IZQDER);
+			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX() + i, this.ubicacion.getPosY()), map);
 		}
 	}
 
@@ -130,10 +115,7 @@ public class Bomba extends Entidad {
 		// Se ejecuta hasta llegar al rango maximo, o toparse con un
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosY() - i >= 0 ; i++) {
-			if(i == this.rango)
-				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() - i), map,ARRIBAPUNTA);
-			else
-				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() - i), map,ARRABA);
+			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() - i), map);
 		}
 	}
 
@@ -143,10 +125,7 @@ public class Bomba extends Entidad {
 		// Se ejecuta hasta llegar al rango maximo, o toparse con un
 		// obstaculo/muro siempre dentro del ANCHO y ALTO
 		for (int i = 1; i <= this.rango && !hayObstaculo && this.ubicacion.getPosY() + i <= DefConst.ALTOMAPA; i++) {
-			if(i == this.rango)
-				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() + i), map,ABAJOPUNTA);
-			else
-				hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() + i), map,ARRABA);
+			hayObstaculo = explosion(new Ubicacion(this.ubicacion.getPosX(), this.ubicacion.getPosY() + i), map);
 		}
 	}
 
@@ -160,15 +139,16 @@ public class Bomba extends Entidad {
 	 * @return true si encontró un obstaculo o un muro, false si no encontró
 	 */
 
-	private boolean explosion(Ubicacion ubic, ServerMap map,int dir) {		
+	private boolean explosion(Ubicacion ubic, ServerMap map) {		
 		// Buscamos una entidad en dicha ubicación. Solo puede haber una, así
 		// que buscamos la que esté ahí
 		Entidad ent = map.obtenerEntidadDelConjunto(ubic);
-		Bomberman bomber = map.obtenerBombermanEn(ubic);
+		SvBomberman bomber = map.obtenerBombermanEn(ubic);
 
 		// en la ubicacion no explota.
 		if (bomber != null) {
 			bomber.morir();
+			return true;
 		}
 
 		//ent != this no queremos explotarnos de vuelta a nosotros mismos
@@ -180,18 +160,6 @@ public class Bomba extends Entidad {
 		
 		//Creamos una explosion (el grafico) en la ubicacion
 		Explosion expl = new Explosion(ubic.getPosX()*DefConst.TILESIZE, ubic.getPosY()*DefConst.TILESIZE, DefConst.TILESIZE, DefConst.TILESIZE);
-		/*if(dir == ARRABA) 
-			expl.cambiarImagenArrAba(); 
-		else if(dir == IZQDER)
-			expl.cambiarImagenIzqDer();
-		else if(dir == ARRIBAPUNTA)
-			expl.cambiarImagenArribaPunta();
-		else if(dir == ABAJOPUNTA)
-			expl.cambiarImagenAbajoPunta();
-		else if (dir == DERECHAPUNTA)
-			expl.cambiarImagenDerechaPunta();
-		else if(dir == IZQUIERDAPUNTA)
-			expl.cambiarImagenIzquierdaPunta();*/
 		expl.startTimer(map);
 		map.agregarEntidadAlConjunto(expl.ubicacion, expl);
 		
@@ -202,7 +170,7 @@ public class Bomba extends Entidad {
 		return this.segsExplosion * 1000;
 	}
 	
-	public boolean hayColisionConCreador(Bomberman bman) {
+	public boolean hayColisionConCreador(SvBomberman bman) {
 		if (bman.equals(this.creador)) {
 			return !this.ignorarColisionCreador;
 		}
@@ -221,9 +189,9 @@ public class Bomba extends Entidad {
 	
 	class miOyente implements ActionListener {
 		private ServerMap map;
-		private Bomba bomba;
+		private SvBomba bomba;
 		
-		public miOyente(ServerMap map, Bomba bomba) {
+		public miOyente(ServerMap map, SvBomba bomba) {
 			this.map = map;
 			this.bomba = bomba;
 		}

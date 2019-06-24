@@ -1,15 +1,13 @@
 package com.emmettbrown.entorno.grafico;
 
 import java.awt.Color;
-import java.awt.Toolkit;
-import java.util.List;
+
 import javax.swing.JFrame;
 
 import com.emmettbrown.cliente.Cliente;
+import com.emmettbrown.cliente.ListenerThread;
 import com.emmettbrown.controles.Teclado;
-import com.emmettbrown.entidades.Bomberman;
 import com.emmettbrown.entidades.DefConst;
-import com.emmettbrown.mapa.Mapa;
 
 public class JVentanaGrafica extends JFrame {
 	/**
@@ -18,38 +16,34 @@ public class JVentanaGrafica extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanelGrafico contentPane;
 	private Teclado teclado;
-	//private Bomberman[] bomberman;
-	//private Mapa miMapa;
-	//private Bomberman miBomber;
 	private Cliente cliente;
 
-	public JVentanaGrafica(Mapa miMapa, int ancho, int alto, Cliente cliente) {
+	public JVentanaGrafica(int ancho, int alto, Cliente cliente) {
 		super(DefConst.TITLE);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(20, 20, ancho, alto);
 		setBackground(Color.RED);
 		setLocationRelativeTo(null);
-//		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/resources/icons/bomb.png")));
-		
-		
-		contentPane = new JPanelGrafico(miMapa, cliente);
+
+		contentPane = new JPanelGrafico(cliente);
 		contentPane.setBackground(new Color(32,155,221));
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 		
-		/*List<Bomberman> miLista = miMapa.obtenerListaBomberman();
-		bomberman = miLista.toArray(new Bomberman[miLista.size()]);*/
-		//this.miMapa = miMapa;
-		//this.miBomber = miBomber;
 		
-		this.teclado = new Teclado();
 		this.cliente = cliente;
+		this.teclado = new Teclado(cliente);
 		
 		addKeyListener(teclado);
+		
+		RefreshThread thread = new RefreshThread(this,cliente);
+		thread.start();
+		ListenerThread listener = new ListenerThread(this.cliente);
+		listener.start();
 	}
 
-	public void refrescar() {
+	/*public void refrescar() {
 		
 		if (this.teclado.isArriba()) {
 			
@@ -90,5 +84,9 @@ public class JVentanaGrafica extends JFrame {
 //		}
 
 		repaint();
+	}*/
+	
+	public Teclado getTeclado() {
+		return this.teclado;
 	}
 }

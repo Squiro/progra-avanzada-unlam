@@ -1,8 +1,10 @@
 package com.emmettbrown.mensajes;
 
-import com.emmettbrown.principal.*;
-import com.emmettbrown.entidades.Bomberman;
+import java.util.List;
+import com.emmettbrown.cliente.Cliente;
 import com.emmettbrown.entidades.DefConst;
+import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.servidor.entidades.SvBomberman;
 
 public class MsgAgregarBomberman extends Msg {
 
@@ -10,22 +12,40 @@ public class MsgAgregarBomberman extends Msg {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int x;
-	private int y;
+	private List<SvBomberman> listaBomberman; 
+	private int nroCliente;
 
-	public MsgAgregarBomberman(int x, int y) {
-		this.x = x;
-		this.y = y;
-		
+	public MsgAgregarBomberman(List<SvBomberman> lista, int nroCliente) {
+		this.listaBomberman = lista;
+		this.nroCliente = nroCliente;
 	}
 	
 	@Override
 	public Object realizarAccion(Object obj) {
-		Motor motor = ((Motor) obj);
+		Cliente cliente = ((Cliente) obj);
+		List<Bomberman> lista = cliente.getMapa().obtenerListaBomberman();
 		
-		motor.getCliente().setBomber(new Bomberman(x, y, DefConst.DEFAULTWIDTH, DefConst.DEFAULTHEIGHT));
-		motor.getMapa().agregarBomberman(motor.getCliente().getBomber());
 		
+		for (SvBomberman bomberman : listaBomberman) {
+			boolean creado = false;
+			
+			for (Bomberman bman : lista) {
+				if (bomberman.getIdBomberman() == bman.getIdBomberman()) {
+					creado = true;
+				}
+			}
+			
+			if (!creado) {
+				Bomberman bomber = new Bomberman(bomberman.getX(), bomberman.getY(), DefConst.DEFAULTWIDTH, DefConst.DEFAULTHEIGHT);
+				
+				if (cliente.getNroCliente() == nroCliente) {
+					cliente.setBomber(bomber);
+				}
+				
+				cliente.getMapa().agregarBomberman(bomber);
+			}
+				
+		}
 		return null;
 	}
 

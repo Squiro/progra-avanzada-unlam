@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import com.emmettbrown.cliente.Cliente;
-import com.emmettbrown.principal.Motor;
+import com.emmettbrown.entidades.DefConst;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+
 
 public class Login extends JFrame {
 
@@ -82,28 +83,17 @@ public class Login extends JFrame {
 		});
 		txtPassword.setBounds(197, 72, 107, 20);
 		contentPane.add(txtPassword);
-
+		txtUsername.setText("Nico");
+		txtPassword.setText("1234");
 		JButton btnIniciarSesin = new JButton("Iniciar Sesi\u00F3n");
 		btnIniciarSesin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (validarUsuario(txtUsername.getText(),new String (txtPassword.getPassword()))) {
 					cliente = new Cliente("localhost", 5000, txtUsername.getText());
-					dispose();
-					Motor m = new Motor(cliente);
-					m.iniciarJuego();
-					m.gameLoop();					
-					/*EventQueue.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								Motor m = new Motor(cliente);
-								m.iniciarJuego();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					});*/
-					
+
+					JVentanaGrafica ventana = new JVentanaGrafica(DefConst.ANCHO, DefConst.ALTO, cliente);
+					ventana.setVisible(true);
+					dispose();					
 				}
 			}
 		});

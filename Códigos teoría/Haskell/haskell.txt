@@ -1,0 +1,214 @@
+Haskell utiliza el paradigma funcional. 
+
+Las funciones son como los objetos en otros lenguajes. Son una "cosa" mas del lenguaje. Las funciones utilizan la evaluación tardía.
+
+Idempotencia: una funcion que cuando se aplica genera cualquier resultado en la misma condicion. Una cosa siempre va a dar el mismo valor sobre la misma peticion.
+
+
+-----
+https://tio.run/#haskell 
+
+Ejemplo:
+
+square(x) = x * x
+main = print(square 42)
+
+square(x) es una funcion (definida informalmente) que recibe un parametro. Lo que hace es asignar una conversion, es decir, cuando reciba un x, lo convierte a x*x.
+
+En si, este ejemplo esta haciendo un print(42 * 42).
+
+----
+
+Evaluacion tardia:
+
+square(1 + 2)
+=> (1 + 2) * (1 + 2)
+=> 3 * (1+2)
+=> 3 * 3
+=> 9
+
+---
+
+(&&) :: Bool -> Bool -> Bool
+True && x = x
+False && x = False
+
+Lo que estoy haciendo es simplificar el comportamiento de &&. O en sí, le estoy diciendo cómo comportarse cuando recibe dos parámetros booleanos. 
+
+Si el primero es true, el resultado es el del segundo.
+
+---
+
+lst = [2, 3, 5, 7, 11]
+total = sum(map (3*) lst)
+main = print (total)
+
+
+total es una funcion que es una composicion de funciones. Está componiendo la funcion sum, con la funcion map, con el multiplicar, todo sobre lst.
+
+map recibe dos parametros: que voy a hacer sobre qué. Es una funcion predefinda de Haskell.
+
+sum suma todos los valores de una colección mapeable.
+
+
+----
+
+Funciones propias
+
+sumatoria :: Integer -> Integer
+sumatoria 0 = 0
+sumatoria n = n + sumatoria(n - 1)
+
+main = print (sumatoria 10)
+
+
+Hay que entender que estamos convirtiendo un entero en un entero. Es decir, convertimos un numero entrada en otro. No trabajamos sobre el mismo.
+
+---
+
+hailstone :: Integer -> Integer
+hailstone n
+ | n `mod` 2 == 0 = n `div` 2 (si el mod es verdadero, se ejecuta lo que esta al lado)
+ | otherwise = 3 * n + 1 (si no... se ejecuta esto)
+
+main = print(hailstone 3)
+
+Los | indican patrones.
+
+---
+
+fibonacci :: Integer -> Integer
+fibonacci n
+ | n == 0 = 0
+ | n == 1 = 1
+ |otherwise = fibonacci(n-1) + fibonacci(n-2)
+
+main = print(fibonacci 8)
+
+O TAMBIEN
+
+fib 0 = 0
+fib 1 = 1
+fib n = fib(n-1) + fib (n-2)
+
+main = print (fib 10)
+
+-----
+
+misterio :: [Integer] -> Integer
+misterio [] = 0
+misterio (x:xs) = 1 + misterio xs
+main = print (misterio [1, 2, 3, 4, 5])
+
+x:xs me ayuda a definir una forma: x = un elemento, xs = todos los otros
+
+x es el primer elemento de la lista, xs es todos menos el primero. Basicamente estamos separando/diviendo la lista entre un elemento y todo el resto.
+
+Lo que hace es contar la cantidad de elementos de la lista.
+
+--
+
+
+misterioDos :: [Integer] -> Integer
+misterioDos [] = []
+misterioDos [x] = [x * x]
+misterioDos (x:xs) = (x*x) : (misterioDos xs)
+
+El operador : me permite agregar elementos a la lista, adelante de todo. O tambien me permite dividir listas. 
+
+10 : 1, 2, 3 se transforma en = 10, 1, 2, 3
+
+--
+
+Contar pares de una lista:
+
+contar :: Integer -> Integer
+contar x = case (x `mod` 2) of
+ 0 -> 1
+ _ -> 0
+
+contarPares :: [Integer] -> Integer
+contarPares [] = 0
+contarPares (x:xs) = (contar x) + contarPares xs
+
+main = print (contarPares[1,2,3,4,5,6])
+
+
+--
+
+Operadores : y ++:
+
+p = x:xs OPERACION = CONCATENA AL PRINCIPIO
+
+(p:ps) = [1, 2, 8, 15] ---> p = 1		MATCHING
+			    ps = [2, 8, 15]
+
+++ concantena dos listas
+
+---
+
+
+Queue / dequeue de colas:
+
+lst = [1,2,3,4,5]
+
+queue :: Integer -> [Integer] -> [Integer]
+queue x xs = reverse (x:(reverse xs))
+
+O TAMBIEN
+
+queue x xs = xs++[x]
+
+dequeue :: [Integer] -> Integer
+dequeue (x:xs) = x
+
+main = print(queue 1 lst)
+
+Push y pop de pila: 
+
+lst = [1,2,3,4,5]
+
+push :: Integer -> [Integer] -> [Integer]
+push x xs = (x:xs)
+
+pop :: [Integer] -> Integer
+pop (_:xs) = (x)
+
+main = print(pop lst)
+
+---
+
+Currying: se componenen funciones que ya estan evaluadas.
+
+Funciones parcialmente evaluadas.
+
+function x y = x + y
+fun y = function 3 y
+fun 2
+
+
+----
+
+Segundo valor de una lista: 
+
+(_:y:xs) = y
+
+--
+
+myfac :: Integer -> Integer
+myfac 0 = 2
+myfac n = n * myfac(n-1)
+myfac 6
+
+myfac 6
+
+=> 6 * myfac(6-1)
+=> 6 * 5 * myfac(5-1)
+=> 6 * 5 * 4 * myfac(4-1)
+=> 6 * 5 * 4 * myfac(3-1)
+...
+=> 6 * 5 * 4 * 3 * 2 * 1 * myfac(1-1)
+=> 6 * 5 * 4 * 3 * 2 * 1 * 2
+=> 30 * 4 * 3 * 2 * 1 * 2
+...
+=> ____ * 2

@@ -165,6 +165,7 @@ public class Bomba extends Entidad {
 		// en la ubicacion no explota.
 		if (bomber != null) {
 			bomber.morir();
+			return true;
 		}
 
 		//ent != this no queremos explotarnos de vuelta a nosotros mismos

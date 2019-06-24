@@ -1,6 +1,5 @@
 package com.emmettbrown.entorno.grafico;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,8 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.emmettbrown.cliente.Cliente;
 import com.emmettbrown.entidades.DefConst;
-import com.emmettbrown.mensajes.MsgActualizarLista;
-import com.emmettbrown.principal.Motor;
 
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
@@ -56,15 +53,12 @@ public class JVentanaSala extends JFrame {
 		contentPane.add(list);
 		DefaultListModel<String> df = new DefaultListModel<>();
 		list.setModel(df);
-		cliente.enviarMsg(new MsgActualizarLista(df));
+//		cliente.enviarMsg(new MsgActualizarLista(df));
 		JButton btnCrearPartida = new JButton("Crear partida");
 		btnCrearPartida.addActionListener(new ActionListener() {
 			
 
-			public void actionPerformed(ActionEvent e) {
-				Motor m = new Motor("",null);
-				m.iniciarJuego();
-				m.gameLoop();			
+			public void actionPerformed(ActionEvent e) {			
 			}
 		});
 		btnCrearPartida.setBounds(134, 212, 162, 23);

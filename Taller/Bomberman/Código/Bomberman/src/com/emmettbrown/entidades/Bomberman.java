@@ -32,12 +32,12 @@ public class Bomberman extends Entidad {
 		esVisible = false;
 	}
 	
-	public void cambiarPosX(double despX) {
-		this.x += despX;
+	public void cambiarPosX(int despX) {
+		this.x = despX;
 	}
 	
-	public void cambiarPosY(double despY) {
-		this.y += despY;
+	public void cambiarPosY(int despY) {
+		this.y = despY;
 	}
 	
 	public void cambiarImagenIzquierda() {
@@ -55,6 +55,10 @@ public class Bomberman extends Entidad {
 	
 	public void cambiarUbicacion(Ubicacion ubic) {
 		this.ubicacion = ubic;
+	}
+	
+	public int getIdBomberman() {
+		return this.idBomberman;
 	}
 
 	@Override

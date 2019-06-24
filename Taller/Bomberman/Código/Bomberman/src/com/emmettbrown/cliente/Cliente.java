@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.net.Socket;
 
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mensajes.Msg;
 
 public class Cliente implements Serializable {
@@ -17,16 +18,27 @@ public class Cliente implements Serializable {
 	private String mensajeError;
 	private transient Socket clientSocket;
 	private Bomberman bomber;
+	private Mapa mapa;
+	private int nroCliente;
 
 	public Cliente(String ip, int puerto, String username) {
 		try {
 			this.host = ip;
 			this.clientSocket = new Socket(host, puerto);
 			this.username = username;
+			this.mapa = new Mapa();
 		} catch (IOException e) {
 			this.mensajeError = "No se encontro ningun servidor al cual conectarse!";
 			System.out.println(mensajeError);
 		}
+	}
+	
+	public int getNroCliente() {
+		return this.nroCliente;
+	}
+	
+	public void setNroCliente(int num) {
+		this.nroCliente = num;
 	}
 	
 	public Bomberman getBomber() {
@@ -35,6 +47,14 @@ public class Cliente implements Serializable {
 	
 	public void setBomber(Bomberman bomber) {
 		this.bomber = bomber;
+	}
+	
+	public void setMapa(Mapa mapa) {
+		this.mapa = mapa;
+	}
+	
+	public Mapa getMapa() {
+		return this.mapa;
 	}
 	
 	public String getUsername() {

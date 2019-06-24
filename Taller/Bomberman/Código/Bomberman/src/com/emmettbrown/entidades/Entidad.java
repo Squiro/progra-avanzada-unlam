@@ -52,7 +52,7 @@ public abstract class Entidad {
 	}
 	
 	public Ubicacion obtenerUbicacion() {
-		return this.ubicacion;
+		return new Ubicacion(this.x/DefConst.TILESIZE, this.y/DefConst.TILESIZE);
 	}
 	
 	public int getX() {

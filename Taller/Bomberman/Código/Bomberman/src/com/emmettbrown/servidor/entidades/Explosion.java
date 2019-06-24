@@ -1,9 +1,10 @@
 package com.emmettbrown.servidor.entidades;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
+
 import javax.swing.Timer;
 
 import com.emmettbrown.servidor.entidades.Entidad;
@@ -13,6 +14,10 @@ import com.emmettbrown.mapa.Ubicacion;
 
 public class Explosion extends Entidad {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final static int DURACION = 1;
 	private Timer t;
 
