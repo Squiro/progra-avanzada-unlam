@@ -1,7 +1,6 @@
 package vecinos;
 
 import java.io.FileNotFoundException;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,8 +31,8 @@ public class Enfrentamiento {
 	}
 	
 	public void resolver() {
-		ArrayList<Nodo> posiblesAliadosDeX = grafo.DFS(0, 4);
-		ArrayList<Nodo> posiblesAliadosDeY = grafo.DFS(4, 0);
+		ArrayList<Nodo> posiblesAliadosDeX = grafo.BFS(priOponente, segOponente);
+		ArrayList<Nodo> posiblesAliadosDeY = grafo.BFS(segOponente, priOponente);
 		
 		hallarCadenasMaximasPorNodo(posiblesAliadosDeX);
 		hallarCadenasMaximasPorNodo(posiblesAliadosDeY);
@@ -42,10 +41,20 @@ public class Enfrentamiento {
 		
 		for (int i = 0; i < posiblesAliadosDeX.size(); i++) {
 			if (i != priOponente && i != segOponente) {
-				if (posiblesAliadosDeX.get(i).getCadenaMax().getValor() > posiblesAliadosDeY.get(i).getCadenaMax().getValor()) {
-					aliadosX++;
-				} else {
-					aliadosY++;
+				//Si las dos cadenas existen, debemos decidir a quien pertenece el aliado
+				if(posiblesAliadosDeX.get(i).getCadenaMax() != null && posiblesAliadosDeY.get(i).getCadenaMax() != null) {
+					if (posiblesAliadosDeX.get(i).getCadenaMax().getValor() > posiblesAliadosDeY.get(i).getCadenaMax().getValor()) {
+						aliadosX++;
+					} else if (posiblesAliadosDeX.get(i).getCadenaMax().getValor() < posiblesAliadosDeY.get(i).getCadenaMax().getValor()){
+						aliadosY++;
+					}
+				}
+				//En cambio si una de las cadenas no existe y la otra sí, debemos ver a qué aliado pertenece esa cadena
+				else {
+					if(posiblesAliadosDeX.get(i).getCadenaMax() == null && posiblesAliadosDeY.get(i).getCadenaMax() != null)
+						aliadosY++;
+					else if (posiblesAliadosDeX.get(i).getCadenaMax() != null && posiblesAliadosDeY.get(i).getCadenaMax() == null)
+						aliadosX++;
 				}
 			}
 			
