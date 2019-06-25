@@ -1,8 +1,6 @@
 package vecinos;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 public class Grafo {
@@ -24,40 +22,9 @@ public class Grafo {
 		return 1;
 	}
 	
-	public boolean[][] warshall() {
-		boolean mct[][] = new boolean[cantNodos][cantNodos];
-		
-		//Inicialiamos la matriz de clausura transitiva con los valores originales
-		for (int i = 0; i < cantNodos; i++) {
-			for (int j = 0; j < cantNodos; j++) {
-				if (matrizAdy[i][j] > 0 && matrizAdy[i][j] != infinito) {
-					mct[i][j] = true;
-				} else {
-					mct[i][j] = false;
-				}
-			}
-		}
-		
-		//Recorremos cantNodos veces
-		for (int k = 0; k < cantNodos; k++) {
-			//Por cada nodo...
-			for (int i = 0; i < cantNodos; i++) {
-				//Recorremos sus posibles adyacentes...
-				for (int j = 0; j < cantNodos; j++) {
-					//Si existe una conexión directa... o si existe un camino alternativo pasando por el nodo K
-					if (mct[i][j] || mct[i][k] && mct[k][j]) {
-						mct[i][j] = true;
-					}
-				}
-			}
-		}
-		
-		return mct;		
-	}
-	
 	public ArrayList<Nodo> DFS(int nodoInicial, int nodoOponente) {
 		boolean estado[] = new boolean[cantNodos];
-		int dist[] = new int[cantNodos];
+		//int dist[] = new int[cantNodos];
 		int padre[] = new int[cantNodos];
 		Stack<Integer> pila = new Stack<Integer>();
 		ArrayList<Nodo> nodos = new ArrayList<Nodo>();
@@ -116,47 +83,5 @@ public class Grafo {
 	}
 	
 	
-	public int[] BFS (int nodoInicial) {
-		//Estado que nos indica si ya está recorrido o no
-		boolean estado[] = new boolean[cantNodos];
-		//Vector de costos/distancias
-		int dist[] = new int[cantNodos];
-		int padre[] = new int[cantNodos];
-		//Cola en la que vamos a almacenar los nodos que hallemos durante el BFS
-		Queue<Integer> cola = new LinkedList<>();
-		
-		estado[nodoInicial] = true;
-		//Pongo el nodo inicial
-		cola.offer(nodoInicial);
-		dist[nodoInicial] = 0;
-		
-		//Mientras haya nodos en la cola
-		while (!cola.isEmpty()) {
-			//Desacolamos el primer nodo
-			int nodo = cola.poll();
-			int min;
-			
-			//Recorremos por cada nodo adyacente
-			for (int i = 0; i < cantNodos; i++) {
-				if (matrizAdy[nodo][i] > 0 && matrizAdy[nodo][i] != infinito) {
-					//Si no lo visitamos ya
-					if (estado[i] == false) {
-						dist[i] =  matrizAdy[nodo][i];						
-						estado[i] = true;
-						padre[i] = nodo;
-						//Acolamos el nodo adyacente i para poder recorer sus adyacentes luego
-						cola.offer(i);						
-					} else {
-						
-												
-					}
-				}
-			}
-			
-		}
-		
-		return dist;
-		
-	}
 	
 }
