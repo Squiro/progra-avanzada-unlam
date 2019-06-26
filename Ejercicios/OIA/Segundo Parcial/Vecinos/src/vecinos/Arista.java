@@ -2,6 +2,12 @@ package vecinos;
 
 public class Arista {
 	
+	/** 
+	 * La clase Arista es una clase que simplemente se encarga de representar, en codigo, lo que es una arista.
+	 * Posee un nodo origen, un nodo destino, y el costo/peso de la arista en sí.
+	 * 
+	 */
+	
 	private int origen;
 	private int destino;
 	private int costo;

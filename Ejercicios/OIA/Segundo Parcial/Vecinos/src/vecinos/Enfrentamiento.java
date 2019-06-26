@@ -8,6 +8,16 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+//			|\---/|
+//			| ,_, |
+//			 \_`_/-..----.
+//			___/ `   ' ,""+ \  
+//			(__...'   __\    |`.___.';
+//			(_,...'(_,.`__)/'.....+
+//
+//			NO REMOVER AL GATO, APARENTEMENTE EL CODIGO NO ANDA SIN EL GATO
+
 public class Enfrentamiento {
 	
 	private Grafo grafo;
@@ -31,34 +41,36 @@ public class Enfrentamiento {
 	}
 	
 	public void resolver() {
-		ArrayList<Nodo> posiblesAliadosDeX = grafo.BFS(priOponente, segOponente);
-		ArrayList<Nodo> posiblesAliadosDeY = grafo.BFS(segOponente, priOponente);
+		//Realizamos un BFS para obtener todas las cadenas vistas desde el vecino X, hacia todos los nodos
+		//(con obvias excepciones tales como las cadenas que pasen por el oponente, o aquellas que se formen consigo mismo) 
+		ArrayList<Nodo> cadenasDesdeX = grafo.BFS(priOponente, segOponente);
+		ArrayList<Nodo> cadenasDesdeY = grafo.BFS(segOponente, priOponente);
 		
-		hallarCadenasMaximasPorNodo(posiblesAliadosDeX);
-		hallarCadenasMaximasPorNodo(posiblesAliadosDeY);
-		
-		//int aliadosX = 0, aliadosY = 0;
-		
-		for (int i = 0; i < posiblesAliadosDeX.size(); i++) {
+		//Buscamos la cadena máxima por cada uno de los nodos, para ambas listas de nodos
+		hallarCadenasMaximasPorNodo(cadenasDesdeX);
+		hallarCadenasMaximasPorNodo(cadenasDesdeY);
+				
+		//Ejecutamos un ciclo que recorra todos los nodos de las listas
+		for (int i = 0; i < grafo.getCantNodos(); i++) {
 			if (i != priOponente && i != segOponente) {
 				//Si las dos cadenas existen, debemos decidir a quien pertenece el aliado
-				if(posiblesAliadosDeX.get(i).getCadenaMax() != null && posiblesAliadosDeY.get(i).getCadenaMax() != null) {
-					if (posiblesAliadosDeX.get(i).getCadenaMax().getValor() > posiblesAliadosDeY.get(i).getCadenaMax().getValor()) {
+				if(cadenasDesdeX.get(i).getCadenaMax() != null && cadenasDesdeY.get(i).getCadenaMax() != null) {
+					if (cadenasDesdeX.get(i).getCadenaMax().getValor() > cadenasDesdeY.get(i).getCadenaMax().getValor()) {
 						aliadosX++;
-					} else if (posiblesAliadosDeX.get(i).getCadenaMax().getValor() < posiblesAliadosDeY.get(i).getCadenaMax().getValor()){
+					} else if (cadenasDesdeX.get(i).getCadenaMax().getValor() < cadenasDesdeY.get(i).getCadenaMax().getValor()){
 						aliadosY++;
 					}
 				}
 				//En cambio si una de las cadenas no existe y la otra sí, debemos ver a qué aliado pertenece esa cadena
 				else {
-					if(posiblesAliadosDeX.get(i).getCadenaMax() == null && posiblesAliadosDeY.get(i).getCadenaMax() != null)
+					//Si la cadena existente es la del vecino Y... le sumamos un aliado
+					if(cadenasDesdeX.get(i).getCadenaMax() == null && cadenasDesdeY.get(i).getCadenaMax() != null)
 						aliadosY++;
-					else if (posiblesAliadosDeX.get(i).getCadenaMax() != null && posiblesAliadosDeY.get(i).getCadenaMax() == null)
+					//Si no, le sumamos un aliado al vecino X
+					else if (cadenasDesdeX.get(i).getCadenaMax() != null && cadenasDesdeY.get(i).getCadenaMax() == null)
 						aliadosX++;
 				}
 			}
-			
-
 		}
 	}
 	
@@ -81,11 +93,11 @@ public class Enfrentamiento {
 		Scanner sc = new Scanner(new FileReader(path));
 		
 		int cantVecinos = sc.nextInt(), cantLazos = sc.nextInt();
-		//Oponente pri = new Oponente(sc.nextInt()-1), seg = new Oponente(sc.nextInt()-1);
 		int pri = sc.nextInt()-1, seg = sc.nextInt()-1;
 		
 		int matrizAdy[][] = new int[cantVecinos][cantVecinos];
 		
+		//Creamos la matriz de adyacencia
 		for (int i = 0; i < cantLazos; i++) {
 			int nodoOrig = sc.nextInt()-1, nodoDest = sc.nextInt()-1, costo = sc.nextInt();
 			matrizAdy[nodoOrig][nodoDest] = costo;
@@ -104,7 +116,4 @@ public class Enfrentamiento {
 		
 		out.close();		
 	}
-	
-	
-
 }
