@@ -35,9 +35,9 @@ public class Enfrentamiento {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Enfrentamiento enf = leerArchivo("entrada.in");
+		Enfrentamiento enf = leerArchivo("vecinos5.in");
 		enf.resolver();
-		enf.escribirArchivo("salida.out");
+		enf.escribirArchivo("vecinos5.out");
 	}
 	
 	public void resolver() {

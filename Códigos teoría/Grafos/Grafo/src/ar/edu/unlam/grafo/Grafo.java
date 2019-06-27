@@ -57,13 +57,13 @@ public class Grafo {
 		boolean conjSol[] = new boolean[cantNodos];
 		//Distancia. Pesos de las aritas en relacion con nodoIni
 		int dist[] = new int[cantNodos];
-		int infinidad = Integer.MAX_VALUE;
+		//int infinidad = Integer.MAX_VALUE;
 		this.nodoInicial = nodoInicial;
 		
 		//Inicializamos todas las distancias en infinito
 		//Y todos los nodos predecesores como el nodo inicial
 		for (int i = 0; i < cantNodos; i++) {
-			dist[i] = infinidad;
+			dist[i] = infinito;
 			predecesores[i] = nodoInicial;
 		}
 		
@@ -81,7 +81,7 @@ public class Grafo {
 			//Iteramos por cada nodo adyacente (vecino) del nodoActual
 			for (int vecino = 0; vecino < cantNodos; vecino++) {
 				//Si existe adyacencia con el nodoActual
-				if (matrizAdy[nodoActual][vecino] > 0 && matrizAdy[nodoActual][vecino] != infinidad) {
+				if (matrizAdy[nodoActual][vecino] > 0 && matrizAdy[nodoActual][vecino] != infinito) {
 					//Si el vecino no se encuentra en el conj. de solución 
 					if (conjSol[vecino] == false ) {
 						//El peso del nodoActual, mas el costo de ir desde nodoActual al vecino
@@ -179,7 +179,7 @@ public class Grafo {
 			Arista ari = pq.remove();
 			
 			//Chequeamos si añadir esta arista nos forma un ciclo. 
-			//Para eso debemos buscar el padre de ambas aristas y preguntar si es el mismo.
+			//Para eso debemos buscar el padre de ambos nodos que conforman la arista y preguntar si es el mismo.
 			int padre_x = find(padre, ari.getOrigen());
 			int padre_y = find(padre, ari.getDestino());
 			
@@ -395,7 +395,7 @@ public class Grafo {
 	public int[][] floyd() {
 		int dist[][] = new int[cantNodos][cantNodos];
 		dist = matrizAdy.clone();
-		
+			
 		//Esto no tendría que ser necesario si las matrices son cargadas con ceros en las diag. principales
 		for (int i = 0; i < cantNodos; i++) {
 			dist[i][i] = 0;
@@ -407,7 +407,7 @@ public class Grafo {
 		for (int k = 0; k < cantNodos; k++) {
 			//Recorremos todos los nodos...
 			for (int i = 0; i < cantNodos; i++) {
-				//Y por cada nodo adyacente al que estamos parado...
+				//Y seteamos nuestra vista en los demás nodos restantes...
 				for (int j = 0; j < cantNodos; j++) {
 					//Preguntamos si la distancia pasando por un nodo K es menor que la distancia original 
 					if (dist[i][k] + dist[k][j] < dist[i][j]) {
@@ -434,16 +434,16 @@ public class Grafo {
 			for (int j = 0; j < cantNodos; j++) {
 				if (matrizAdy[i][j] > 0 && matrizAdy[i][j] != infinito) {
 					mct[i][j] = true;
-				} else {
+				} /*else {
 					mct[i][j] = false;
-				}
+				}*/
 			}
 		}
 
 		for (int k = 0; k < cantNodos; k++) {
 			//Recorremos todos los nodos...
 			for (int i = 0; i < cantNodos; i++) {
-				//Y por cada nodo adyacente al que estamos parado...
+				//Y seteamos nuestra vista en los demás nodos restantes...
 				for (int j = 0; j < cantNodos; j++) {
 					//Preguntamos si hay alguna conexión
 					if (mct[i][j] || (mct[i][k] && mct[k][j]) ) {

@@ -59,7 +59,7 @@ public class Grafo {
 					//Si el nodo adyacente que estamos viendo es diferente al nodoInicial, y al nodoOponete, 
 					//y si no existe ya una cadena que haya sido creada desde el nodo adyacente 
 					//hasta el nodo en el que estamos parados
-					if (i != nodoInicial && i != nodoOponente && !cadCreadas[i][nodo]) {
+					if (i != nodoInicial && i != nodoOponente && !cadCreadas[nodo][i]) {
 						//Marcamos como creada una cadena entre el nodo y el adyacente
 						cadCreadas[nodo][i] = true;
 						//Creamos una nueva cadena de amistad
