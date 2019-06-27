@@ -1,6 +1,7 @@
 package ar.edu.unlam.grafo;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -489,49 +490,31 @@ public class Grafo {
 				
 				//Obtenemos el primer nodo de la lista de los noColoreados
 				Iterator<Nodo> iter = noColoreados.iterator();
-				Nodo nodo = iter.next();
 				
 				//Mientras que el iterator no se quede sin nodos para sacar...
-				while (nodo != null) {
+				while (iter.hasNext()) {
+					Nodo nodo = iter.next();
 					//Encontrado me indica si hay adyacentes del mismo color
-					encontrado = false;
-					
-					//Sacamos, si existe, el primer nodo de la lista de COLORACTUAL
-					Iterator<Nodo> iterPintados = color.getNodos().iterator();
-					Nodo nodoPintado = null;
-					
-					if (iterPintados.hasNext())			
-						nodoPintado = iterPintados.next();
-					
+					encontrado = false;					
+												
 					//Este ciclo comprueba si hay algún nodo pintado de COLORACTUAL que se adyacente
 					//al nodo que sacamos de la lista. Si hay al menos un adyacente, entonces no podemos pintar ese nodo
-					//del mismo color.
-					while (nodoPintado != null) {
+					//del mismo color.				
+					for (Nodo nodoPintado : color.getNodos()) {
 						//¿Es el nodo pintado adyacente al que no está pintado?
 						if (matrizAdy[nodo.getNodo()][nodoPintado.getNodo()] > 0 
 								&& matrizAdy[nodo.getNodo()][nodoPintado.getNodo()] != infinito) {
 							encontrado = true;
 						}
-						//Saco el siguiente nodo de los de este color, si existe
-						if (iterPintados.hasNext())
-							nodoPintado = iterPintados.next();
-						else 
-							nodoPintado = null;
 					}
 					
 					//Si no encontré ninguno que sea adyacente, pinto al nodo con colorActual
 					if (encontrado == false) {
 						//Saco al nodo de los noColoreados
-						//noColoreados.remove(nodo);
 						iter.remove();
 						//Lo agrego a la lista de nodos de colorActual
 						color.getNodos().add(nodo);
 					}
-					//Saco el siguiente nodo de los noColoreados (si es que hay)
-					if (iter.hasNext())
-						nodo = iter.next(); 
-					else
-						nodo = null;
 				}			
 				colorActual++;
 			}
