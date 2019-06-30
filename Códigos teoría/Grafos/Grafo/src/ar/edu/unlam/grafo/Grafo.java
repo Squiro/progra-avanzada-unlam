@@ -43,7 +43,7 @@ public class Grafo {
 		for (int i = 0; i < matrizAdy.length; i++) {
 			//Si no está incluido en el conjunto de solución, y 
 			//el valor de su distancia es menor que el valor infinito
-			if (conjSol[i] == false && minKey > dist[i]) {
+			if (conjSol[i] == false && dist[i] < minKey) {
 				minKey = dist[i];
 				nodo = i;
 			}
@@ -71,11 +71,10 @@ public class Grafo {
 		//Seteamos la distancia al nodo inicial en 0
 		dist[nodoInicial] = 0;
 		
+		
+		int nodoActual = nodoInicial; 
 		//Recorremos todos los nodos
-		for (int i = 0; i < cantNodos; i++) {
-			//Hallamos el nodo que tenga menor distancia
-			int nodoActual = hallarNodoMinDist(conjSol, dist);
-			
+		for (int i = 0; i < cantNodos; i++) {			
 			//Añadimos el nodo al conjunto de solución
 			conjSol[nodoActual] = true;
 			
@@ -100,6 +99,9 @@ public class Grafo {
 						}
 					}
 				}
+				
+				//Hallamos el nodo que tenga menor distancia
+				nodoActual = hallarNodoMinDist(conjSol, dist);
 			}			
 		}	
 		//Retornamos las distancias
