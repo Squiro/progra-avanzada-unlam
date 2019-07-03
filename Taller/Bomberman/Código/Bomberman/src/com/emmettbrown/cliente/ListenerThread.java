@@ -13,8 +13,9 @@ public class ListenerThread extends Thread {
 	@Override
 	public void run() {
 		while (true) {
-			/* Recibo Consulta de cliente */
+			//Recibo mensajes del servidor 
 			Msg msgRecibido = (Msg) cliente.recibirMsg();
+			//Ejecuto la acción
 			msgRecibido.realizarAccion(cliente);
 		}
 	}

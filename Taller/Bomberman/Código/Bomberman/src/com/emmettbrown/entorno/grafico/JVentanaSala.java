@@ -14,6 +14,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class JVentanaSala extends JFrame {
 
@@ -39,6 +40,7 @@ public class JVentanaSala extends JFrame {
 	 * Create the frame.
 	 */
 	public JVentanaSala() {
+		setTitle("Sala: ");
 		cliente = new Cliente(DefConst.IP, DefConst.PORT, "Usuario1");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,13 +50,13 @@ public class JVentanaSala extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JList list = new JList();
-		list.setBounds(10, 29, 414, 172);
-		contentPane.add(list);
+		JList lstJugadores = new JList();
+		lstJugadores.setBounds(10, 36, 414, 165);
+		contentPane.add(lstJugadores);
 		DefaultListModel<String> df = new DefaultListModel<>();
-		list.setModel(df);
+		lstJugadores.setModel(df);
 //		cliente.enviarMsg(new MsgActualizarLista(df));
-		JButton btnCrearPartida = new JButton("Crear partida");
+		JButton btnCrearPartida = new JButton("Comenzar partida");
 		btnCrearPartida.addActionListener(new ActionListener() {
 			
 
@@ -63,5 +65,9 @@ public class JVentanaSala extends JFrame {
 		});
 		btnCrearPartida.setBounds(134, 212, 162, 23);
 		contentPane.add(btnCrearPartida);
+		
+		JLabel lblNewLabel = new JLabel("Jugadores conectados en esta sala:");
+		lblNewLabel.setBounds(10, 11, 196, 14);
+		contentPane.add(lblNewLabel);
 	}
 }

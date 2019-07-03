@@ -1,58 +1,59 @@
 package com.emmettbrown.entorno.grafico;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import java.awt.EventQueue;
-import java.awt.event.ActionListener;
+import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
+
+import com.emmettbrown.cliente.Cliente;
+import com.emmettbrown.mensajes.MsgConectarseASala;
 
 public class JVentanaInicial extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JVentanaInicial frame = new JVentanaInicial();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JList<Sala> lstSalas;
+	private ArrayList<Sala> salasCreadas;
+	private Cliente cliente;
 
 	/**
 	 * Create the frame.
 	 */
-	public JVentanaInicial() {
+	public JVentanaInicial(Cliente cliente) {
+		setTitle("Bomberman");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 447);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JList list = new JList();
-		list.setBounds(275, 34, 136, 178);
-		contentPane.add(list);
-		DefaultListModel DModel = new DefaultListModel<>();
-		list.setModel(DModel);
-		DModel.addElement("Sala1");
+		this.cliente = cliente;
+		
+		lstSalas = new JList<Sala>();
+		lstSalas.setBounds(20, 141, 391, 222);
+		contentPane.add(lstSalas);
+		/*DefaultListModel DModel = new DefaultListModel<>();
+		lstSalas.setModel(DModel);
+		DModel.addElement("Sala1");*/
 		JButton btnUnirseALa = new JButton("Unirse a la Sala");
-		btnUnirseALa.setBounds(285, 227, 107, 23);
+		
+		btnUnirseALa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				unirseASala();
+			}
+		});
+		btnUnirseALa.setBounds(304, 374, 107, 23);
 		contentPane.add(btnUnirseALa);
 		
 		JButton btnCrearSala = new JButton("Crear Sala");
@@ -60,8 +61,26 @@ public class JVentanaInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnCrearSala.setBounds(117, 227, 108, 23);
+		btnCrearSala.setBounds(20, 374, 108, 23);
 		contentPane.add(btnCrearSala);
+		
+		JLabel lblTextoSalas = new JLabel("Salas actuales en el servidor:");
+		lblTextoSalas.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblTextoSalas.setBounds(20, 116, 181, 14);
+		contentPane.add(lblTextoSalas);
+		
+		JTextArea txtrBienvenidoAlBomberman = new JTextArea();
+		txtrBienvenidoAlBomberman.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtrBienvenidoAlBomberman.setBackground(SystemColor.menu);
+		txtrBienvenidoAlBomberman.setLineWrap(true);
+		txtrBienvenidoAlBomberman.setText("Bienvenido al Bomberman desarrollado por Emmett-Brown. \r\n\r\nPara continuar, por favor cree una sala o seleccione una de las ya creadas y \u00FAnase a la misma.");
+		txtrBienvenidoAlBomberman.setBounds(20, 11, 391, 94);
+		contentPane.add(txtrBienvenidoAlBomberman);
 	}
-
+	
+	public void unirseASala() {
+		Sala seleccionada = lstSalas.getSelectedValue();
+		
+		cliente.enviarMsg(new MsgConectarseASala(seleccionada.getId()));		
+	}
 }
