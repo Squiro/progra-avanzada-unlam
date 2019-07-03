@@ -2,6 +2,7 @@ package com.emmettbrown.entidades;
 
 import javax.swing.ImageIcon;
 
+import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mapa.Mapa;
 
 public class Muro extends Entidad{

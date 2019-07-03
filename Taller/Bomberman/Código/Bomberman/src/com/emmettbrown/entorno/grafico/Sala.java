@@ -1,14 +1,23 @@
 package com.emmettbrown.entorno.grafico;
 
-public class Sala {
+import java.io.Serializable;
 
-	private int id;
+public class Sala implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int idSala;
+	private int idCreador;
 	private String nombre;
 	private int jugConectados;
 	private int limJugadores;
+	//private ArrayList<>
 	
-	public Sala (int id, String nombre, int jugConectados, int limJugadores) {
-		this.id = id;
+	public Sala (int id, int idCreador, String nombre, int jugConectados, int limJugadores) {
+		this.idSala = id;
+		this.idCreador = idCreador;
 		this.nombre = nombre;
 		this.jugConectados = jugConectados;
 		this.limJugadores = limJugadores;
@@ -16,11 +25,15 @@ public class Sala {
 
 	@Override
 	public String toString() {
-		return "Sala [nombre=" + nombre + ", jugConectados=" + jugConectados + ", limJugadores=" + limJugadores + "]";
+		return nombre + " ---- Jugadores conectados: " + jugConectados + "/" + limJugadores;
 	}
 	
 	public int getId() {
-		return this.id;
+		return this.idSala;
+	}
+	
+	public int getIdCreador() {
+		return this.idCreador;
 	}
 	
 	

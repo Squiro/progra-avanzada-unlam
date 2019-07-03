@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import com.emmettbrown.servidor.entidades.SvBomberman;
-import com.emmettbrown.entidades.DefConst;
 import com.emmettbrown.servidor.entidades.Entidad;
 import com.emmettbrown.servidor.entidades.Explosion;
 import com.emmettbrown.servidor.mapa.ServerMap;
+import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mapa.Ubicacion;
 
 public class SvBomba extends Entidad {

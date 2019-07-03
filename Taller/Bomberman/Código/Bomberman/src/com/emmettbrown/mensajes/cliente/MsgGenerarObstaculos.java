@@ -1,4 +1,4 @@
-package com.emmettbrown.mensajes;
+package com.emmettbrown.mensajes.cliente;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import com.emmettbrown.entidades.Entidad;
 import com.emmettbrown.entidades.Obstaculo;
 import com.emmettbrown.servidor.entidades.SvObstaculo;
 import com.emmettbrown.mapa.Ubicacion;
+import com.emmettbrown.mensajes.Msg;
 
 public class MsgGenerarObstaculos extends Msg {
 

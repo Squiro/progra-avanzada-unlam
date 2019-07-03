@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.emmettbrown.cliente.Cliente;
-import com.emmettbrown.entidades.DefConst;
 
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
@@ -18,6 +17,10 @@ import javax.swing.JLabel;
 
 public class JVentanaSala extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Cliente cliente;
 	/**

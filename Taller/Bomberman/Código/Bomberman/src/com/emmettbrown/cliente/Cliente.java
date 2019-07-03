@@ -1,12 +1,15 @@
 package com.emmettbrown.cliente;
 
 import java.io.IOException;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.entorno.grafico.Sala;
 import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mensajes.Msg;
 
@@ -19,7 +22,8 @@ public class Cliente implements Serializable {
 	private transient Socket clientSocket;
 	private Bomberman bomber;
 	private Mapa mapa;
-	private int nroCliente;
+	private int idCliente;
+	private ArrayList<Sala> listaSalas;
 
 	public Cliente(String ip, int puerto, String username) {
 		try {
@@ -27,18 +31,21 @@ public class Cliente implements Serializable {
 			this.clientSocket = new Socket(host, puerto);
 			this.username = username;
 			this.mapa = new Mapa();
+			this.listaSalas = new ArrayList<Sala>();
+			ListenerThread listener = new ListenerThread(this);
+			listener.start();
 		} catch (IOException e) {
 			this.mensajeError = "No se encontro ningun servidor al cual conectarse!";
 			System.out.println(mensajeError);
 		}
 	}
 	
-	public int getNroCliente() {
-		return this.nroCliente;
+	public int getIdCliente() {
+		return this.idCliente;
 	}
 	
-	public void setNroCliente(int num) {
-		this.nroCliente = num;
+	public void setIdCliente(int num) {
+		this.idCliente = num;
 	}
 	
 	public Bomberman getBomber() {
@@ -95,9 +102,13 @@ public class Cliente implements Serializable {
 			inputStream.close();
 			outputStream.close();
 		} catch (IOException e) {
-			System.out.println(mensajeError);
 			this.mensajeError = "problemas al cerrar comunicacion. " + e;
+			System.out.println(mensajeError);
 		}
+	}
+
+	public ArrayList<Sala> getListaSalas() {
+		return this.listaSalas;
 	}
 
 }

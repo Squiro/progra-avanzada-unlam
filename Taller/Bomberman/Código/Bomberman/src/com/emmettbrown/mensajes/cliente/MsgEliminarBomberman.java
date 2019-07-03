@@ -1,10 +1,11 @@
-package com.emmettbrown.mensajes;
+package com.emmettbrown.mensajes.cliente;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.emmettbrown.cliente.Cliente;
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.mensajes.Msg;
 
 public class MsgEliminarBomberman extends Msg {
 

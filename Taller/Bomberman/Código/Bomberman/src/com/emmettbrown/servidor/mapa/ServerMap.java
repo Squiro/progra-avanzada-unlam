@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.emmettbrown.entidades.Bomba;
 import com.emmettbrown.servidor.entidades.SvBomba;
-import com.emmettbrown.entidades.Bomberman;
-import com.emmettbrown.entidades.DefConst;
+import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mapa.Ubicacion;
 import com.emmettbrown.servidor.entidades.Entidad;
 import com.emmettbrown.servidor.entidades.Muro;
@@ -20,7 +18,7 @@ public class ServerMap {
 	private HashMap<Ubicacion, Entidad> conjuntoEntidades;
 	private ArrayList<SvObstaculo> obstaculos;
 	private List<SvBomberman> listaBomberman;
-	//private double seed;
+	private ArrayList<Ubicacion> ubicacionesInicio;
 	
 	///////////////////////////////////////
 	// 									//
@@ -32,6 +30,7 @@ public class ServerMap {
 		conjuntoEntidades = new HashMap<Ubicacion, Entidad>();
 		listaBomberman = new ArrayList<SvBomberman>();
 		obstaculos = new ArrayList<SvObstaculo>();
+		ubicacionesInicio = generarUbicacionesInicio();		
 	}
 
 	////////////////////////////////////////
@@ -86,6 +85,26 @@ public class ServerMap {
 		return true;
 	}
 	
+	public ArrayList<Ubicacion> generarUbicacionesInicio() {
+		ArrayList<Ubicacion> ubic = new ArrayList<Ubicacion>();
+		ubic.add(new Ubicacion(1, 1));
+		ubic.add(new Ubicacion(7,1));
+		ubic.add(new Ubicacion(1,7));
+		ubic.add(new Ubicacion(7,7));
+		
+		return ubic;
+	}
+	
+	public Ubicacion obtenerUbicacionInicio() {
+		if (ubicacionesInicio.size() > 0) {
+			Ubicacion ubic = ubicacionesInicio.get(0);
+			ubicacionesInicio.remove(0);
+			
+			return ubic;
+		}
+		
+		return new Ubicacion(1,1);
+	}
 	
 	///////////////////////////////////////
 	// 									//
@@ -181,6 +200,16 @@ public class ServerMap {
 		}
 
 		return null;
+	}
+	
+	/** Remueve un obstaculo de la lista de obstaculos
+	 * 
+	 * @param obs
+	 */
+	
+	public void removerObstaculo(SvObstaculo obs) {
+		this.obstaculos.remove(obs);
+		
 	}
 	
 	public void moverBomberman(SvBomberman bomberman, int despX, int despY) {
@@ -410,11 +439,5 @@ public class ServerMap {
 	public void explotarBomba(SvBomba bomba) {
 		bomba.explotar(this);
 	}
-	
-	public void removerObstaculo(SvObstaculo obs) {
-		this.obstaculos.remove(obs);
-		
-	}
-
 
 }

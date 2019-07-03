@@ -1,7 +1,8 @@
-package com.emmettbrown.mensajes;
+package com.emmettbrown.mensajes.servidor;
 
 import java.io.ObjectOutputStream;
 
+import com.emmettbrown.mensajes.Msg;
 import com.emmettbrown.servidor.HiloCliente;
 
 

@@ -3,7 +3,7 @@ package com.emmettbrown.entidades;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import com.sun.javafx.geom.Rectangle;
-
+import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mapa.Ubicacion;
 

@@ -1,5 +1,6 @@
 package com.emmettbrown.entidades;
 
+import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mapa.*;
 
 import org.junit.After;

@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.emmettbrown.cliente.Cliente;
-import com.emmettbrown.mensajes.MsgMover;
+import com.emmettbrown.mensajes.servidor.MsgMover;
 
 public class Teclado implements KeyListener {
 	

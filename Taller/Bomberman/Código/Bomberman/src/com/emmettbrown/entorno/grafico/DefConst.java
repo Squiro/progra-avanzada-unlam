@@ -1,4 +1,4 @@
-package com.emmettbrown.entidades;
+package com.emmettbrown.entorno.grafico;
 public final class DefConst {
 	
 	public static final int DEFAULTWIDTH = 60;
@@ -15,4 +15,5 @@ public final class DefConst {
 	public static final String TITLE = "Bomberman";
 	public static final String IP = "localhost";
 	public static final int PORT = 5000;
+	public static final int LIMITEJUGADORES = 4;
 }

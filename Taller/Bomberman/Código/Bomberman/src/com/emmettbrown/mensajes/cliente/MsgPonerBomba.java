@@ -1,8 +1,9 @@
-package com.emmettbrown.mensajes;
+package com.emmettbrown.mensajes.cliente;
 import java.util.List;
 
 import com.emmettbrown.cliente.Cliente;
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.mensajes.Msg;
 import com.emmettbrown.servidor.entidades.SvBomberman;
 
 public class MsgPonerBomba extends Msg {

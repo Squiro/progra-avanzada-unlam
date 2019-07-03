@@ -1,6 +1,7 @@
-package com.emmettbrown.mensajes;
+package com.emmettbrown.mensajes.cliente;
 
 import com.emmettbrown.cliente.Cliente;
+import com.emmettbrown.mensajes.Msg;
 
 public class MsgPosBomberman extends Msg {
 	

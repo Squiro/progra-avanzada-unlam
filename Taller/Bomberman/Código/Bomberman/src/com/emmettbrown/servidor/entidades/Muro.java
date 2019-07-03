@@ -1,6 +1,6 @@
 package com.emmettbrown.servidor.entidades;
 
-import com.emmettbrown.entidades.DefConst;
+import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.servidor.entidades.Entidad;
 import com.emmettbrown.servidor.mapa.ServerMap;
 

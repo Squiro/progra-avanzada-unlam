@@ -2,7 +2,7 @@ package com.emmettbrown.servidor.entidades;
 
 import java.io.Serializable;
 
-import com.emmettbrown.entidades.DefConst;
+import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mapa.Ubicacion;
 import com.emmettbrown.servidor.mapa.ServerMap;
 import com.sun.javafx.geom.Rectangle;
