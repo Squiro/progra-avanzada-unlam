@@ -4,7 +4,7 @@ import com.emmettbrown.cliente.Cliente;
 import com.emmettbrown.mensajes.Msg;
 
 public class MsgPosBomberman extends Msg {
-	
+
 	/**
 	 * 
 	 */

@@ -6,12 +6,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.emmettbrown.entidades.Bomberman;
+import com.emmettbrown.entorno.grafico.JPanelGrafico;
+import com.emmettbrown.entorno.grafico.JVentanaGrafica;
+import com.emmettbrown.entorno.grafico.JVentanaLobby;
 import com.emmettbrown.entorno.grafico.Sala;
 import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mensajes.Msg;
+import com.emmettbrown.mensajes.servidor.MsgActualizarNombre;
 
 public class Cliente implements Serializable {
 
@@ -19,21 +23,38 @@ public class Cliente implements Serializable {
 	private String username;
 	private String host;
 	private String mensajeError;
-	private transient Socket clientSocket;
+	private transient Socket readSocket;
+	private transient Socket writeSocket;
+	private ObjectInputStream inputStream;
+	private ObjectOutputStream outputStream;
 	private Bomberman bomber;
 	private Mapa mapa;
 	private int idCliente;
-	private ArrayList<Sala> listaSalas;
+	private JVentanaLobby lobbyActual;
+	private ConcurrentLinkedQueue<Sala> listaSalas;
+	private Sala salaActual;
+	private JPanelGrafico panelGrafico;
+	private JVentanaGrafica ventanaGrafica;
 
 	public Cliente(String ip, int puerto, String username) {
 		try {
-			this.host = ip;
-			this.clientSocket = new Socket(host, puerto);
 			this.username = username;
+			this.host = ip;
+			//Creamos los sockets de escritura y lectura
+			this.readSocket = new Socket(host, puerto);
+			this.writeSocket = new Socket(host, puerto);
+			
+			this.outputStream = new ObjectOutputStream(writeSocket.getOutputStream());
+			this.inputStream = new ObjectInputStream(readSocket.getInputStream());
+			
 			this.mapa = new Mapa();
-			this.listaSalas = new ArrayList<Sala>();
+			this.listaSalas = new ConcurrentLinkedQueue<Sala>();
+
+			//Creamos un hilo escucha que se encargará de leer las cosas que se envíen al readSocket
 			ListenerThread listener = new ListenerThread(this);
 			listener.start();
+			//Enviamos un mensaje al servidor para que setee el nombre de usuario del cliente
+			enviarMsg(new MsgActualizarNombre(this.username));
 		} catch (IOException e) {
 			this.mensajeError = "No se encontro ningun servidor al cual conectarse!";
 			System.out.println(mensajeError);
@@ -62,7 +83,7 @@ public class Cliente implements Serializable {
 	
 	public Mapa getMapa() {
 		return this.mapa;
-	}
+	}	
 	
 	public String getUsername() {
 		return username;
@@ -75,10 +96,11 @@ public class Cliente implements Serializable {
 	public String obtenerMsgErr() {
 		return mensajeError;
 	}
-	
+		
 	public void enviarMsg(Msg consultaAlServidor) {
 		try {
-			ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+			//Reseteamos el outputStream para enviar un nuevo mensaje
+			outputStream.reset();
 			outputStream.writeObject(consultaAlServidor);
 		} catch (IOException e) {
 			System.out.println("Error al querer enviar peticion al sv " + e);
@@ -88,7 +110,6 @@ public class Cliente implements Serializable {
 	public Object recibirMsg() {
 		Object obj = null;
 		try {
-			ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
 			obj = inputStream.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			this.mensajeError = "Comunicacion cerrada en recibir msg1. " + e;
@@ -97,7 +118,7 @@ public class Cliente implements Serializable {
 		return obj;
 	}
 
-	public void cerrarComunicacion(ObjectInputStream inputStream, ObjectOutputStream outputStream) {
+	public void cerrarComunicacion() {
 		try {
 			inputStream.close();
 			outputStream.close();
@@ -107,8 +128,44 @@ public class Cliente implements Serializable {
 		}
 	}
 
-	public ArrayList<Sala> getListaSalas() {
+	public ConcurrentLinkedQueue<Sala> getListaSalas() {
 		return this.listaSalas;
 	}
 
+	public void limpiarSalas() {
+		listaSalas.clear();		
+	}
+
+	public void setLobby(JVentanaLobby lobby) {
+		this.lobbyActual = lobby;
+	}
+	
+	public JVentanaLobby getLobby() {
+		return this.lobbyActual;
+	}
+
+	public void setPanelGrafico(JPanelGrafico jPanelGrafico) {
+		this.panelGrafico = jPanelGrafico;
+	}
+	
+	public JPanelGrafico getPanelGrafico() {
+		return this.panelGrafico ;
+	}
+	
+	public void setVentanaGrafica(JVentanaGrafica ventana) {
+		this.ventanaGrafica = ventana;
+	}
+	
+	public JVentanaGrafica getVentanaGrafica() {
+		return this.ventanaGrafica;
+	}
+	
+	public void setSalaActual(Sala sala) {
+		this.salaActual = sala;
+	}
+	
+	public Sala getSalaActual() {
+		return this.salaActual;
+	}
+	
 }

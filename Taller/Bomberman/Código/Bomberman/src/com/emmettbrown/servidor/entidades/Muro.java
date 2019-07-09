@@ -1,10 +1,10 @@
 package com.emmettbrown.servidor.entidades;
 
 import com.emmettbrown.entorno.grafico.DefConst;
-import com.emmettbrown.servidor.entidades.Entidad;
+import com.emmettbrown.servidor.entidades.SvEntidad;
 import com.emmettbrown.servidor.mapa.ServerMap;
 
-public class Muro extends Entidad{
+public class Muro extends SvEntidad{
 	
 	/**
 	 * 

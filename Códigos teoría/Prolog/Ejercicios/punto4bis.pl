@@ -16,7 +16,7 @@ promociona(X,Prom):-parcial1(X,Y),parcial2(X,Z),Y>=7,Z>=7,promedio(Y,Z,Prom).
 
 cursada(X):-parcial1(X,Y),parcial2(X,Z),Y>=4,Z>=4,not(promociona(X,_)).
 
-recursan(X):-parcial1(X,Y),parcial2(X,Z),Y=<4,Z=<4.
+recursan(X):-parcial1(X,Y),parcial2(X,Z),Y=<3,Z=<3.
 
 %Obtiene los alumnos sin que me interesen las notas
 % _: variables anonimas
@@ -32,7 +32,7 @@ proyeccion(X):-seleccion(X,_).
 %A los numeros X les resto aquellos
 
 medalla(X,Prom):-
-    promociona(X,Prom),not(proyeccion(X)).
+    promociona(X,Prom),not(proyeccion(Prom)).
 
 ausentes(X):-parcial1(X,_),not(parcial2(X,_)).
 ausentes(X):-parcial2(X,_),not(parcial1(X,_)).

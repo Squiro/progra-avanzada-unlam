@@ -1,6 +1,6 @@
 package com.emmettbrown.servidor.entidades;
 import com.emmettbrown.servidor.entidades.SvBomba;
-import com.emmettbrown.servidor.entidades.Entidad;
+import com.emmettbrown.servidor.entidades.SvEntidad;
 import com.emmettbrown.servidor.entidades.Explosion;
 import com.emmettbrown.servidor.mapa.ServerMap;
 import com.emmettbrown.mapa.Ubicacion;
@@ -9,22 +9,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import com.sun.javafx.geom.Rectangle;
 
-public class SvBomberman extends Entidad implements Serializable{
+public class SvBomberman extends SvEntidad implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static int nroBomberman = 0;
+	public static int nroBomberman;
 	private int idBomberman;
 	private ArrayList<SvBomba> bombas;
+	private String nombre;
 
-	public SvBomberman(int posX, int posY, int width, int height) {
+	public SvBomberman(int posX, int posY, int width, int height, String nombre) {
 		super(posX, posY, width, height);
 		idBomberman = nroBomberman++;
 		this.destructible = true;
+		this.nombre = nombre;
 		this.bombas = new ArrayList<SvBomba>();
 	}
-
+	public boolean estaVivo() {
+		return this.esVisible;
+	}
+	public String getNombre() {
+		return nombre;
+	}
 	public void morir() {
 		esVisible = false;
 	}
@@ -64,7 +71,7 @@ public class SvBomberman extends Entidad implements Serializable{
 		
 	}
 	
-	public boolean manejarColisionCon(Entidad ent) {
+	public boolean manejarColisionCon(SvEntidad ent) {
 		if (ent instanceof SvBomba) {
 			return ((SvBomba) ent).hayColisionConCreador(this);
 		}

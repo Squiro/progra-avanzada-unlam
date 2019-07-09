@@ -163,10 +163,9 @@ public class Bomba extends Entidad {
 		Entidad ent = map.obtenerEntidadDelConjunto(ubic);
 		Bomberman bomber = map.obtenerBombermanEn(ubic);
 
-		// en la ubicacion no explota.
-		if (bomber != null) {
+		// en la ubicacion explota.
+		if (bomber != null && bomber.esVisible == true) {
 			bomber.morir();
-			return true;
 		}
 
 		//ent != this no queremos explotarnos de vuelta a nosotros mismos

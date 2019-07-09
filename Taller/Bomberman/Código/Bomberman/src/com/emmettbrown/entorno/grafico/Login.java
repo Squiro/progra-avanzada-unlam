@@ -43,9 +43,6 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/resources/icons/bomb.png")));
 		setTitle("Iniciar sesi\u00F3n");
@@ -88,11 +85,9 @@ public class Login extends JFrame {
 		btnIniciarSesin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (validarUsuario(txtUsername.getText(),new String (txtPassword.getPassword()))) {
-					cliente = new Cliente("localhost", 5000, txtUsername.getText());
-					JVentanaGrafica ventana = new JVentanaGrafica(DefConst.ANCHO, DefConst.ALTO, cliente);
-					ventana.setVisible(true);
-					//JVentanaInicial inicial = new JVentanaInicial(cliente);
-					//inicial.setVisible(true);
+					cliente = new Cliente(DefConst.IP, DefConst.PORT, txtUsername.getText());
+					JVentanaInicial inicial = new JVentanaInicial(cliente);
+					inicial.setVisible(true);
 					dispose();					
 				}
 			}
@@ -105,7 +100,7 @@ public class Login extends JFrame {
 		contentPane.add(btnCrearUsuario);
 	}
 
-	//Esto debería ser server side...
+	//Esto deberï¿½a ser server side...
 	public boolean validarUsuario(String user, String pass){
 		if (pass.equals("1234")){ //if (user.equals("bomber") && pass.equals("1234")){
 			return true;

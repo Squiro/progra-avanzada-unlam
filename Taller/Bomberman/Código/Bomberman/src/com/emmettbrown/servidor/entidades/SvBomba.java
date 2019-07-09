@@ -3,14 +3,15 @@ package com.emmettbrown.servidor.entidades;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+
 import com.emmettbrown.servidor.entidades.SvBomberman;
-import com.emmettbrown.servidor.entidades.Entidad;
+import com.emmettbrown.servidor.entidades.SvEntidad;
 import com.emmettbrown.servidor.entidades.Explosion;
 import com.emmettbrown.servidor.mapa.ServerMap;
 import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mapa.Ubicacion;
 
-public class SvBomba extends Entidad {
+public class SvBomba extends SvEntidad {
 
 	private static final long serialVersionUID = 1L;
 	private int segsExplosion;
@@ -34,12 +35,12 @@ public class SvBomba extends Entidad {
 		this.ignorarColisionCreador = true;
 	}
 
-	public SvBomba(Ubicacion ubic, SvBomberman creador2) {
+	public SvBomba(Ubicacion ubic, SvBomberman creador) {
 		super(ubic, DefConst.TILESIZE, DefConst.TILESIZE);
 		segsExplosion = 3;
 		this.destructible = true;
 		this.rango = 2;
-		this.creador = creador2;
+		this.creador = creador;
 		this.ignorarColisionCreador = true;
 	}
 
@@ -142,13 +143,12 @@ public class SvBomba extends Entidad {
 	private boolean explosion(Ubicacion ubic, ServerMap map) {		
 		// Buscamos una entidad en dicha ubicación. Solo puede haber una, así
 		// que buscamos la que esté ahí
-		Entidad ent = map.obtenerEntidadDelConjunto(ubic);
+		SvEntidad ent = map.obtenerEntidadDelConjunto(ubic);
 		SvBomberman bomber = map.obtenerBombermanEn(ubic);
 
 		// en la ubicacion no explota.
-		if (bomber != null) {
+		if (bomber != null && bomber.esVisible == true) {
 			bomber.morir();
-			return true;
 		}
 
 		//ent != this no queremos explotarnos de vuelta a nosotros mismos

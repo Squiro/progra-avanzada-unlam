@@ -21,14 +21,12 @@ public class MsgLogin extends Msg {
 	public Object realizarAccion(Object obj) {
 		HiloCliente hilo =(HiloCliente) obj;
 		try { 
-			ObjectOutputStream salidaACliente = new ObjectOutputStream(hilo.getClientSocket().getOutputStream()); 
+			ObjectOutputStream salidaACliente = new ObjectOutputStream(hilo.getWriteSocket().getOutputStream()); 
 			
 			if ((this.usuario.equals("Usuario") && this.clave.equals("clave"))
 					|| (this.usuario.equals("Usuario2") && this.clave.equals("clave2"))) {
-				
-				
-				
-				hilo.getUsuariosConectados().add(hilo.getClientSocket());			
+
+				//hilo.getUsuariosConectados().add(hilo.getWriteSocket());			
 				//Le mandamos un OK al cliente
 				salidaACliente.writeObject("OK");				
 			}

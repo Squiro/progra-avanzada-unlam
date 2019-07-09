@@ -11,19 +11,24 @@ public class MsgActualizarListaSalas extends Msg {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Sala sala;
+	private int idSala;
+	private int idCreador;
+	private String nombre;
+	private int jugConectados;
+	private int limJug;
 	
-	public MsgActualizarListaSalas(Sala s) {
-		this.sala = s;
+	public MsgActualizarListaSalas(int idSala, int idCreador, String nombre, int jugConectados, int limJug) {
+		this.idSala = idSala;
+		this.idCreador = idCreador;
+		this.nombre = nombre;
+		this.jugConectados = jugConectados;
+		this.limJug = limJug;
 	}
 	
 	@Override
 	public Object realizarAccion(Object obj) {
 		Cliente cliente = (Cliente) obj;
-		cliente.getListaSalas().add(sala);
-		//System.out.println("sdasdasd + sdasdasd "+c.getListaSalas().size());
-		
+		cliente.getListaSalas().add(new Sala(idSala, idCreador, nombre, jugConectados, limJug));
 		return null;
 	}
-
 }

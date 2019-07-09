@@ -7,11 +7,11 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 
-import com.emmettbrown.servidor.entidades.Entidad;
+import com.emmettbrown.servidor.entidades.SvEntidad;
 import com.emmettbrown.servidor.mapa.ServerMap;
 import com.emmettbrown.mapa.Ubicacion;
 
-public class Explosion extends Entidad {
+public class Explosion extends SvEntidad {
 
 	/**
 	 * 
