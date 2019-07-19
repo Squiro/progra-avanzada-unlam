@@ -17,7 +17,6 @@ public class JPanelInicial extends JPanel {
 	private JList<Sala> lstSalas;
 	private DefaultListModel<Sala> df;
 	private ConcurrentLinkedQueue<Sala> salasCreadas;
-	//private Cliente cliente;
 	
 	public JPanelInicial(ConcurrentLinkedQueue<Sala> salasCreadas) {
 		this.salasCreadas = salasCreadas;

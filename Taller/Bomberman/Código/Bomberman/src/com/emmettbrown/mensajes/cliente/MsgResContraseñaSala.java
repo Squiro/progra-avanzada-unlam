@@ -1,5 +1,7 @@
 package com.emmettbrown.mensajes.cliente;
 
+import javax.swing.JOptionPane;
+
 import com.emmettbrown.cliente.Cliente;
 import com.emmettbrown.mensajes.Msg;
 
@@ -22,7 +24,8 @@ public class MsgResContraseñaSala extends Msg {
 		if (puedeConectarse) {
 			cliente.getVentanaInicial().crearLobbyInvitado();
 		} else {
-			//mostrar un cartelito, ni idea
+			JOptionPane.showMessageDialog(null, "La contraseña no es correcta", "Error al acceder",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		
 		
