@@ -94,3 +94,9 @@ MAS OPERADORES:
 = --> Operador de unificacion. Unifica, pero no asigna. No resuelve.
 
 
+--------------------
+
+
+Unificación en Prolog: http://www.learnprolognow.org/lpnpage.php?pagetype=html&pageid=lpn-htmlse5
+
+En resumen, Prolog asigna valores a las variables hasta que concuerden (o no) con la condición del predicado.

@@ -65,4 +65,11 @@ public class Reloj {
 			}	
 		}
 	}
+
+	public void stop() {
+		t.stop();
+		hora= 0;
+		min = 0;
+		seg = DefConst.SEG;
+	}
 }

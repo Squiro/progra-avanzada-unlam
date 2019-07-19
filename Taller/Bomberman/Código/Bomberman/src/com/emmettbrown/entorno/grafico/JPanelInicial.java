@@ -1,8 +1,12 @@
 package com.emmettbrown.entorno.grafico;
 
-
 import java.awt.Graphics;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+
 
 public class JPanelInicial extends JPanel {
 
@@ -10,16 +14,39 @@ public class JPanelInicial extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JVentanaInicial ventana;
+	private JList<Sala> lstSalas;
+	private DefaultListModel<Sala> df;
+	private ConcurrentLinkedQueue<Sala> salasCreadas;
+	//private Cliente cliente;
 	
-	public JPanelInicial(JVentanaInicial ventana) {
-		this.ventana = ventana;
+	public JPanelInicial(ConcurrentLinkedQueue<Sala> salasCreadas) {
+		this.salasCreadas = salasCreadas;
 	}
 	
+	@Override
 	public void paintComponent(Graphics g) {
-		int index = ventana.getLstSalas().getSelectedIndex();
+		int index = lstSalas.getSelectedIndex();
 		super.paintComponent(g);
-		ventana.refrescarListaSalas();
-		ventana.getLstSalas().setSelectedIndex(index);
+		df.clear();
+		for (Sala sala : salasCreadas) {
+			df.addElement(sala);
+		}
+		lstSalas.setSelectedIndex(index);
 	}
+	
+	public void setDefaultModel(DefaultListModel<Sala> df) {
+		this.df = df;
+	}
+	
+	public void setLstSalas(JList<Sala> lstSalas) {
+		this.lstSalas = lstSalas;
+	}
+
+	/*public void refrescarListaSalas() {		
+		df.clear();
+		for (Sala sala : cliente.getListaSalas()) {
+			df.addElement(sala);
+		}
+	}*/
+
 }

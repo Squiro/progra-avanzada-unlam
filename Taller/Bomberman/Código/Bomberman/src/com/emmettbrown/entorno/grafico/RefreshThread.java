@@ -18,6 +18,7 @@ public class RefreshThread extends Thread {
 		long initialTime = System.nanoTime();
 		final double timeF = 1000000000 / FPS;
 		double deltaF = 0;
+		ventana.requestFocus(); // Para que al iniciar el juego, obtenga automatico el foco la ventana y se muevan directamente
 		while (corriendo) {
 			long currentTime = System.nanoTime();
 			deltaF += (currentTime - initialTime) / timeF;

@@ -13,8 +13,9 @@ public class Sala {
 	private Tablero tableroPuntos;
 	private Reloj reloj;
 	private int rondaActual;
+	private boolean privada;
 	
-	public Sala (int id, int idCreador, String nombre, int jugConectados, int limJugadores) {
+	public Sala (int id, int idCreador, String nombre, int jugConectados, int limJugadores, boolean privada) {
 		this.idSala = id;
 		this.idCreador = idCreador;
 		this.nombre = nombre;
@@ -24,6 +25,7 @@ public class Sala {
 		this.tableroPuntos = new Tablero();
 		this.reloj = new Reloj(00, 00, DefConst.SEG);		
 		this.rondaActual = 1;
+		this.privada = privada;
 	}
 
 	@Override
@@ -77,5 +79,13 @@ public class Sala {
 	
 	public void iniciarReloj() {
 		this.reloj.startTimer();
+	}
+
+	public void setIdCreador(int nueIdCreador) {
+		this.idCreador = nueIdCreador;
+	}
+	
+	public boolean esPrivada() {
+		return privada;
 	}
 }

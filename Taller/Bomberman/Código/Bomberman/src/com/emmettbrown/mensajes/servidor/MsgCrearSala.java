@@ -14,16 +14,18 @@ public class MsgCrearSala extends Msg {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int idCliente; 
+	private String password;
 	
-	public MsgCrearSala(int s) {
-		this.idCliente = s;
+	public MsgCrearSala(int idCli, String password) {
+		this.idCliente = idCli;
+		this.password = password;
 	}
 	
 	@Override
 	public Object realizarAccion(Object obj) {
 		HiloCliente hilo = (HiloCliente) obj;
 		Servidor.idSalas++;
-		SvSala svSala = new SvSala(Servidor.idSalas, this.idCliente, "Sala "+Servidor.idSalas+" de " +hilo.getNombreUsuario(), DefConst.LIMITEJUGADORES);
+		SvSala svSala = new SvSala(Servidor.idSalas, this.idCliente, "Sala "+Servidor.idSalas+" de " +hilo.getNombreUsuario(), DefConst.LIMITEJUGADORES, password);
 		svSala.agregarUsuario(hilo,hilo.getNombreUsuario());
 		hilo.agregarSala(svSala);
 		
@@ -31,7 +33,7 @@ public class MsgCrearSala extends Msg {
 		hilo.setSalaConectada(svSala);
 		
 		hilo.broadcast(new MsgActualizarListaSalas(svSala.getId(), svSala.getIdCreador(), svSala.getNombre(), 
-				svSala.getClientesConectadosSize(), svSala.getLimJugadores()), hilo.getUsuariosConectados());
+				svSala.getClientesConectadosSize(), svSala.getLimJugadores(), svSala.esPrivada()), hilo.getUsuariosConectados());
 		
 		return null;
 	}

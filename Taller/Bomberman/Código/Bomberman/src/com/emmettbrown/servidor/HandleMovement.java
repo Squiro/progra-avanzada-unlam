@@ -1,8 +1,8 @@
 package com.emmettbrown.servidor;
 
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import com.emmettbrown.controles.Movimientos;
 import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mensajes.cliente.MsgEliminarBomberman;
@@ -54,9 +54,11 @@ public class HandleMovement extends Thread {
 				break;
 
 			case BOMBA:
-				hilo.getMap().agregarBomba(bomberActual.getX(), bomberActual.getY(), bomberActual);
-				hilo.broadcast(new MsgPonerBomba(bomberActual.getX(), bomberActual.getY(), bomberActual),
-						outputStreams);
+				if (hilo.getBomber().cantBombasAct() < DefConst.CANTBOMBASMAX) {
+					hilo.getMap().agregarBomba(bomberActual.getX(), bomberActual.getY(), bomberActual);
+					hilo.broadcast(new MsgPonerBomba(bomberActual.getX(), bomberActual.getY(), bomberActual),
+							outputStreams);
+				}
 				break;
 
 			case NULL:
@@ -65,11 +67,14 @@ public class HandleMovement extends Thread {
 			default:
 				break;
 			}
-		}
-		else //Anunciamos que nuestro chaboncito... se murio!
+		} else // Anunciamos que nuestro chaboncito... se murio!
+		{
 			hilo.broadcast(new MsgEliminarBomberman(bomberActual.getIdBomberman()), outputStreams);
+			matarHandle();
+		}
+
 	}
-	
+
 	public void enviarNuevaPosicion() {
 		hilo.broadcast(new MsgPosBomberman(bomberActual.obtenerID(), bomberActual.getX(), bomberActual.getY()),
 				outputStreams);
@@ -78,10 +83,10 @@ public class HandleMovement extends Thread {
 	public void matarHandle() {
 		this.run = false;
 	}
-	
+
 	public void run() {
 		long initialTime = System.nanoTime();
-		final double timeF = 1000000000 / DefConst.FPS;
+		final double timeF = 1000000000 / DefConst.FPSHANDLEMOVEMENT;
 
 		double deltaF = 0;
 

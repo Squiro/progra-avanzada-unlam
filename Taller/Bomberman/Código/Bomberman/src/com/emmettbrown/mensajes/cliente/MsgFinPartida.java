@@ -1,6 +1,7 @@
 package com.emmettbrown.mensajes.cliente;
 
 import com.emmettbrown.cliente.Cliente;
+import com.emmettbrown.entorno.grafico.JVentanaGrafica;
 import com.emmettbrown.mensajes.Msg;
 
 public class MsgFinPartida extends Msg {
@@ -12,8 +13,10 @@ public class MsgFinPartida extends Msg {
 
 	@Override
 	public Object realizarAccion(Object obj) {
+		JVentanaGrafica venAct;
 		Cliente cliente = (Cliente) obj;		
-		cliente.getVentanaGrafica().finPartida();		
+		venAct = cliente.getVentanaGrafica();	
+		venAct.finPartida();
 		return null;
 	}
 

@@ -66,6 +66,7 @@ public class JVentanaLobby extends JFrame {
 		btnCrearPartida.setEnabled(puedeCrearPartida);
 		cliente.setLobby(this);
 		cliente.setSalaActual(sala);
+		setLocationRelativeTo(null);
 	}
 
 	public void comenzarPartida() {

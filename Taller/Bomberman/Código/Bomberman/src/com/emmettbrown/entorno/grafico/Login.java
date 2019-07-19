@@ -14,6 +14,11 @@ import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
 import com.emmettbrown.cliente.Cliente;
+import com.emmettbrown.mensajes.servidor.MsgCrearUsuario;
+import com.emmettbrown.mensajes.servidor.MsgLogin;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 public class Login extends JFrame {
@@ -47,66 +52,110 @@ public class Login extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/resources/icons/bomb.png")));
 		setTitle("Iniciar sesi\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 215);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		JLabel lblIngreseUsuario = new JLabel("Ingrese Usuario");
-		lblIngreseUsuario.setBounds(50, 50, 126, 14);
-		contentPane.add(lblIngreseUsuario);
 
 		JLabel lblIngreseContrasea = new JLabel("Ingrese Contrase\u00F1a");
-		lblIngreseContrasea.setBounds(50, 75, 126, 14);
-		contentPane.add(lblIngreseContrasea);
 
 		txtUsername = new JTextField();
-		txtUsername.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				validarUsuario(txtUsername.getText(),new String (txtPassword.getPassword()));
-			}
-		});
-		txtUsername.setBounds(197, 47, 107, 20);
-		contentPane.add(txtUsername);
 		txtUsername.setColumns(10);
 
 		txtPassword = new JPasswordField();
-		txtPassword.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				validarUsuario(txtUsername.getText(),new String (txtPassword.getPassword()));
-			}
-		});
-		txtPassword.setBounds(197, 72, 107, 20);
-		contentPane.add(txtPassword);
-		txtUsername.setText("Nico");
-		txtPassword.setText("1234");
+		//txtUsername.setText("Nico");
+		//txtPassword.setText("1234");
 		JButton btnIniciarSesin = new JButton("Iniciar Sesi\u00F3n");
 		btnIniciarSesin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (validarUsuario(txtUsername.getText(),new String (txtPassword.getPassword()))) {
+				if (txtUsername.getText().isEmpty() || new String(txtPassword.getPassword()).isEmpty())
+					JOptionPane.showMessageDialog(null, "Los dos campos deben estar completados", "Acceso denegado",
+							JOptionPane.ERROR_MESSAGE);
+				else {
+				if (cliente != null) {
+					cliente.enviarMsg(new MsgLogin(txtUsername.getText(),new String(txtPassword.getPassword())));
+				}else {
 					cliente = new Cliente(DefConst.IP, DefConst.PORT, txtUsername.getText());
-					JVentanaInicial inicial = new JVentanaInicial(cliente);
-					inicial.setVisible(true);
-					dispose();					
+					cliente.enviarMsg(new MsgLogin(txtUsername.getText(),new String(txtPassword.getPassword())));
+					setPantallaLoginEnCliente();
 				}
+				}
+					
 			}
 		});
-		btnIniciarSesin.setBounds(162, 100, 142, 23);
-		contentPane.add(btnIniciarSesin);
 
 		JButton btnCrearUsuario = new JButton("Crear Usuario");
-		btnCrearUsuario.setBounds(50, 213, 142, 23);
-		contentPane.add(btnCrearUsuario);
+		btnCrearUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (txtUsername.getText().isEmpty() || new String(txtPassword.getPassword()).isEmpty())
+					JOptionPane.showMessageDialog(null, "Los dos campos deben estar completados", "Acceso denegado",
+							JOptionPane.ERROR_MESSAGE);
+				else {
+				if (cliente != null) {
+					cliente.enviarMsg(new MsgCrearUsuario(txtUsername.getText(),new String(txtPassword.getPassword())));
+				}else {
+					cliente = new Cliente(DefConst.IP, DefConst.PORT, txtUsername.getText());
+					cliente.enviarMsg(new MsgCrearUsuario(txtUsername.getText(),new String(txtPassword.getPassword())));
+				}
+				setPantallaLoginEnCliente();			
+			}
+			}
+		});
+		
+		JLabel lblCrearUsuario = new JLabel("O tambien puede");
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(46)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblCrearUsuario)
+							.addPreferredGap(ComponentPlacement.RELATED, 198, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblIngreseContrasea, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblIngreseUsuario, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+									.addGap(2)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnCrearUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+								.addComponent(txtUsername, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+								.addComponent(txtPassword, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+								.addComponent(btnIniciarSesin, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))))
+					.addGap(98))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(20)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblIngreseUsuario)
+							.addGap(11)
+							.addComponent(lblIngreseContrasea))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(txtUsername, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnIniciarSesin, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+					.addGap(14)
+					.addComponent(lblCrearUsuario, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnCrearUsuario, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addGap(39))
+		);
+		contentPane.setLayout(gl_contentPane);
 	}
-
-	//Esto deber�a ser server side...
-	public boolean validarUsuario(String user, String pass){
-		if (pass.equals("1234")){ //if (user.equals("bomber") && pass.equals("1234")){
-			return true;
-		} else {
-			JOptionPane.showMessageDialog(null, "Incorrecto, intente de nuevo", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
+	
+	private void setPantallaLoginEnCliente() {
+		cliente.setPantallaLogin(this);
 	}
 }

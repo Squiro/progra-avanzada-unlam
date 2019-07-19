@@ -2,6 +2,13 @@ package com.emmettbrown.entidades;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
@@ -22,6 +29,7 @@ public class Bomba extends Entidad {
 	private Bomberman creador;
 	private boolean ignorarColisionCreador;
 	private Timer timer;
+	private Clip sonido;
 
 	///////////////////////////////////////
 	// 									//
@@ -80,6 +88,7 @@ public class Bomba extends Entidad {
 	public void explotar(Mapa map) {
 		// Seteamos visible = false para dejar de renderizar la bomba
 		this.cambiarVisibilidad();
+		sonido();
 		// Removemos la bomba de la lista de entidades
 		map.removerEntidadDelConjunto(this.ubicacion);
 		//Y de la lista del creador
@@ -93,6 +102,17 @@ public class Bomba extends Entidad {
 		explosionDerecha(map);
 		explosionArriba(map);
 		explosionAbajo(map);
+	}
+
+	public void sonido() {
+		try {
+			sonido = AudioSystem.getClip();
+			sonido.open(AudioSystem.getAudioInputStream(new File("./src/resources/music/bombSound.wav")));
+			sonido.start();
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			System.out.println("ERROR AL ABRIR EL SONIDO EN JVENTANAGRAFICA");
+			e.printStackTrace();
+		}
 	}
 
 	private void explosionIzquierda(Mapa map) {

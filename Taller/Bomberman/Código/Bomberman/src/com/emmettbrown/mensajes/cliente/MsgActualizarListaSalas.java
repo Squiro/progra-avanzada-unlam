@@ -16,19 +16,21 @@ public class MsgActualizarListaSalas extends Msg {
 	private String nombre;
 	private int jugConectados;
 	private int limJug;
+	private boolean privada;
 	
-	public MsgActualizarListaSalas(int idSala, int idCreador, String nombre, int jugConectados, int limJug) {
+	public MsgActualizarListaSalas(int idSala, int idCreador, String nombre, int jugConectados, int limJug, boolean privada) {
 		this.idSala = idSala;
 		this.idCreador = idCreador;
 		this.nombre = nombre;
 		this.jugConectados = jugConectados;
 		this.limJug = limJug;
+		this.privada = privada;
 	}
 	
 	@Override
 	public Object realizarAccion(Object obj) {
 		Cliente cliente = (Cliente) obj;
-		cliente.getListaSalas().add(new Sala(idSala, idCreador, nombre, jugConectados, limJug));
+		cliente.getListaSalas().add(new Sala(idSala, idCreador, nombre, jugConectados, limJug, privada));
 		return null;
 	}
 }

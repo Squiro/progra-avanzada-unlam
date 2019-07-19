@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
+import com.emmettbrown.entorno.grafico.DefConst;
+
 public class SvReloj {
 
 	private int hora,min,seg;
@@ -63,5 +65,12 @@ public class SvReloj {
 				t.stop();
 			}	
 		}
+	}
+
+	public void stop() {
+		t.stop();
+		hora= 0;
+		min = 0;
+		seg = DefConst.SEG;
 	}
 }

@@ -1,7 +1,9 @@
 package com.emmettbrown.cliente;
 
-import java.io.IOException;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -11,7 +13,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import com.emmettbrown.entidades.Bomberman;
 import com.emmettbrown.entorno.grafico.JPanelGrafico;
 import com.emmettbrown.entorno.grafico.JVentanaGrafica;
+import com.emmettbrown.entorno.grafico.JVentanaInicial;
 import com.emmettbrown.entorno.grafico.JVentanaLobby;
+import com.emmettbrown.entorno.grafico.Login;
 import com.emmettbrown.entorno.grafico.Sala;
 import com.emmettbrown.mapa.Mapa;
 import com.emmettbrown.mensajes.Msg;
@@ -35,6 +39,8 @@ public class Cliente implements Serializable {
 	private Sala salaActual;
 	private JPanelGrafico panelGrafico;
 	private JVentanaGrafica ventanaGrafica;
+	private Login pantallaLogin;
+	private JVentanaInicial ventanaInicial;
 
 	public Cliente(String ip, int puerto, String username) {
 		try {
@@ -44,8 +50,11 @@ public class Cliente implements Serializable {
 			this.readSocket = new Socket(host, puerto);
 			this.writeSocket = new Socket(host, puerto);
 			
-			this.outputStream = new ObjectOutputStream(writeSocket.getOutputStream());
-			this.inputStream = new ObjectInputStream(readSocket.getInputStream());
+			this.outputStream = new ObjectOutputStream(new BufferedOutputStream(writeSocket.getOutputStream()));
+			//Necesitamos flushear el buffer ni bien creamos el outputStream. De otra forma, al crear el inputStream,
+			//va a quedar todo bloqueado para siempre
+			outputStream.flush();
+			this.inputStream = new ObjectInputStream(new BufferedInputStream(readSocket.getInputStream()));
 			
 			this.mapa = new Mapa();
 			this.listaSalas = new ConcurrentLinkedQueue<Sala>();
@@ -99,15 +108,16 @@ public class Cliente implements Serializable {
 		
 	public void enviarMsg(Msg consultaAlServidor) {
 		try {
-			//Reseteamos el outputStream para enviar un nuevo mensaje
-			outputStream.reset();
 			outputStream.writeObject(consultaAlServidor);
+			//Reseteamos el outputStream desp de enviar un mensaje
+			outputStream.reset();
+			outputStream.flush();
 		} catch (IOException e) {
-			System.out.println("Error al querer enviar peticion al sv " + e);
+			System.out.println("PROBLEMA AL ENVIAR MENSAJE EN CLIENTE " + e);
 		}
 	}
 
-	public Object recibirMsg() {
+	public 	Object recibirMsg() {
 		Object obj = null;
 		try {
 			obj = inputStream.readObject();
@@ -160,12 +170,29 @@ public class Cliente implements Serializable {
 		return this.ventanaGrafica;
 	}
 	
+	public void setVentanaInicial(JVentanaInicial ventana) {
+		this.ventanaInicial = ventana;
+	}
+	
+	public JVentanaInicial getVentanaInicial() {
+		return this.ventanaInicial;
+	}
+	
 	public void setSalaActual(Sala sala) {
 		this.salaActual = sala;
 	}
 	
 	public Sala getSalaActual() {
 		return this.salaActual;
+	}
+
+	public void setPantallaLogin(Login login) {
+		this.pantallaLogin = login;
+	}
+
+	public Login getPantallaLogin() {
+		// TODO Auto-generated method stub
+		return this.pantallaLogin;
 	}
 	
 }

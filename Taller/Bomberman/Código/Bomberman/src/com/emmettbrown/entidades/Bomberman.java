@@ -8,7 +8,6 @@ import com.emmettbrown.mapa.Ubicacion;
 import com.sun.javafx.geom.Rectangle;
 
 public class Bomberman extends Entidad {
-//	private static int nroBomberman = 0;
 	private int idBomberman;
 	private ImageIcon bomberIzq;
 	private ImageIcon bomberDer;
@@ -103,5 +102,8 @@ public class Bomberman extends Entidad {
 	
 	public void removerBomba(Bomba bomba) {
 		this.bombas.remove(bomba);
+	}
+	public int cantBombasAct() {
+		return bombas.size();
 	}
 }

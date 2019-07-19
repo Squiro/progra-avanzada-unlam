@@ -1,23 +1,36 @@
 package com.emmettbrown.base.datos.base;
 
-public class Usuario {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+@Entity
+@Table(name="USUARIO")
+public class Usuario implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name="usuario")
 	private String usuario;
+	@Column(name="contraseña")
 	private String contraseña;
+	@Column(name="puntaje")
 	private int puntaje;
 	
 //	<!--
 //    <property name="hbm2ddl.auto">create</property>
 //-->
-
-	public Usuario() {
-		
-	}
-	
-	public Usuario( String usuario, String contraseña) {
+	public Usuario(){}
+	public Usuario( String usuario, String contraseña,int puntaje) {
 		
 		this.usuario=usuario;
 		this.contraseña=contraseña;
-		this.puntaje=0;
+		this.puntaje= puntaje;
 		
 	}
 	
@@ -47,6 +60,4 @@ public class Usuario {
 		return "Usuario [usuario=" + usuario + ", contraseña=" + contraseña + ", puntaje=" + puntaje + "]";
 	}
 
-	
-	
 }

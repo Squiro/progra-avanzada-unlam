@@ -1,9 +1,8 @@
 package com.emmettbrown.servidor;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
-
-
-
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -11,11 +10,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.emmettbrown.base.datos.base.GestionBD;
 import com.emmettbrown.entorno.grafico.DefConst;
 import com.emmettbrown.mapa.Ubicacion;
 import com.emmettbrown.mensajes.Msg;
 import com.emmettbrown.mensajes.cliente.MsgAgregarBomberman;
-import com.emmettbrown.mensajes.cliente.MsgEliminarBomberman;
 import com.emmettbrown.mensajes.cliente.MsgEliminarSala;
 import com.emmettbrown.mensajes.cliente.MsgGenerarObstaculos;
 import com.emmettbrown.mensajes.cliente.MsgIdCliente;
@@ -41,26 +40,29 @@ public class HiloCliente extends Thread {
 	private HandleMovement movimiento;	
 	//Listado de salas del servidor
 	private ArrayList<SvSala> listaSalas;
-	//Contador estático de ids de los clientes
+	//Contador estï¿½tico de ids de los clientes
 	private static int idCounter = 0;	
 	private SvSala salaConectada;
 	private ServerMap map;
 	private String nombreUsuario;
 	private HashMap<String, Integer> puntajes;
+	private GestionBD gestionBD;
 	
-	public HiloCliente(Socket writeSocket, Socket readSocket, ArrayList<ObjectOutputStream> usuariosConectados, ArrayList<SvSala> salas) {
+	public HiloCliente(Socket writeSocket, Socket readSocket, ArrayList<ObjectOutputStream> usuariosConectados, ArrayList<SvSala> salas, GestionBD gestion) {
 		this.idCliente = idCounter++;
 		this.writeSocket = writeSocket;
 		this.readSocket = readSocket;
-		
+		this.gestionBD = gestion;
 		try {
-			this.outputStream = new ObjectOutputStream(writeSocket.getOutputStream());
+			this.outputStream = new ObjectOutputStream(new BufferedOutputStream(writeSocket.getOutputStream()));
+			//Necesitamos flushear el buffer ni bien creamos el outputStream. De otra forma, al crear el inputStream,
+			//va a quedar todo bloqueado para siempre
+			outputStream.flush();
 			usuariosConectados.add(outputStream);
-			this.inputStream = new ObjectInputStream(readSocket.getInputStream());
+			this.inputStream = new ObjectInputStream(new BufferedInputStream(readSocket.getInputStream()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		
 		this.usuariosConectados = usuariosConectados;
 		this.estaConectado = true;
@@ -129,16 +131,21 @@ public class HiloCliente extends Thread {
 		try {
 			outputStream.writeObject(msg);
 			outputStream.reset();
+			outputStream.flush();
 		} catch (Exception e) {
-			System.out.println("¡No se pudo enviar el mensaje! :)");
+			System.out.println("NO SE PUDO ENVIAR EL MENSAJE EN HILOCLIENTE");
 		}
 	}
 	
 	public void broadcast(Msg msg, ArrayList<ObjectOutputStream> usuariosConectados) {		
+		this.enviarMsg(msg);	
 		for (ObjectOutputStream salidaACliente : usuariosConectados) {
 			try {
-				salidaACliente.reset();
-				salidaACliente.writeObject(msg);
+				if (!salidaACliente.equals(outputStream) ) {
+					  salidaACliente.writeObject(msg);
+					  salidaACliente.reset(); 
+					  salidaACliente.flush();
+				}
 			} catch (IOException e) {
 				System.out.println(e);
 			}
@@ -157,13 +164,19 @@ public class HiloCliente extends Thread {
 			inputStream.close();
 			readSocket.close();
 		} catch (IOException | ClassNotFoundException ex) {
-			System.out.println("Problemas al querer leer otra petición: " + ex.getMessage());
-			this.salaConectada.getMap().eliminarBomberman(this.bomber);
+			System.out.println("Un mensaje no se recibio correctamente en HiloCliente: " + ex.getMessage());
+			desconectarDeSala();
 			this.usuariosConectados.remove(outputStream);			
 			eliminarSala(this.idCliente);
-			broadcast(new MsgEliminarBomberman(this.bomber.getIdBomberman()), usuariosConectados);
 			this.estaConectado = false;
 		}
+	}
+	
+	public void desconectarDeSala() {
+		//Si se encuentra en una sala, lo borramos de ahi
+		
+		if (this.salaConectada != null)
+			this.salaConectada.removerCliente(this);
 	}
 
 	public void agregarSala(SvSala sala) {
@@ -205,5 +218,10 @@ public class HiloCliente extends Thread {
 
 	public HashMap<String, Integer> getPuntajes() {
 		return puntajes;
+	}
+
+	public GestionBD getGestionBD() {
+		// TODO Auto-generated method stub
+		return this.gestionBD;
 	}
 }
