@@ -1,0 +1,3 @@
+Generar flash-cards de la materia (temas del taller preferiblemente)
+
+Dos por grupo, sin repetir con ninguno de los otros dos grupos. Si un grupo hace una, se invalida para los demas.

@@ -1,0 +1,15 @@
+TODAS ESTAS SOLUCIONES TOMAN COMO PUNTO DE INICIO LAS FLECHAS DEL GRAFICO
+A SU VEZ, LA NUMERACION DE LOS CIRCULOS SE TOMA EN CUENTA DESDE EL MAS PEQUEÑO HASTA EL MAS GRANDE
+1: CIRCULO CONCENTRICO MAS PEQUEÑO... 6: CIRCULO CONCENTICO MAS GRANDE
+PRESTAR ATENCIÓN EN LOS SENTIDOS DE LAS ROTACIONES DEL CIRCULO
+
+
+Para el número vampiro 6880: 
+Rotar el círculo concéntrico número 1, 2 veces en sentido antihorario
+Rotar el círculo concéntrico número 2, 2 veces en sentido antihorario
+Rotar el círculo concéntrico número 3, 1 veces en sentido antihorario
+Rotar el círculo concéntrico número 4, 2 veces en sentido horario
+Rotar el círculo concéntrico número 5, 1 veces en sentido antihorario
+Rotar el círculo concéntrico número 6, 2 veces en sentido antihorario
+
+

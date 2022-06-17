@@ -1,0 +1,85 @@
+Objetos
+Clases
+Herencia
+Polimorfismo
+S
+O (open closed principle)
+L (list substitution principle)
+I
+D
+
+-Objetos: Son pequeñas máquinas de software, saben cosas (atributos) y saben hacer cosas con esas cosas (metodos). Tienen que estar encapsulados.
+
+Lo que caracteriza a la POO es la coherencia con la que organizo los objetos.
+
+Abstracción: ignorancia selectiva de algunos de los aspectos de la realidad.
+
+En el modelado de objetos se debe usar la abstracción para darle más importancia a otros atributos.
+
+-Diferencia entre Clase y Objeto: la clase es la abstracción y generalización de un colectivo. Es algo general que se usa para describir a todo ese colectivo. El objeto es un individuo con características únicas.
+
+(Instanciar = obtener un ejemplar, esta mal dicho decir instanciar)
+
+-Encapsulamiento: poner juntas las cosas que el objeto sabe y hace. El objeto tiene las capacidades de resolver las cosas por sí mismo (no anda pidiendo las cosas a otras clases/objetos).
+
+Puedo tener los atributos públicos sin romper el encapsulamiento. La accesibilidad/ocultamiento no hace que las cosas dejen de estar encapsuladas. Encapsular es elegir bien los atributos que uno utiliza.
+
+---
+
+Principio de acceso uniforme: predecibilidad en como se acceden a las cosas.
+
+---
+
+-Clase abstracta: es una clase que define algo mediante un concepto abarcador (algo que abarca varias cosas, e.g.: facturas, alumnos). Las clases abstractas no pueden instanciarse.
+
+-Herencia: relacion jerarquica (superclase, subclase).
+
+Si leo para abajo, estoy especializando. ?
+Si leo para arriba, estoy generalizando. ?
+
+Herencia puede definirse mejor con la palabra extensión. Extendemos el comportamiento.
+
+Las superclases pueden ser concretas o abstractas.
+
+---
+
+Objetos polimórficos: "muchas formas". Mismo mensaje, distintas formas de responderse. Es la capacidad de un objeto de cambiar su comportamiento. Una variable es 
+polimorfica cuando puede contener un objeto de un tipo, o de otro. 
+
+Las clases deben ser abstractas para poder generar objetos polimorficos.
+
+Ejemplo:
+
+figura f = new circulo(1);
+f.calcularArea();
+f = new cuadrado(2);
+f.calcularArea();
+
+Sobrecarga de metodos =/= polimorfismo
+
+La sobrecarga es un metodo con firma similar. E.g.: un metodo que recibe mas parametros.
+
+--
+
+Sobrecarga y sobre-escritura
+
+-Sobrecarga: se sobrecarga un método enviándoles diferentes parámetros (tipos y cantidad). El compilador puede evaluar si hay un método que tenga firma igual a lo que le estamos enviando como parametros, y en base a eso seleccionar el método adecuado. 
+
+-Sobre-escritura: la sobreescritura me permite ignorar la funcionalidad heredada de la clase padre. Puedo sobre-escribir el método del padre con un método propio, con funcionalidad distinta adaptada a mi clase.
+
+--
+
+Modificador static: no es necesario instanciar un objeto para utilizar el método. Los atributos con este modificador pertenecen a la clase en sí y no al objeto.
+
+
+--
+
+Referencias:
+
+Circulo c = new Circulo (radio1);
+
+c -> es una referencia a un objeto, sin hacer el new no tiene nada, es solo una referencia vacia.
+
+Cuando hago el new, se hace una referencia a las variables miembro y las funciones del objeto.
+
+Si yo asigno otro objeto a la referencia, el objeto que estaba guardado deja de existir y se pisa por el nuevo.

@@ -1,0 +1,52 @@
+Un grafo es un tipo de dato abstracto que nos permite crear relaciones entre los objetos. Los nodos representan objetos y las aristas que los unen
+representan una relación entre ellos. 
+
+Por ej: Nodos = Ciudades
+	Aristas = Km a recorrer entre cada ciudad
+
+Las aristas siempre marcan una relación.
+
+Grafos no dirigidos: la arista que une los dos nodos tiene un doble sentido.
+
+Grafos dirigidos: la arista tiene un sentido y tiene un peso (un valor).
+
+Si el grafo está ponderado, está todo ponderado. Es decir, si una arista tiene un valor, todas las demás tendrán valores.
+
+¿Qué es un camino?
+
+Es una sucesión de nodos unidos por aristas, donde la longitud del camino es igual a la cantidad de aristas que lo forman, que sería igual a la cantidad de nodos-1.
+
+¿Qué es un ciclo?
+
+Es un camino cuyo primer nodo es igual al último. 
+
+Grado de un nodo: es igual a la cantidad de aristas que salen de él.
+
+	Camino de Euler:
+
+Es un camino que no repite aristas. Tiene que recorrer el grafo (complet) sin repetir aristas. Puede repetir nodos. Para que se pueda formar un camino de euler,  tiene que tener todos los grados de sus nodos pares, o todos pares y 2 impares. Para armar el camino de euler en esta última ocasión, se debe partir de alguno de los 2 nodos impares.
+
+
+	Camino de Hamilton:
+
+Es un camino donde se debe pasar una vez por cada nodo del grafo, pero pueden haber aristas que no utilice.
+
+
+Matriz de adyacencia:
+
+Es una matriz que representa las conexiones de los nodos. Aquellos nodos que no compartan conexiones, se representan con un valor infinito. Si es muy conexo, es mucho mejor utilizar una matriz. 
+
+Lista de adyacencia:
+
+Un vector en que los subíndices indican los nodos, y que está poblado con referencias a listas que contienen las conexiones de cada nodo. Los nodos que están en esa lista me indican que son adyacentes al nodo X, pero no mantienen ninguna relación entre sí. Si el grafo no es muy conexo, conviene usar una lista de adyacencia.
+
+
+	Algoritmo de Dijkstra: 
+
+Nos dice el costo mínimo, el camino más corto en cuanto al costo. Pero no nos dice cuál es ese camino.
+
+1-Elijo un W perteneciente a N-S, tal que desde W sea mínimo. 
+2-Aplicar la formula para los nodos que son adyacentes a W, pertenecientes a N-S.
+
+
+Para poder saber el camino, necesitamos un vector P extra que obtenga los precedentes. Cuando hay un cambio en el valor del costo, ponemos en el vector de precedentes el nodo W. 

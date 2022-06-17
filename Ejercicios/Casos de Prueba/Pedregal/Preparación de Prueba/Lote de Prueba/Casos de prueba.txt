@@ -1,0 +1,23 @@
+Casos de prueba
+
+
+Caso 1: Las dimensiones de la casa son demasiado grandes como para entrar al terreno.
+
+Output esperado: No es posible ubicar la casa. "NO"
+
+Caso 2: Los pedregales hacen imposible ubicar la casa. 
+
+Output esperado: No es posible ubicar la casa. "NO"
+
+Caso 3: La casa puede ubicarse correctamente en una posición única, debido a los pedregales encontrados.
+
+Output esperado: La casa se ubica correctamente. "SI"
+
+
+Caso 4: La casa se ubica correctamente, la puerta se ubica en uno de los lados más largos. 
+
+Output esperado: La ubicación de la puerta y la orientación son válidas, es decir, la puerta está en uno de los lados más largo y la orientación coincida con el lado.
+
+--
+
+Programa probador: debe chequear que la casa no este posicionada en un pedregal, y que la puerta este ubicada en el lado mas largo. Además la posición debe concordar con la de la puerta.

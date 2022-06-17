@@ -1,0 +1,30 @@
+Es un molde del plano general. No hay objetos, es todo estatico.
+
+---- Classname -----
+-		   -  ATRIBUTOS
+-		   -
+--------------------
+-		   -  METODOS
+-		   -
+--------------------
+
+
+Simbolos para atributos: 
+
+- (menos) private : type (tipo de dato)
++ (mas) public : type
+~ package : type
+# protected : type
+
+
+Simbolos para metodos:
+
+Se asumen que los metodos son publicos (mayormente lo son). Ademas, no es necesario ponerle nombres a los parametros. Los constructores se escriben si no son por defecto.
+
+Los get y set solo deben ponerse si tienen relevancia. Los genericos NO.
+
++ metodo(int, double) : void (return type)
++ metodo() : void (return type)
+
+Relaciones entre clases:
+

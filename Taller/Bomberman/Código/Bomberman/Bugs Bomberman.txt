@@ -1,0 +1,14 @@
+Lista de BUGs del Bomberman a actualización del 21/6/2019
+
+-Al poner una bomba, el Bomberman frena su movimiento -> Observado siempre
+
+-Las imágenes del fuego de la bomba no cargan -> Observado algunas veces
+
+-Cuando un Bomberman fuera de rango del fuego de la bomba se acerca a la explosión y toca el fuego, 
+ debería morirse. En su lugar, una colisión le impide tocar el fuego -> Observado siempre
+ 
+-Si un Bomberman tiene parte de su cuerpo dentro del rango del fuego de la bomba, 
+ debería morirse, pero no muere. -> Observado siempre hacia arriba
+				 -> Observado nunca hacia abajo
+			  	 -> Observado siempre hacia izquierda 
+				 -> Observado nunca hacia derecha

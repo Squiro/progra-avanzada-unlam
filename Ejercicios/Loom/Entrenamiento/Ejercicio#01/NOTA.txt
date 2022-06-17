@@ -1,0 +1,10 @@
+Dado un conjunto de N números cualesquiera, un número T y un entero K, ¿cuán rápido puede usted determinar si existe un subconjunto de K elementos cuya suma es, a lo sumo, T?
+
+Este ejercicio parece una modificación del sub-set sum problem (problema de la suma de subconjuntos). Nos piden determinar si existe un subconjunto de K elementos cuya suma es T. El problema se hace más complicado mientras K y N sean más grandes. Solo se hace simple cuando alguno de los dos (pero no los dos al mismo tiempo) sea muy chico. 
+
+Por ejemplo, para un conjunto de N = 3, sería rápido hallar cuáles K = 2 números suman T, ya que N tomado de a K da como máximo 3 combinaciones posibles. 
+
+La complejidad de tiempo de este ejercicio varía según N y K. Seguramente, llegue a ser exponencial en la mayoría de los casos.
+
+https://stackoverflow.com/questions/8916539/sum-subset-with-a-fixed-subset-size
+https://stackoverflow.com/questions/10423575/given-a-set-of-n-integers-return-all-subsets-of-k-elements-that-sum-to-0 

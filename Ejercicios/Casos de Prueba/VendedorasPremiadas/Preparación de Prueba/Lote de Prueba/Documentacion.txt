@@ -1,0 +1,47 @@
+CASOS:
+
+-Caso 1:
+
+El caso 1 prueba el programa con un lote vacío de vendedoras, ventas o importes.
+
+Output esperado: No hay ganadoras, ya que no hay datos significativos.
+
+-Caso 2: 
+
+El caso 2 prueba una situación de empate entre dos vendedoras, recurriendo a que el programa evalúe n+1 cantidad de ventas par decidir el ganador.
+
+Output esperado: La tercer vendedora es la ganadora den el desempate debido a tener mayor facturación.
+
+-Caso 3:
+
+El caso 3 prueba una situación de clara victoria de una vendedora con una mayor cantidad de facturación que las demás en las N ventas consecutivas estipuladas.
+
+Output esperado: la vendedora 1 es la ganadora con mayor facturación en las N ventas estipuladas.
+
+-Caso 4:
+
+El caso 4 prueba una situación en la que ninguna de las vendedoras tenga N ventas consecutivas, siendo N = 6.
+
+Output esperado: No hay ganadoras.
+
+-Caso 5:
+
+El caso prueba un empate entre vendedoras el cual no se puede desempatar, ya que no existe ninguna vendedor que tiene N+1 ventas. El empate debe suceder, pero no debe haber errores al momento de buscar vendedoras con más ventas.
+
+Output esperado: No se puede desempatar.
+
+-Caso 6: 
+
+El caso 6 es una ampliación del caso 3 en cuanto a cantidad de ventas y valor de los importes. La ganadora es clara, pero los valores de los importes están desordenados y no de mayor a menor.
+
+Output esperado: Gana la vendedora 3, teniendo una mayor facturación en N (N = 2) ventas consecutivas.
+
+-Caso 7: 
+
+El caso 7 analiza la situación de un empate entre vendedoras, y prueba que el programa no considere otras vendedoras al momento de realizar el desempate.
+
+Output esperado: la vendedora 1 resulta la ganadora, ya que estaba empatada con la vendedora 3, y en el desempate la que tiene mayor facturación en N+1 ventas es la 1.
+
+-Caso 8:
+
+

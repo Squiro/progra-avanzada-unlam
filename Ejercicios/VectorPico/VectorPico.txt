@@ -1,0 +1,24 @@
+Vector creciente en forma de pico
+
+CRECE	DECRECE
+1 2 3 4 1 -1
+
+Encontrar la posición del pico. El pico no es primero ni el ultimo.
+
+Tamaño mayor igual a 3. Dos posicones aledañas son distintas. 
+
+Compelejidad: O(log(n))
+
+Intentar hacerlo recursivo. 
+
+Hacer algo similar a la busqueda binaria. Ir partiendo. 
+
+lim Inf = 0
+lim Sup = lenght
+
+punto medio = inf + sup/2
+
+comparo Puntomedio con Pmedio-1 y Pmedio+1, si no veo que es creciente, tengo que mover el lim inferior, si veo que es decreciente, tengo que mover el lim sup
+
+
+

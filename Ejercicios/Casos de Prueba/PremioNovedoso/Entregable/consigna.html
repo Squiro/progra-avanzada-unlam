@@ -1,0 +1,49 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Untitled Document.md</title><style></style></head><body id="preview">
+<h1><a id="Trabajo_Prctico_pruebas_de_software_0"></a>Trabajo Práctico: pruebas de software</h1>
+<h2><a id="Aspectos_generales_2"></a>Aspectos generales</h2>
+<p>Los alumnos recibirán el enunciado de un problema y distintos programas ejecutables que “supuestamente” resuelven el problema.</p>
+<p>Los grupos de trabajo deben diseñar e implementar un Lote de Pruebas con distintos casos que permitan testear en profundidad el funcionamiento del software entregado y que sean lo suficientemente ingeniosos y atómicos para poder decir de la manera mas certera posible, el o los errores cometidos en la implementación de cada ejecutable.</p>
+<p>Deberán también completar y entregar un informe detallado de los resultados obtenidos, indicando los errores observados.</p>
+<h2><a id="Contenido_de_la_entrega_10"></a>Contenido de la entrega</h2>
+<p>La entrega constará de un reporte por error encontrado, el cual deberá realizarse al momento de encontrar el error (es una competencia por tiempo y objetivos), en el formulario en línea que especificarán los docentes de la materia.</p>
+<p>Se requerirá:</p>
+<ul>
+<li>Número de grupo</li>
+<li>Ejecutable sobre el cual se corrió la prueba</li>
+<li>Descripción del caso de prueba</li>
+<li>Descripción del posible error encontrado</li>
+<li>Archivo de entrada</li>
+<li>Archivo de salida esperada</li>
+<li>Archivo de salida obtenida</li>
+</ul>
+<h3><a id="Ejemplo_de_entrega_23"></a>Ejemplo de entrega</h3>
+<p>Si fuera un ejercicio en el cual se recibe por archivo una serie de números a ordenar, el siguiente sería un reporte correcto (independientemente de que sea acertado o no):</p>
+<ul>
+<li>Grupo 10</li>
+<li>Ejecutable caso1.jar</li>
+<li>En este caso el último valor es el que debería ordenarse en primera posición</li>
+<li>Este caso falla porque estaría ignorando la última posición al momento de ordenar.</li>
+</ul>
+<p><a href="http://archivo.in">archivo.in</a></p>
+<pre><code>1
+2
+3
+0
+</code></pre>
+<p>esperado.out</p>
+<pre><code>1
+2
+3
+0
+</code></pre>
+<p>archivo.out</p>
+<pre><code>0
+1
+2
+3
+</code></pre>
+<h2><a id="Forma_de_ejecucin_56"></a>Forma de ejecución</h2>
+<p>Se proporcionan archivos <code>.jar</code>. Los mismos, se ejecutan con el comando <code>java -jar caso.jar</code>, donde <code>caso.jar</code> es el nombre del archivo.<br>
+Los archivos de entrada y de salida se encontrarán en la misma ruta que el ejecutable.</p>
+
+</body></html>

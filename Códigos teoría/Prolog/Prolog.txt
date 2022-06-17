@@ -1,0 +1,102 @@
+			PROLOG
+
+Prolog no es imperativo. Se basa en la escritura de reglas, que no son ni ordenes ni funciones.
+
+Programa: SWI-Prolog (interprete) (.pl extension).
+
+Las ordenes se escriben con punto. Si no, no se ejecutan.
+
+REGLAS:
+
+nombre_algo(argumento)
+
+Variables comienzan con mayuscula, constantes con minuscula.
+Todas las reglas que se llamen igual tienen que estar juntas (declaradas secuencialmente). 
+
+Para compilar vamos a Compile --> Compile Buffer
+
+CONSULTAS:
+
+?- es_un_pais(argentina).
+
+?- es_un_pais(X).
+	X = argentina ; (el punto ; me hace recorrer todos los valores de las reglas)
+	X = chile ;
+	x = peru.
+
+?- es_un_pais(X),write(X),nl,fail.
+
+"escriba X uno por linea hasta que falle"
+nl --> nextline
+
+son_limitrofes(X,Y),write(X+Y),nl,fail.
+
+Escribe pares. El + es un conector que puede ser reemplazado con otro simbolo.
+
+Las reglas pueden tener tantos argumentos como yo necesite.
+
+limita_con(argentina,chile).
+limita_con(argentina,brasil).
+limita_con(bolivia,brasil).
+limita_con(bolivia,paraguay).
+limita_con(bolivia,chile).
+limita_con(bolivia,argentina).
+limita_con(peru,ecuador).
+
+son_limitrofes(X,Y):-limita_con(X,Y);limita_con(Y,X).
+
+"son limitrofes X,Y si (:-) limita con X,Y o (;) limita con Y,X"
+
+CONECTORES / CONDICIONALES / COSAS
+
+:- SI
+
+, Y
+
+; O
+
+== (igual)
+
+not() (resta) (nunca ponerlo luego de un SI :-)
+
+dif(A,B) (da verdadero si A y B son distintos)
+
+>
+
+<
+
+>=
+
+=< (el igual siempre va del lado del piquito)
+
+
+% comentarios
+
+LIMPIAR CONSOLA: write('\e[2J').cls
+cls.
+
+VARIABLE ANONIMA:
+_ --> se utiliza cuando no me interesa el valor de la variable
+
+DOS REGLAS AL MISMO TIEMPO:
+ausentes(X):-parcial1(X,_),not(parcial2(X,_)).
+ausentes(X):-parcial2(X,_),not(parcial1(X,_)).
+
+LAS REGLAS SE EVALUAN TODAS:
+
+De arriba hacia abajo, de izquierda a derecha. Si tengo reglas con el mismo nombre,
+se van a evaluar todas.
+
+MAS OPERADORES:
+
+! --> Operador de corte. Corta la ejecución.
+
+= --> Operador de unificacion. Unifica, pero no asigna. No resuelve.
+
+
+--------------------
+
+
+Unificación en Prolog: http://www.learnprolognow.org/lpnpage.php?pagetype=html&pageid=lpn-htmlse5
+
+En resumen, Prolog asigna valores a las variables hasta que concuerden (o no) con la condición del predicado.

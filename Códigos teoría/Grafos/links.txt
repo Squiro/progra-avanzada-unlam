@@ -1,0 +1,8 @@
+LINKS UTILES
+
+
+Algoritmos que usan Cola de Prioridad:  
+
+Algoritmo de Kruskal (MST): https://algorithms.tutorialhorizon.com/kruskals-algorithm-minimum-spanning-tree-mst-complete-java-implementation/
+
+Algoritmo de Prim (MST): https://github.com/cormacpayne/algorithms/blob/master/PrimsAlgorithmMST.java

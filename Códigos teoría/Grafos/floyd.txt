@@ -1,0 +1,6 @@
+Floyd devuelve una matriz con los costos para ir desde un nodo hasta todos los nodos, por cada nodo del grafo (por eso es una matriz). 
+
+Floyd se utiliza en grafos dirigidos. 
+
+Empieza recorriendo la matriz de adyacencia, copiando todos sus valores, salvo que en la diagonal principal les pone 0. 
+

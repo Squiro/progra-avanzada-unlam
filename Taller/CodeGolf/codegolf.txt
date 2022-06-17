@@ -1,0 +1,11 @@
+Se trata de escribir un programa con la menor cantidad de caracteres posibles. 
+
+Espacios y enters no cuentan como chars. El nombre de la funcion cuenta, pero no puede cambiarse.
+
+
+charcount.com
+
+Los elementos de una clase se inicializan en 0 (o nulo, o el neutro de ese tipo/clase).
+
+Ejercicio -> facebook, enviar por mail
+

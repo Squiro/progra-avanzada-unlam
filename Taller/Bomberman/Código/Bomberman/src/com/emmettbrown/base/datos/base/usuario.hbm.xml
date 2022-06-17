@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+ <class name="com.emmettbrown.base.datos.base.Usuario" table="USUARIO">
+  <id column="usuario" name="usuario" type="string"/>
+  <property column="contraseña" generated="never" lazy="false"
+   name="contraseña" not-null="true" type="string"/>
+  <property column="puntaje" generated="never" lazy="false"
+   name="puntaje" not-null="true" type="int"/>
+ </class>
+</hibernate-mapping>

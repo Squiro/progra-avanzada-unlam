@@ -1,0 +1,26 @@
+Tomar de a tres en tres = tomarlos así para poder hacerlos coincidir con ASCII
+
+A-Z = [65, 90]
+a-z = [97, 122]
+
+038 703 322 181 521 146 126 340 770 357 571 079 844 341 358 464 325 333 787 395 802
+101 726 295 219 637 253 013 372 881 272 600 058 801 311 271 437 311 290 893 427 835
+
+
+BITWISE XOR
+
+038	703 322 181 521 146
+101	726 295 219 637 253
+67	105 101 110 116 111
+C   i   e   n   t   o
+
+DIN DIN DIN
+
+Cosas intentadas:
+
+--No es la suma de los pares de 3 cifras (si sumamos, nos dan valores que estan lejos del ASCII)
+--No es la resta de los pares de 3 cifras 
+--No son valores ASCII normales (eso es obvio de por si, algunos se van por arriba de 255)
+--No es la resta en hexadecimal
+--No es la suma de los digitos de cada par de 3 cifras por separado
+--Poner par tras par encolumnados y tomar los de a tres así tampoco sirve

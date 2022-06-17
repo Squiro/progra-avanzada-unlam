@@ -1,0 +1,3 @@
+http://www.it.uc3m.es/rcrespo/docencia/irc/lab/Ejercicios_Prolog.pdf
+https://elvex.ugr.es/decsai/intelligent/workbook/ai/PROLOG.ejercicios.pdf
+https://es.scribd.com/doc/111878912/Prolog-ejercicios-resueltos

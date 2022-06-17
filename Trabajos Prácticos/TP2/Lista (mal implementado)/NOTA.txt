@@ -1,0 +1,7 @@
+Esta versión está mal hecha por las siguientes razones:
+
+-Las versiones dinámicas de las colas y pilas no eran realmente dinámicas, eran estáticas. El hecho de tener un array que se "alargue" a medida que se van metiendo elementos no las hace dinámicas, ya que el método de almacenamiento sigue siendo estático (es decir, sigue siendo un array). En realidad, dicha implementación ES una implementación estática.
+
+-Se utilizó una lista doblemente enlazada. Esto, per se, no está mal, pero los profesores querían una lista simplemente enlazada porque era más fácil hacerlo así. 
+
+-La clase Nodo tenía atributos públicos. Esto es una chanchada, ya que a los atributos de la clase Nodo solo deberían acceder selectas clases (es decir, Lista, ColaDinamica, PilaDinamica, y toda aquella que utilice una clase Nodo).
